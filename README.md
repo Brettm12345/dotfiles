@@ -1,6 +1,8 @@
 # Dotfiles :fire::fire:
 
-![xkcd](https://imgs.xkcd.com/comics/automation.png)
+<p align="center">
+  <img src="https://imgs.xkcd.com/comics/automation.png" />
+</p>
 
 ## System info
 * os: `arch linux`
