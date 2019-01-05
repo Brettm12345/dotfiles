@@ -7,17 +7,20 @@
 </p>
 
 ## System info
-* os: `arch linux`
-* browser: `chromium`
-* shell: `fish`
-* desktop-enviroment: `Plasma`
-* terminal: `termite`
-* terminal font: `Iosevka Term Custom`
+* browser: `Chromium`
+* colorscheme: `Material Palenight`
 * desktop font: `Noto Sans ExtraCondensed Semibold`
-* editor: `emacs`
-* terminal editor: `neovim`
-* launcher: `kde`
+* desktop-enviroment: `KDE/Plasma`
+* editor: `Emacs`
+* gtk theme: `Flat-Remix`
+* icon theme: `Papirus`
+* login manager: `Lightdm webkit2`
+* os: `Arch Linux`
 * resolution: `3440x1440`
+* shell: `Fish`
+* terminal editor: `Neovim`
+* terminal font: `Iosevka Term Custom`
+* terminal: `Termite`
 
 ## Instalation
 Set `DOTFILES` to whatever you want.
@@ -28,7 +31,7 @@ git clone git://github.com/Brettm12345/dotfiles "$DOTFILES"
 eval "$DOTFILES"/install.sh
 ```
 
-## Other dotfiles
+## Other repositories
 * [Doom Emacs](https://github.com/Brettm12345/doom-emacs-literate-config "Doom Emacs literate config")
 * [Neovim](https://github.com/Brettm12345/vim-config "Neovim configuration")
 
@@ -36,7 +39,7 @@ eval "$DOTFILES"/install.sh
 ```
 /home/brett
 ├── bin
-│   ├── backup
+│   ├── ghq
 │   ├── [...]
 │   ├── wall-e
 │   ├── sgrid
@@ -58,6 +61,7 @@ eval "$DOTFILES"/install.sh
 │   ├── [...]
 │   ├── gitlab.com
 ├── tmp
+│   └── dwl
 ├── usr
 │   ├── doc
 │   ├── img
