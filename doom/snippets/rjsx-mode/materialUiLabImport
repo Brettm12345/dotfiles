@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: materialUiLabImport
-# key: muil
-# --
-import $1 from '@material-ui/lab/$1';

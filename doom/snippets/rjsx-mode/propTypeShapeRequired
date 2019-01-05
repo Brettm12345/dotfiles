@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: propTypeShapeRequired
-# key: ptshr
-# --
-PropTypes.shape({
-    $1
-}).isRequired,

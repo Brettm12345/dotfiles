@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: defaultProps
-# key: rdp
-# --
-static defaultProps = {
-  $1
-};

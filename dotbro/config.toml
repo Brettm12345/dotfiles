@@ -8,7 +8,7 @@
 
 # Directory of your dotfiles repository.
 # Default: directory of this config.
-dotfiles = "$HOME/etc"
+dotfiles = "$DOTFILES"
 
 # Destination directory - your dotfiles will be linked there.
 # Default: $HOME
@@ -19,51 +19,31 @@ destination = "$HOME"
 backup = "$HOME/.etc.bkp~"
 
 [mapping]
-
-# Binaries
-
 "alacritty" = ".config/alacritty"
 "awesome" = ".config/awesome"
 "bat" = ".config/bat"
 "beets" =  ".config/beets"
-"BetterDiscord" = ".config/BetterDiscord"
 "bin" = "bin"
+"BetterDiscord" = ".config/BetterDiscord"
 "cava" = ".config/cava"
 "compton/compton.conf" = ".config/compton.conf"
-"dotbro" = ".config/dotbro"
 "doom" = ".config/doom"
+"dotbro" = ".config/dotbro"
 "dunst" = ".config/dunst"
-"profile" = ".profile"
 "fish" = ".config/fish"
-"fisher" = ".config/fisher"
-
 "fontconfig" = ".config/fontconfig"
-
-"git" = ".config/git"
-
-"htop" = ".config/htop"
-
-"ncmpcpp" = ".config/ncmpcpp"
-
-"mpd" = ".config/mpd"
-
-"mpv" = ".config/mpv"
-
-"ranger" = ".config/ranger"
-
-"termite" = ".config/termite"
-
-"yay" = ".config/yay"
-
-"gtk/gtkrc" = ".config/gtkrc"
-
-"themes" = ".local/share/themes"
-
 "fonts" = "usr/share/fonts"
-
-"xorg" = ".config/xorg"
-
-"tmux" = ".config/tmux"
-
+"git" = ".config/git"
+"gtk/gtkrc" = ".config/gtkrc"
+"htop" = ".config/htop"
+"mpd" = ".config/mpd"
+"mpv" = ".config/mpv"
+"ncmpcpp" = ".config/ncmpcpp"
 "nvim" = ".config/nvim"
-
+"profile" = ".profile"
+"ranger" = ".config/ranger"
+"termite" = ".config/termite"
+"themes" = ".local/share/themes"
+"tmux" = ".config/tmux"
+"xorg" = ".config/xorg"
+"yay" = ".config/yay"

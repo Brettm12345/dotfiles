@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: componentDidMount
-# key: cdm
-# --
-componentDidMount() {
-  $1
-};

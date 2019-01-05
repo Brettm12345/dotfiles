@@ -1,23 +1,29 @@
 # Dotfiles :fire::fire:
-* os: `artix linux`
+* os: `arch linux`
 * browser: `chromium`
-* shell: `zsh`
+* shell: `fish`
 * desktop-enviroment: `Plasma`
 * terminal: `termite`
 * terminal font: `Iosevka Term Custom`
 * desktop font: `Noto Sans ExtraCondensed Semibold`
 * editor: `emacs`
+* terminal editor: `neovim`
 * launcher: `kde`
 
 ![xkcd](https://imgs.xkcd.com/comics/automation.png)
 
-## Install
-To install just use make to symlink all the directories
+## Instalation
+Set `DOTFILES` to whatever you want.
+I personally use `~/etc`
 ``` shell
-go get -u github.com/hypnoglow/dotbro
-git clone git://github.com/Brettm12345/dotfiles ~/etc
-dotbro -c ~/etc/dotbro/config.toml 
+export DOTFILES="${HOME}/etc"
+git clone git://github.com/Brettm12345/dotfiles "$DOTFILES"
+eval "$DOTFILES"/install.sh
 ```
+
+## Other dotfiles
+* [Doom Emacs](https://github.com/Brettm12345/doom-emacs-literate-config "Doom Emacs literate config")
+* [Neovim](https://github.com/Brettm12345/vim-config "Neovim configuration")
 
 ## File Structure
 ```
@@ -32,13 +38,18 @@ dotbro -c ~/etc/dotbro/config.toml
 │   ├── nvim
 │   ├── [...]
 │   ├── wm
-│   └── zsh
-├── src
-│   ├── go
-│   ├── js
-│   ├── py
+│   └── xorg
+├── org
+│   ├── code
 │   ├── [...]
-│   ├── rb
+│   └── projects
+├── src
+│  ├── github.com
+|      ├── brettm12345
+|      ├── [...]
+│      └── hlissner
+│   ├── [...]
+│   ├── gitlab.com
 ├── tmp
 ├── usr
 │   ├── doc
@@ -47,10 +58,10 @@ dotbro -c ~/etc/dotbro/config.toml
 │   ├── msc
 │   └── vid
 └── var
-    ├── nvim
+    ├── cache
     ├── [...]
-    ├── wm
-    └── zsh
+    ├── mpd
+    └── rtorrent
 ```
 
 ## Screenshots

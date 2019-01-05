@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: propTypeElement
-# key: ptel
-# --
-PropTypes.element,
