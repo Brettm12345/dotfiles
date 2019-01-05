@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# mpvtube
+
+# INSTALL (something will happen on alt+a)
+# put me in openbox rc.xml like
+#    <!-- mpv youtube url -->
+#    <keybind key="A-a">
+#      <action name="Execute">
+#        <command>mpvtube</command>
+#      </action>
+#    </keybind>
+
+# USAGE
+# ctrl+c youtube url, then alt+a to launch mpv with that url.
+
+url=$(xclip -o)
+
+# primitive link validation from
+# https://stackoverflow.com/questions/3183444/check-for-valid-link-url
+
+regex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
+
+if [[ $url =~ $regex ]]
+then
+    echo "link seems valid"
+    notify-send "opening $url with mpv"
+    mpv "$url" # --ytdl-format=best
+else
+    echo "link not valid"
+fi

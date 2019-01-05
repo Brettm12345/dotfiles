@@ -1,0 +1,54 @@
+directory: /mnt/music/Music/
+
+import:
+  copy: yes
+  move: no
+
+per_disk_numbering: yes
+
+item_fields:
+  disc_and_track: u'%02i.%02i' % (disc, track) if
+    disctotal > 1 else u'%02i' % (track)
+
+match:
+  preferred:
+    countries: ["US", "GB|UK"]
+    media: ["CD", "Digital Media|File"]
+
+mpd:
+  host: localhost
+  port: 6600
+
+copyartifacts:
+  extensions: .cue .log
+
+paths:
+  default: $albumartist/$album [$year]/$disc_and_track $title
+
+embedart:
+  remove_art_file: no
+
+fetchart:
+  enforce_ratio: yes
+  sources: bandcamp fanarttv itunes filesystem *
+  google_key: AIzaSyCzytlRIjEeOgWImQY0NvogIjm7WKReQD0
+  fanarttv_key: 9669886cf2b357fc3d284d905105d594
+  store_source: yes
+
+bandcamp:
+  lyrics: true
+  art: true
+
+gmusic:
+  email: brettmandler@gmail.com
+  password: wzfwtowhaigyzpxe
+  auto-upload: yes
+  enable-matching: yes
+
+convert:
+  command: ffmpeg -i $source -y -vn -aq 0 $dest
+  extension: mp3
+  dest: /mnt/media/Music_Android
+  never_convert_lossy_files: yes
+
+plugins: embedart lyrics embedart acousticbrainz mbsync mpdupdate scrub ftintitle missing duplicates bandcamp fetchart inline copyartifacts

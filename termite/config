@@ -1,0 +1,46 @@
+[options]
+allow_bold = true
+audible_bell = false
+browser = xdg-open
+clickable_url = true
+cursor_blink = system
+cursor_shape = ibeam
+dynamic_title = true
+filter_unmatched_urls = true
+font = Iosevka Term Medium 14
+hyperlinks = false
+icon_name = terminal
+modify_other_keys = false
+mouse_autohide = true
+scroll_on_keystroke = true
+scroll_on_output = false
+scrollback_lines = 10000
+scrollbar = off
+search_wrap = true
+size_hints = false
+urgent_on_bell = true
+
+[colors]
+background = #292D3E
+foreground = #A6Accd
+
+highlight = #3c435e
+
+color0 = #343b51
+color8 = #676E95
+color1 = #FF5370
+color9 = #FF5370
+color2 =	#C3E88D
+color10 =	#C3E88D
+color3 =	#FFCB6B
+color11 =	#FFCB6B
+color4 =	#82aaff
+color12 =	#82aaff
+color5 =	#c792ea
+color13 =	#c792ea
+color6 =	#78CCF0
+color14 =	#78CCF0
+color7 =	#BFC7D5
+color15 = #EEFFFF
+
+# vim: ft=dosini cms=#%s

@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: reactJustClassComponent
+# key: rcjc
+# --
+class ${1:${`(file-name-base (buffer-file-name))`}} extends React.Component {
+  static propTypes = {
+    $2
+  };
+
+  render() {
+    const { $3 } = this.props;
+    return (
+      $4
+    );
+  }
+}
+
+export default $1;

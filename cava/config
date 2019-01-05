@@ -1,0 +1,29 @@
+[general]
+mode = waves
+framerate = 60
+autosens = 1
+sensitivity = 1
+
+[input]
+method = fifo
+source = /tmp/mpd.fifo
+
+[output]
+method = ncurses
+channels = stereo
+raw_target = /dev/stdout
+data_format = binary
+bit_format = 16bit
+ascii_max_range = 1000
+
+[color]
+foreground = blue
+gradient = 0
+
+[smoothing]
+integral = 95
+monstercat = 1
+waves = 1
+gravity = 70
+
+# vim:ft=config

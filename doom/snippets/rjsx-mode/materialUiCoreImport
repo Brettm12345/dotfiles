@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: materialUiCoreImport
+# key: muic
+# --
+import $1 from '@material-ui/core/$1';

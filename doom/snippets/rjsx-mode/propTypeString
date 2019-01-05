@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: propTypeString
+# key: pts
+# --
+PropTypes.string,

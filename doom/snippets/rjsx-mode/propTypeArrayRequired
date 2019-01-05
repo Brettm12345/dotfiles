@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: propTypeArrayRequired
+# key: ptar
+# --
+PropTypes.array.isRequired,

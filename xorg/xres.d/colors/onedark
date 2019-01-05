@@ -1,0 +1,24 @@
+! -- Title:     onedark
+! -- Author:    Brett
+! -- Created:   2018
+
+#define fg   #abb2bf
+#define bg   #282c34
+#define blk  #3a3f4b
+#define red  #e06c75
+#define grn  #98c379
+#define ylw  #e5c08b
+#define blu  #61afef
+#define mag  #c678dd
+#define cyn  #56b6c2
+#define wht  #dcdfe4
+#define bblk #4b5263
+#define bred #e5848c
+#define bgrn #b0d199
+#define bylw #f7d79b
+#define bblu #7dbff6
+#define bmag #d28de6
+#define bcyn #77ced9
+#define bwht #eff2f6
+
+! vim:ft=xdefaults

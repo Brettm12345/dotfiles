@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: propTypeShape
+# key: ptsh
+# --
+PropTypes.shape({
+    $1
+}),

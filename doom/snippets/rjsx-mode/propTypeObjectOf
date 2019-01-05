@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: propTypeObjectOf
+# key: ptoo
+# --
+PropTypes.objectOf($1),

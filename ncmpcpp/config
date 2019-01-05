@@ -1,0 +1,86 @@
+# Mpd settings
+mpd_host = "localhost"
+mpd_port = "6600"
+mpd_music_dir = "/mnt/media/Music"
+
+# Ncmpcpp settings
+default_find_mode = "wrapped"
+ncmpcpp_directory = "~/.config/ncmpcpp"
+ignore_leading_the = "yes"
+message_delay_time = "2"
+
+# User interface
+autocenter_mode = "no"
+centered_cursor = "no"
+current_item_inactive_column_prefix = "$(blue)$r"
+current_item_inactive_column_suffix = "$/r$(end)"
+current_item_prefix = "$(yellow)$r"
+current_item_suffix = "$/r$(end)"
+cyclic_scrolling = "yes"
+mouse_list_scroll_whole_page = "no"
+now_playing_prefix = "$6»$9"
+now_playing_suffix = ""
+
+# Playlist
+playlist_disable_highlight_delay = 1
+playlist_display_mode = "classic"
+playlist_separate_albums = "yes"
+song_columns_list_format = "(3f)[white]{n} (40)[blue]{t|f} (25)[magenta]{a} (30)[green]{b} (4f)[white]{l}"
+song_library_format = "{%n > }{%t}"
+song_list_format = " $5{%a}$5 $5|$1 $2{%t}$1 $R $4{%b}$1"
+# song_list_format = {%a - }{%t}|{$8%f$9}$R{$3(%l)$9}
+# song_list_format = "$9{$8%a $1►$3 %t}|{$8%a $1►$8 <untitled>}|{$8<unknown artist> $1►$3 %t}|{$1►$8 %f} $9 $R{$1%l}"
+# song_list_format = "{$1►$3 %t}|{$1►$8 <untitled>}|{$1►$8 %f} $1$R{$8 %a}|{$8 <unknown artist>} {$1◀ %l}"
+
+# Media library
+media_library_primary_tag = album_artist
+media_library_albums_split_by_date = "yes"
+
+# Bars
+header_visibility = "no"
+# progressbar_look = "━━━"
+progressbar_look = "━|━"
+# progressbar_look = "─╼─"
+song_status_format = "{$2%t $b$1- %a}|{%f}"
+statusbar_visibility = "no"
+titles_visibility = "no"
+
+# Browser
+browser_display_mode = "classic" (classic/columns)
+browser_playlist_prefix = "$2plist »$9 "
+
+# Colors
+alternative_ui_separator_color = "black:b"
+color1 = "blue"
+color2 = "magenta"
+discard_colors_if_item_is_selected = "yes"
+empty_tag_color = "black:b"
+header_window_color = "white"
+main_window_color = "blue"
+progressbar_color = "black"
+progressbar_elapsed_color = "magenta"
+state_flags_color = "black:b"
+state_line_color = "red"
+statusbar_color = "white"
+statusbar_time_color = "white"
+visualizer_color = "blue, cyan, green, yellow, magenta, red"
+volume_color = "white"
+
+# Visualizer
+visualizer_in_stereo = "yes"
+visualizer_sync_interval = "30"
+visualizer_output_name = "Pipe"
+visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_type = "spectrum"
+visualizer_look = "▋▋"
+
+# Lyrics
+fetch_lyrics_for_current_song_in_background = "yes"
+follow_now_playing_lyrics = "yes"
+lyrics_directory = "~/var/mpd/lyrics"
+lyrics_fetchers = "lyricwiki, azlyrics, genius, sing365, lyricsmania, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, internet"
+
+# Others
+lastfm_preferred_language = "en"
+search_engine_display_mode = "columns" (classic/columns)
+song_window_title_format = "{%a » }{%t}|{%f}"

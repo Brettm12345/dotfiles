@@ -1,0 +1,30 @@
+#include "xres.d/xft"
+#include "xres.d/colors/material"
+#include "xres.d/fonts/iosevka"
+#include "xres.d/2bwm"
+#include "xres.d/emacs"
+#include "xres.d/misc"
+#include "xres.d/rofi"
+#include "xres.d/st"
+#include "xres.d/urxvt"
+
+*bg: bg
+*fg: fg
+*color0:      blk
+*color8:      bblk
+*color1:      red
+*color9:      bred
+*color2:      grn
+*color10:     bgrn
+*color3:      ylw
+*color11:     bylw
+*color4:      blu
+*color12:     bblu
+*color5:      mag
+*color13:     bmag
+*color6:      cyn
+*color14:     bcyn
+*color7:      wht
+*color15:     bwht
+
+! vim:ft=xdefaults

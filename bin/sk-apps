@@ -1,0 +1,15 @@
+#!/bin/sh
+
+_do_sk() { sk --prompt='run > '; }
+
+cmd=$(echo "$PATH" | xargs -d: -I{} -r -- find -L {} -maxdepth 1 -mindepth 1 -type f -executable -printf '%P\n' 2>/dev/null | sort -u | _do_sk)
+if [ -z "$cmd" ]; then
+    exit
+elif [ "${cmd#sk}" != "${cmd}" ]; then
+    $cmd
+elif ! command -v lnch >/dev/null; then
+    echo >&2 "lnch not installed, run 'go get github.com/oem/lnch'"
+    exit 1
+else
+    lnch "$cmd"
+fi

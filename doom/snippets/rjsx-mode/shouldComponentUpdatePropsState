@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: shouldComponentUpdatePropsState
+# key: scups
+# condition: t
+# --
+
+shouldComponentUpdate(nextProps, nextState) {
+  const { changed: changedProps } = treeChanges(nextProps, this.props);
+  const { changed: changedState } = treeChanges(nextState, this.state);
+
+  return (changedProps($1) || changedState($2));
+};

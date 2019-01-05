@@ -1,0 +1,10 @@
+#!/bin/sh
+
+preview="man '{}'"
+cmd="fd '{}' /usr/share/man -t f"
+
+man "$(sk \
+    --cmd-prompt 'man > ' \
+    -i \
+    --preview 'man {}' \
+    -c "fd '{}' /usr/share/man -t f")"

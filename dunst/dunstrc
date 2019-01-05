@@ -1,0 +1,53 @@
+[global]
+    font                 = Noto Sans ExtraCondensed Medium 16
+    markup               = full
+    format               = "<b>%s</b>\n%b"
+    monitor              = 0
+    follow               = mouse
+    geometry             = "1000x50-10+10"
+    indicate_hidden      = yes
+    sort                 = yes
+    alignment            = left
+    shrink               = yes
+    separator_height     = 4
+    padding              = 16
+    horizontal_padding   = 16
+    frame_width          = 0
+    separator_color      = auto
+    idle_threshold       = 120
+    show_age_threshold   = 60
+    word_wrap            = yes
+    ignore_newline       = no
+    stack_duplicates     = true
+    hide_duplicate_count = false
+    show_indicators      = no
+    ignore_newline       = no
+    history_length       = 20
+    sort                 = yes
+    title                = Dunst
+    class                = Dunst
+    browser              = /usr/bin/chromium -new-tab
+    startup_notification = true
+    always_run_script    = true
+    icon_position        = left
+
+[play_sound]
+    summary = "*"
+    script = /home/brett/bin/ding
+
+[urgency_low]
+    background = "#121c21"
+    foreground = "#aaafb2"
+    timeout = 4
+
+[urgency_normal]
+    background = "#121c21"
+    foreground = "#aaafb2"
+    timeout = 6
+
+[urgency_critical]
+    background = "#121c21"
+    foreground = "#aaafb2"
+    timeout = 0
+
+# vim:ft=dosini

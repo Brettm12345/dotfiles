@@ -1,0 +1,6 @@
+#!/bin/sh
+case $1 in
+    start) tmux new-session -c rtorrent -s rtorrent -n rtorrent -d rtorrent;;
+    stop) /usr/bin/bash -c "/usr/bin/tmux -L rt send-keys -t rt:rtorrent.0 C-q; while pidof rtorrent > /dev/null; do echo stopping rtorrent...; sleep 1; done";;
+esac
+

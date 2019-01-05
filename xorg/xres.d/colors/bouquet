@@ -1,0 +1,24 @@
+! -- Title:     bouquet
+! -- Author:    NerdyPepper
+! -- Created:   2018
+
+#define fg   #aaafb2
+#define bg   #121c21
+#define blk  #252b33
+#define bblk #3f6173
+#define red  #f0696f
+#define bred #fa9a6a
+#define grn  #76a08c
+#define bgrn #1e2e36
+#define ylw  #f7cca1
+#define bylw #304b59
+#define blu  #718c97
+#define bblu #7b8e98
+#define mag  #ceb5ce
+#define bmag #bcd9e8
+#define cyn  #5f9993
+#define bcyn #877366
+#define wht  #aaafb2
+#define bwht #cfefff
+
+! vim:ft=xdefaults

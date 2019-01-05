@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. $HOME/.profile
+
+cmd="all-the-package-names"
+preview="yarn info {}"
+
+sk \
+ --cmd-prompt 'add >' \
+ --multi \
+ --preview="$preview" \
+ --preview-window right:50%:wrap:hidden \
+ --bind 'ctrl-p:toggle-preview' \
+ --cmd $cmd

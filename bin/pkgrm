@@ -1,0 +1,23 @@
+#!/bin/bash
+
+cmd="expac -H M '%011m\t%-20n\t%10d' -s {} | sort -n -r"
+preview="pacman -Qi '{4}'"
+
+packages="$(sk \
+    --cmd-prompt 'remove ❯ ' \
+    --interactive \
+    --regex \
+    --delimiter \t \
+    --cmd "$cmd" \
+    --nth 2 \
+    --preview="$preview" \
+    --preview-window right:50%:wrap:hidden \
+    --bind 'ctrl-x:toggle-preview' \
+    --multi \
+    --no-hscroll \
+    | cut -d '	' -f 2 \
+    | tr '\n' ' ' \
+    | tr '\t' ' ')"
+
+# echo "$packages"
+test -n "$packages" && sudo pacman -R $packages

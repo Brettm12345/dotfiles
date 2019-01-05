@@ -1,0 +1,4 @@
+URxvt.font: xft:scientifica:pixelsize=11
+st.font: scientifica:pixelsize=11
+
+! vim:ft=xdefaults

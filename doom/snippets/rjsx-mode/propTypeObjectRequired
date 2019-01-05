@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: propTypeObjectRequired
+# key: ptor
+# --
+PropTypes.object.isRequired,

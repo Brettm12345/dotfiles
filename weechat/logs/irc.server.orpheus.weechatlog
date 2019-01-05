@@ -1,0 +1,26 @@
+2018-12-13 19:13:07	--	irc: connecting to server irc.orpheus.network/6667...
+2018-12-13 19:13:07	--	irc: connected to irc.orpheus.network/6667 (178.17.174.202)
+2018-12-13 19:13:08	--	irc.orpheus.network: *** Looking up your hostname...
+2018-12-13 19:13:08	--	irc.orpheus.network: *** Found your hostname
+2018-12-13 19:13:09	--	Welcome to the Orpheus IRC Network brett!brett@pool-74-105-95-132.nwrknj.fios.verizon.net
+2018-12-13 19:13:09	--	Your host is irc.orpheus.network, running version UnrealIRCd-4.2.0
+2018-12-13 19:13:09	--	This server was created Tue Oct 2 2018 at 12:48:43 EEST
+2018-12-13 19:13:09	--	irc.orpheus.network UnrealIRCd-4.2.0 iowrsxzdHtIDZRqpWGTSB lvhopsmntikraqbeIzMQNRTOVKDdGLPZSCcf
+2018-12-13 19:13:09	--	CMDS=USERIP,STARTTLS,KNOCK,DCCALLOW,MAP UHNAMES NAMESX SAFELIST HCN MAXCHANNELS=25 CHANLIMIT=#:25 MAXLIST=b:60,e:60,I:60 MAXNICKLEN=30 NICKLEN=30 CHANNELLEN=32 TOPICLEN=307 KICKLEN=307 :are supported by this server
+2018-12-13 19:13:09	--	AWAYLEN=307 MAXTARGETS=20 WALLCHOPS WATCH=128 WATCHOPTS=A SILENCE=15 MODES=12 CHANTYPES=# PREFIX=(qaohv)~&@%+ CHANMODES=beI,kLf,l,psmntirzMQNRTOVKDdGPZSCc NETWORK=Orpheus CASEMAPPING=ascii EXTBAN=~,tmTSOcaRrnqj :are supported by this server
+2018-12-13 19:13:09	--	ELIST=MNUCT STATUSMSG=~&@%+ EXCEPTS INVEX :are supported by this server
+2018-12-13 19:13:09	--	96247946.C69A8C52.B0B4CEE2.IP :is now your displayed host
+2018-12-13 19:13:09	--	There are 2 users and 404 invisible on 2 servers
+2018-12-13 19:13:09	--	15 :operator(s) online
+2018-12-13 19:13:09	--	41 :channels formed
+2018-12-13 19:13:09	--	I have 398 clients and 1 servers
+2018-12-13 19:13:09	--	398 570 :Current local users 398, max 570
+2018-12-13 19:13:09	--	406 578 :Current global users 406, max 578
+2018-12-13 19:13:09	--	- irc.orpheus.network Message of the Day -
+2018-12-13 19:13:09	--	- 26/10/2018 11:21
+2018-12-13 19:13:09	--	- MOTD file has been found
+2018-12-13 19:13:09	--	End of /MOTD command.
+2018-12-13 19:13:09	--	User mode [+iwxT] by brett
+2018-12-13 19:13:16	--	You are now known as brett12345
+2018-12-14 01:14:59	--	MSG(Justaplant): brett12345
+2018-12-14 01:15:15	--	MSG(Justaplant): OPS|0b7faa88de235a64695d5992fead4b5df1a2cf59d1d545abe9c600eb29cb89c2|OPS

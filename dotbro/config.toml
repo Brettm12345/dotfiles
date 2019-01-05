@@ -1,0 +1,69 @@
+# Dotbro configuration file.
+#
+# Some points:
+# - Almost all options have default value.
+# - You can use $ENV_VARIABLE in paths.
+
+[directories]
+
+# Directory of your dotfiles repository.
+# Default: directory of this config.
+dotfiles = "$HOME/etc"
+
+# Destination directory - your dotfiles will be linked there.
+# Default: $HOME
+destination = "$HOME"
+
+# Backup directory - your original files will be backuped there.
+# Default: $HOME/.dotfiles~
+backup = "$HOME/.etc.bkp~"
+
+[mapping]
+
+# Binaries
+
+"alacritty" = ".config/alacritty"
+"awesome" = ".config/awesome"
+"bat" = ".config/bat"
+"beets" =  ".config/beets"
+"BetterDiscord" = ".config/BetterDiscord"
+"bin" = "bin"
+"cava" = ".config/cava"
+"compton/compton.conf" = ".config/compton.conf"
+"dotbro" = ".config/dotbro"
+"doom" = ".config/doom"
+"dunst" = ".config/dunst"
+"profile" = ".profile"
+"fish" = ".config/fish"
+"fisher" = ".config/fisher"
+
+"fontconfig" = ".config/fontconfig"
+
+"git" = ".config/git"
+
+"htop" = ".config/htop"
+
+"ncmpcpp" = ".config/ncmpcpp"
+
+"mpd" = ".config/mpd"
+
+"mpv" = ".config/mpv"
+
+"ranger" = ".config/ranger"
+
+"termite" = ".config/termite"
+
+"yay" = ".config/yay"
+
+"gtk/gtkrc" = ".config/gtkrc"
+
+"themes" = ".local/share/themes"
+
+"fonts" = "usr/share/fonts"
+
+"xorg" = ".config/xorg"
+
+"tmux" = ".config/tmux"
+
+"nvim" = ".config/nvim"
+

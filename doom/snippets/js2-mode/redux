@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# name: redux
+# key: redux
+# --
+
+import { createReducer, createActions } from "reduxsauce";
+import Immutable from "seamless-immutable";
+
+/* ------------- Types and Action Creators ------------- */
+
+const { Types, Creators } = createActions({
+      $1
+});
+
+export const $2Types = Types;
+export default Creators;
+
+/* ------------- Initial State ------------- */
+
+export const INITIAL_STATE = Immutable({
+       $3
+});
+
+/* ------------- Reducers ------------- */
+
+$4
+
+/* ------------- Hookup Reducers To Types ------------- */
+
+export const reducer = createReducer(INITIAL_STATE, {
+       $5
+});
+
+/* ------------- Selectors ------------- */
+$6

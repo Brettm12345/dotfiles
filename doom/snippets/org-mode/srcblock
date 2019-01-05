@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: srcblock
+# key: <s
+# condition: t
+# --
+#+BEGIN_SRC $0
+$1
+#+END_SRC

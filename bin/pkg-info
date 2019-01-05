@@ -1,0 +1,23 @@
+#!/bin/sh
+
+ARGS="-R"
+
+case $# in
+    2) query="$2" ;;
+    1) query="$1" ;;
+    0) query="$(cat -)" ;;
+esac
+
+case "$1" in
+    -l|--local) ARGS=""
+esac
+
+INFO="$(xbps-query $ARGS -S $query | rg -0 -e "^\S*" --color ansi)"
+DEPS="$(xbps-query $ARGS -x $query | rg -0 -e "^[^<>=]*" --color ansi)"
+FILES="$(xbps-query $ARGS -f $query)"
+ALTERNATIVES="$(xbps-alternatives -l $query)"
+
+test -n "$INFO" && printf "$(tput setaf 3; tput bold)Info:$(tput sgr0)\n%s\n\n" "$INFO"
+test -n "$DEPS" && printf "$(tput setaf 3; tput bold)Dependencies:$(tput sgr0)\n%s\n\n" "$DEPS"
+test -n "$FILES" && printf "$(tput setaf 3; tput bold)Files:$(tput sgr0)\n%s\n\n" "$FILES"
+

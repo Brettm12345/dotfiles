@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: reactStateless
+# key: rsc
+# --
+import PropTypes from 'prop-types';
+import React from 'react';
+
+const ${1:${`(file-name-base (buffer-file-name))`}} = ({ $2 }) => (
+  $0
+);
+
+${1}.propTypes = {
+  $3
+};
+
+export default $1;

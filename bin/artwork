@@ -1,0 +1,29 @@
+#!/bin/sh
+
+MUSIC_DIR="/mnt/media/Music"
+IMG_REG="(front|cover|art)\\.(jpg|jpeg|png|gif)$"
+PIDFILE="/tmp/artwork.pid"
+
+if [ -e "$PIDFILE" ]; then
+    pkill n30f
+    pkill -F "$PIDFILE"
+    rm "$PIDFILE"
+    exit 0
+else
+    echo $$ > "$PIDFILE"
+fi
+
+
+while :; do
+    file="$(mpc current -f %file%)"
+    folder="$MUSIC_DIR/${file%/*}"
+    cover="$(find "$folder/" -maxdepth 1 -type f | grep -E -i -m1 "$IMG_REG")"
+    convert "$cover" -resize 250x250 ~/tmp/cover.png
+    if pgrep n30f > /dev/null; then
+        pkill n30f
+        n30f -x 440 -y 1100 ~/tmp/cover.png -d
+    else
+        n30f -x 440 -y 1100 ~/tmp/cover.png -d
+    fi
+    mpc idle player 2>/dev/null >/dev/null
+done &

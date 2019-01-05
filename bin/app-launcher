@@ -1,0 +1,4 @@
+#!/bin/sh
+xdotool search --onlyvisible --classname st-fuzzy windowkill
+xdotool search --classname st-fuzzy windowmap \
+	|| xst -c st-fuzzy -g 80x18 -e sk-apps

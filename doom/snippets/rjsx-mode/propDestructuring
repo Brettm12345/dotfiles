@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# key: prd
+# name: propDestructuring
+# --
+const { $1 } = this.props;

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: propTypeNodeRequired
+# key: ptndr
+# --
+PropTypes.node.isRequired,

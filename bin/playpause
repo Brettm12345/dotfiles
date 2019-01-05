@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if $(mpc | grep -q "playing"); then
+	echo ""
+elif $(mpc | grep -q "paused"); then
+	echo ""
+else
+	echo ""
+fi

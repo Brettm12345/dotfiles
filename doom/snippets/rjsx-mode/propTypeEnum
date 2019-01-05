@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: propTypeEnum
+# key: pte
+# --
+PropTypes.enum,

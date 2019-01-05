@@ -1,0 +1,24 @@
+! -- Title:     agila
+! -- Author:    NerdyPepper
+! -- Created:   2018
+
+#define fg   #eeffff
+#define bg   #212121
+#define blk  #212121
+#define bblk #4a4a4a
+#define red  #f07178
+#define bred #f78c6c
+#define grn  #c3e88d
+#define bgrn #303030
+#define ylw  #ffcb6b
+#define bylw #353535
+#define blu  #82aaff
+#define bblu #b2ccd6
+#define mag  #c792ea
+#define bmag #eeffff
+#define cyn  #89ddff
+#define bcyn #ff5370
+#define wht  #eeffff
+#define bwht #ffffff
+
+! vim:ft=xdefaults

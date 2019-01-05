@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: materialUiIconImport
+# key: muii
+# --
+import $1 from '@material-ui/icons/$1';

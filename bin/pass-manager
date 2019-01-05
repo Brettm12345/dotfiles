@@ -1,0 +1,17 @@
+#!/bin/sh
+
+win=$(xdotool getactivewindow)
+if [ -n "$win" ]; then
+    winname=$(xdotool getwindowname $win)
+    if $(echo $winname | grep -q "Chromium"); then
+        url=$(echo $winname | cut -d ' ' -f 1 | rev | cut -d '.' -f -2 | rev)
+    fi
+fi
+
+# Present the popup
+xdotool search --onlyvisible --classname st-fuzzy windowkill
+st -c st-fuzzy \
+   -g 100x16 \
+   -e "sk-pass $url"
+
+test -n $win && xdotool windowactivate $win

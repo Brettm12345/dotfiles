@@ -1,0 +1,9 @@
+{
+    "settings": {
+        "fullRes": true,
+        "minSize": false,
+        "height": "auto",
+        "width": "auto",
+        "debug": false
+    }
+}

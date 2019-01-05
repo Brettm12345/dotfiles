@@ -1,0 +1,33 @@
+! ------------------------------------------------------------------------------
+! rofi
+! ------------------------------------------------------------------------------
+
+#include "colors/material"
+
+rofi.color-enabled: true
+
+rofi.color-window: blk , blk , blk , blk , wht
+rofi.color-normal: blk , wht , blk , blk , mag
+rofi.color-active: blk , mag , blk , blk , wht
+rofi.color-urgent: blk , bblk , blk , blk , wht
+
+rofi.fake-transparency: true
+rofi.font: Noto Sans ExtraCondensed Medium 18
+rofi.columns: 1
+rofi.separator-style: none
+rofi.hide-scrollbar: true
+rofi.location: 0
+rofi.yoffset : 48
+rofi.xoffset: 48
+rofi.padding: 12
+rofi.fullscreen: false
+rofi.width: 500
+rofi.lines: 6
+rofi.terminal: urxvtc
+
+rofi.kb-accept-entry: Return
+rofi.kb-remove-to-eol: Alt+k
+rofi.kb-row-up: Control+k
+rofi.kb-row-down: Control+j
+
+! vim:ft=xdefaults

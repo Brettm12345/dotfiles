@@ -1,0 +1,17 @@
+#!/bin/sh
+
+preview="pkg-info -l '{1}'"
+packages="$(xbps-query -l \
+    | cut -d ' ' -f 2- \
+    | sk \
+    --prompt 'remove > ' \
+    --delimiter ' ' \
+    --nth 1- \
+    --preview="$preview" \
+    --preview-window right:50%:wrap:hidden \
+    --bind 'ctrl-p:toggle-preview' \
+    --multi \
+    --no-hscroll \
+    | cut -d ' ' -f 1 \
+    | tr '\n' ' ')"
+test -n "$packages" && sudo xbps-remove $packages

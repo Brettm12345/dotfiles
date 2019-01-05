@@ -1,0 +1,29 @@
+{
+	"settings": {
+		"muteOnDND": false,
+		"onlyOnOnline": false,
+		"openOnClick": false
+	},
+	"notificationsounds": {
+		"toastonline": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"toastoffline": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"desktoponline": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"desktopoffline": {
+			"url": null,
+			"song": null,
+			"mute": false
+		}
+	}
+}

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+gopass ls --flat | sk --query="$@" --prompt="pass > "| xargs --no-run-if-empty gopass show -c
+

@@ -1,0 +1,12 @@
+twobwm.enable_compton: true
+twobwm.outer_border: 5
+twobwm.border_width: 7
+twobwm.focus_color: bg
+twobwm.unfocus_color: bg
+twobwm.fixed_color: blu
+twobwm.unkill_color: red
+twobwm.fixed_unkill_color: mag
+twobwm.outer_border_color: bgrn
+twobwm.inverted_colors: true
+
+! vim:ft=xdefaults

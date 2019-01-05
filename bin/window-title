@@ -1,0 +1,5 @@
+#!/bin/sh
+
+zscroll -p "  " -l 20 -u true -d 0.1 "xtitle" &
+
+wait

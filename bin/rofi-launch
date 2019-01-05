@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case $@ in
+	-r|--run)
+		rofi -show run
+		;;
+	-d|--drun)
+		rofi -show drun
+		;;
+	-w|--window)
+		rofi -show window
+		;;
+esac

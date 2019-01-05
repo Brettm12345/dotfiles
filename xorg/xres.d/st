@@ -1,0 +1,36 @@
+st.termname: st
+st.shell: /usr/bin/fish
+st.borderpx: 32
+st.cursorshape: 6
+st.cursorthickness: 1
+st.cursorblinkstyle: 0
+st.cursorblinkontype: 1
+st.bold_font: 1
+st.xfps: 120
+st.actionfps: 30
+st.chscale: 1.0
+st.cwscale: 0.9
+st.blinktimeout: 800
+st.bellvolume: 0
+st.prompt_char: λ
+
+st.background: bg
+st.foreground: fg
+st.color0:     blk
+st.color8:     bblk
+st.color1:     red
+st.color9:     bred
+st.color2:     grn
+st.color10:    bgrn
+st.color3:     ylw
+st.color11:    bylw
+st.color4:     blu
+st.color12:    bblu
+st.color5:     mag
+st.color13:    bmag
+st.color6:     cyn
+st.color14:    bcyn
+st.color7:     wht
+st.color15:    bwht
+
+! vim:ft=xdefaults

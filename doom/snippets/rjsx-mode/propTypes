@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: propTypes
+# key: rpt
+# --
+static propTypes = {
+  $1
+};

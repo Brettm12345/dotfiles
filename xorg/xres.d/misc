@@ -1,0 +1,7 @@
+*.background: bg
+*.foreground: fg
+Xcursor.theme: Vanila-DMZ
+
+
+
+! vim:ft=xdefaults

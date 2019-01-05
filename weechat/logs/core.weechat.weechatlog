@@ -1,0 +1,16 @@
+2018-12-13 18:38:23		New key binding (context "default"): meta-meta-OQ => /bar scroll buflist * e
+2018-12-13 18:38:23		New key binding (context "default"): meta-meta-OP => /bar scroll buflist * b
+2018-12-13 18:38:23		New key binding (context "default"): meta-OQ => /bar scroll buflist * +100%
+2018-12-13 18:38:23		New key binding (context "default"): meta-OP => /bar scroll buflist * -100%
+2018-12-13 18:38:23		Plugins loaded: alias, aspell, buflist, charset, exec, fifo, fset, guile, irc, logger, lua, perl, python, relay, script, trigger, xfer
+2018-12-13 18:38:27	=!=	You can not write text in this buffer
+2018-12-13 18:39:19		Plugins loaded: alias, aspell, buflist, charset, exec, fifo, fset, guile, irc, logger, lua, perl, python, relay, ruby, script, tcl, trigger, xfer
+2018-12-13 18:41:00		Plugins loaded: alias, aspell, buflist, charset, exec, fifo, fset, guile, irc, logger, lua, perl, python, relay, ruby, script, tcl, trigger, xfer
+2018-12-13 18:41:25	=!=	irc: unable to add temporary server "irc.morethan.tv" because the addition of temporary servers with command /connect is currently disabled
+2018-12-13 18:41:25	=!=	irc: if you want to add a standard server, use the command "/server add" (see /help server); if you really want to add a temporary server (NOT SAVED), turn on the option irc.look.temporary_servers
+2018-12-13 18:41:39	=!=	Too few arguments for command "/server add" (help on command: /help server)
+2018-12-13 18:41:47		irc: server irc.morethan.tv added
+2018-12-13 18:42:14		Plugins loaded: alias, aspell, buflist, charset, exec, fifo, fset, guile, irc, logger, lua, perl, python, relay, ruby, script, tcl, trigger, xfer
+2018-12-13 18:42:47		irc: server morethantv added
+2018-12-13 19:13:02		irc: server orpheus added
+2018-12-14 01:14:53	=!=	Too few arguments for command "/msg" (help on command: /help msg)

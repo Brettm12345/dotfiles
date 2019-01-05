@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: shouldComponentUpdateProps
+# key: scup
+# condition: t
+# --
+
+shouldComponentUpdate(nextProps) {
+  const { changed } = treeChanges(nextProps, this.props);
+
+  return changed($1);
+};

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+zscroll -p "  " -l 30 -u true -d 0.1 "mpc current" &
+
+wait

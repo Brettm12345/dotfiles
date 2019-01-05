@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: propTypeNode
+# key: ptnd
+# --
+PropTypes.node,

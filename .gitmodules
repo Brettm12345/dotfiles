@@ -1,0 +1,12 @@
+[submodule "doom-emacs-literate-config"]
+	path = doom
+	url = git@github.com:Brettm12345/doom-emacs-literate-config.git
+[submodule "lightdm-gab-gradient"]
+	path = lightdm-webkit/themes/lightdm-gab-gradient
+	url = git@github.com:Brettm12345/lightdm-gab-gradient.git
+[submodule "awesome/cyclefocus"]
+	path = awesome/cyclefocus
+	url = git@github.com:blueyed/awesome-cyclefocus.git
+[submodule "nvim"]
+	path = nvim
+	url = git@github.com:Brettm12345/vim-config.git

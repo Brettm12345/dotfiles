@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: shouldComponentUpdateState
+# key: scus
+# condition: t
+# --
+
+shouldComponentUpdate(_, nextState) {
+  const { changed } = treeChanges(nextState, this.state);
+
+  return changed($1)
+};

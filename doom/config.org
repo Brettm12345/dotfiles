@@ -1,0 +1,904 @@
+#+TITLE: My emacs doom configuration
+#+AUTHOR: Brett Mandler
+#+EMAIL: brettmandler@gmail.com
+#+LANGUAGE: en
+#+STARTUP: inlineimages
+#+PROPERTY: header-args :tangle yes :cache yes :results silent :padline no
+
+* Table of Contents :TOC_3_gh:
+- [[#configuration][Configuration]]
+  - [[#personal-information][Personal Information]]
+    - [[#set-full-name][Set full name]]
+    - [[#set-email-address][Set email address]]
+  - [[#personal-modules][Personal Modules]]
+    - [[#toolstldr][tools/tldr]]
+    - [[#uiindent-guides][ui/indent-guides]]
+  - [[#doom-core][Doom core]]
+    - [[#core][Core]]
+    - [[#keybinds][Keybinds]]
+    - [[#os][Os]]
+    - [[#scratch][Scratch]]
+    - [[#ui][Ui]]
+  - [[#doom-modules][Doom modules]]
+    - [[#appemail][app/email]]
+    - [[#completioncompany][completion/company]]
+    - [[#completionivy][completion/ivy]]
+    - [[#editorlispy][editor/lispy]]
+    - [[#emacsdired][emacs/dired]]
+    - [[#emacseshell][emacs/eshell]]
+    - [[#editorparinfer][editor/parinfer]]
+    - [[#emacsterm][emacs/term]]
+    - [[#emacsvc][emacs/vc]]
+    - [[#featureevil][feature/evil]]
+    - [[#featureworkspaces][feature/workspaces]]
+    - [[#langjavascript][lang/javascript]]
+    - [[#langorg][lang/org]]
+    - [[#langsh][lang/sh]]
+    - [[#langweb][lang/web]]
+    - [[#toolsmagit][tools/magit]]
+    - [[#toolsprodigy][tools/prodigy]]
+    - [[#toolsrgb][tools/rgb]]
+    - [[#uidoom][ui/doom]]
+    - [[#uidoom-dashboard][ui/doom-dashboard]]
+    - [[#uimodeline][ui/modeline]]
+    - [[#uineotree][ui/neotree]]
+    - [[#uitreemacs][ui/treemacs]]
+
+* [0/2] Tasks :noexport:
+** [-] Finish documentation of [[*%5B%5Bdoom-modules:lang/org/%5D%5Blang/org%5D%5D][lang/org]]
+** [ ] Finish documentation of [[org:../.config/doom/config.org][completion/ivy]]
+* Configuration
+** Personal Information
+*** Set full name
+#+BEGIN_SRC emacs-lisp
+(setq user-full-name "Brett Mandler")
+#+END_SRC
+*** Set email address
+#+BEGIN_SRC emacs-lisp
+(setq user-mail-address "brettmandler@gmail.com")
+#+END_SRC
+** Personal Modules
+Here I make customizations to the packages I have installed outside of =doom-emacs=
+*** tools/tldr
+Community driven manpages
+[[github:kuanyui/tldr.el][kuanyui/tldr.el]]
+**** Set tldr directory
+#+BEGIN_SRC emacs-lisp
+(def-package! tldr
+  :commands (tldr)
+  :config
+  (setq tldr-directory-path (concat doom-etc-dir "tldr/")))
+#+END_SRC
+*** ui/indent-guides
+Show indent guides. Similar to the package included with doom but allows indent
+guide characters instead of just setting the background
+Link [[github:DarthFennec/highlight-indent-guides][DarthFennec/highlight-indent-guides]]
+**** Define package
+#+BEGIN_SRC emacs-lisp
+(def-package! highlight-indent-guides
+  :hook (prog-mode . highlight-indent-guides-mode))
+#+END_SRC
+**** Use characters for indent guides
+#+BEGIN_SRC emacs-lisp
+(after! highlight-indent-guides
+  (setq highlight-indent-guides-method 'character))
+#+END_SRC
+**** Use responsive highlights
+Highlight indentation based on current line
+#+BEGIN_SRC emacs-lisp
+(after! highlight-indent-guides
+  (setq highlight-indent-guides-responsive t))
+#+END_SRC
+**** Set indent guide character
+***** Set character
+#+BEGIN_SRC emacs-lisp
+(after! highlight-indent-guides
+  (setq highlight-indent-guides-character ?\┆))
+#+END_SRC
+***** Examples
+- ┆
+- ¦
+- │
+- ⎸
+- ▏
+**** Set colors
+#+BEGIN_SRC emacs-lisp
+(after! highlight-indent-guides
+  (setq highlight-indent-guides-auto-enabled top)
+  (set-face-attribute 'highlight-indent-guides-odd-face nil :inherit 'highlight-indentation-odd-face)
+  (set-face-attribute 'highlight-indent-guides-even-face nil :inherit 'highlight-indentation-even-face)
+  (set-face-foreground 'highlight-indent-guides-character-face (doom-color 'base5)))
+#+END_SRC
+** Doom core
+Here I setup my config for the =doom-emacs= [[doom:core/][core]]
+*** [[doom:core/core.el][Core]]
+**** Do not create lockfiles for files being edited
+#+BEGIN_SRC emacs-lisp
+(setq create-lockfiles nil)
+#+END_SRC
+*** [[doom:core/core-keybinds.el][Keybinds]]
+Here I set my keybinds these are applied on top of the [[doom-modules:config/default/+emacs-bindings.el][defaults]]
+**** Global keybinds
+**** Leader keybinds
+#+BEGIN_SRC emacs-lisp
+(map! :leader
+      (:prefix "TAB"
+        :desc "Rename workspace"       "r"  #'+workspace/rename)
+      (:prefix "f"
+        :desc "Find remote file"      "R" #'counsel-tramp
+        :desc "Find file in dotfiles" "t" #'+brett/find-in-dotfiles
+        :desc "Browse dotfiles"       "T" #'+brett/browse-dotfiles)
+      (:prefix "n"
+        :desc "Browse mode notes"    "m" #'+brett/find-notes-for-major-mode
+        :desc "Browse project notes" "p" #'+brett/find-notes-for-project)
+      (:prefix "t"
+        :desc "Rainbow mode" "r" #'rainbow-mode)
+      (:prefix "/"
+        :desc "Hex colors" "h"  #'counsel-hex-colors))
+#+END_SRC
+**** Use ~-~ to jump up to the previous directory
+Similar to [[github:tpope/vim-vinegar][vim-vinegar]]
+#+BEGIN_SRC emacs-lisp
+(after! evil
+    (map! :m  "-"  #'dired-jump))
+#+END_SRC
+**** Use ~] SPC~ and ~[ SPC~ to insert newlines above and below
+ Similar to [[github:tpope/vim-unimpaired][vim-unimpaired]]
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after evil
+   :m  "] SPC" #'evil-motion-insert-newline-below
+   :m  "[ SPC" #'evil-motion-insert-newline-above))
+#+END_SRC
+**** Sort a region with ~gS~
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after evil
+    :m "gS" #'+brett/sort))
+#+END_SRC
+**** Easy window navigation
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after evil
+   :en "C-h"   #'evil-window-left
+   :en "C-j"   #'evil-window-down
+   :en "C-k"   #'evil-window-up
+   :en "C-l"   #'evil-window-right))
+#+END_SRC
+**** Org Mode
+#+BEGIN_SRC emacs-lisp
+(map! (:localleader
+        (:after evil-org
+          :map evil-org-mode-map
+          "/" #'counsel-org-goto)))
+#+END_SRC
+**** Dired
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after dired
+    (:map dired-mode-map
+    "C-SPC" #'peep-dired)))
+#+END_SRC
+**** Treemacs
+Allow ~C-h~ and ~C-l~ to switch buffers
+#+BEGIN_SRC emacs-lisp
+(map!
+ (:after treemacs-evil
+   (:map evil-treemacs-state-map
+     "C-h" #'evil-window-left
+     "C-l" #'evil-window-right)))
+#+END_SRC
+**** Show keybind help with less of a delay
+#+BEGIN_SRC emacs-lisp
+(after! which-key
+  (setq which-key-idle-delay 0.1
+        which-key-idle-secondary-delay 0.01
+        which-key-sort-order 'which-key-key-order-alpha))
+#+END_SRC
+*** [[doom:core/core-os.el][Os]]
+**** Mouse wheel
+#+BEGIN_SRC emacs-lisp
+(setq mouse-wheel-scroll-amount '(3)
+      mouse-wheel-progressive-speed t
+      mouse-wheel-follow-mouse t
+      scroll-step 1)
+#+END_SRC
+*** [[doom:core/autoload/scratch.el][Scratch]]
+**** Make scratchpad buffers inherit the major mode of the current buffer
+#+BEGIN_SRC emacs-lisp
+(setq doom-scratch-buffer-major-mode t)
+#+END_SRC
+*** [[doom:core/core-ui.el][Ui]]
+**** Resize the frame pixelwise. Making emacs compatible with tiling window managers
+#+BEGIN_SRC emacs-lisp
+(setq frame-resize-pixelwise t)
+#+END_SRC
+**** Highlight trailing whitespace
+#+BEGIN_SRC emacs-lisp
+(setq show-trailing-whitespace t)
+#+END_SRC
+**** Set the scale factor for ~all-the-icons~
+#+BEGIN_SRC emacs-lisp
+(after! all-the-icons
+  (setq all-the-icons-scale-factor 1.0))
+#+END_SRC
+**** Immediately show eldoc
+#+BEGIN_SRC emacs-lisp
+(setq eldoc-idle-delay 0)
+#+END_SRC
+** Doom modules
+Here I make customization to all the modules I have enabled in doom.
+Each of the headers is a link to their respective module
+*** [[doom-modules:app/email/][app/email]]
+**** Install
+My configuration requires:
++ ~[[github:djnym/isync][isync]]~ (for syncing emails)
++ ~[[github:djcb/mu][mu]]~ (for indexing emails)
++ ~[[github:gopasspw/gopass][gopass]]~ (for storing passwords/authentication)
+**** Configuration
+***** Isync
+****** [[file:~/.config/mbsync/config][Mbsync config]]
+Configure mbsync to fetch emails /see also:/ https://wiki.archlinux.org/index.php/isync
+#+BEGIN_SRC conf :tangle no
+IMAPAccount gmail
+Host imap.gmail.com
+User brettmandler@gmail.com
+PassCmd "gopass show -o -f websites/gmail.com/brettmandler"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/var/mail/
+Inbox ~/var/mail/Inbox
+
+Channel gmail-inbox
+Master :gmail-remote:
+Slave :gmail-local:
+Patterns "INBOX"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-trash
+Master :gmail-remote:"[Gmail]/Bin"
+Slave :gmail-local:"Trash"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-sent
+Master :gmail-remote:"[Gmail]/Sent Mail"
+Slave :gmail-local:"Sent Mail"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-all
+Master :gmail-remote:"[Gmail]/All Mail"
+Slave :gmail-local:"All Mail"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-all
+Master :gmail-remote:"[Gmail]/Drafts"
+Slave :gmail-local:"Drafts"
+Create Both
+Expunge Both
+SyncState *
+
+Group gmail
+Channel gmail-inbox
+Channel gmail-drafts
+Channel gmail-sent
+Channel gmail-trash
+Channel gmail-all
+#+END_SRC
+****** Emacs setup
+Configure emacs to use mbsync as the ~mu4e-get-mail-command~
+#+BEGIN_SRC emacs-lisp
+(after! mu4e
+  (setq mu4e-get-mail-command "mbsync -c ~/.config/mbsync/config -a"))
+#+END_SRC
+***** Mu4e
+****** Directories
+Setup the deafault /maildirs/
+#+BEGIN_SRC emacs-lisp
+(setq mu4e-maildir        (expand-file-name "~/var/mail")
+      mu4e-attachment-dir (expand-file-name "attachments" mu4e-maildir))
+#+END_SRC
+****** Gmail setup
+Configure smtp and folders to work well with gmail
+#+BEGIN_SRC emacs-lisp
+(setq smtpmail-stream-type 'starttls
+      smtpmail-smtp-user "brettmandler"
+      smtpmail-default-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587)
+
+(setq mu4e-sent-folder "/Sent Mail"
+      mu4e-drafts-folder "/Drafts"
+      mu4e-trash-folder "/Trash"
+      mu4e-refile-folder "/All Mail")
+
+(setq mu4e-maildir-shortcuts
+      '(("/Inbox"     . ?i)
+        ("/Sent Mail" . ?s)
+        ("/All Mail"  . ?a)
+        ("/Trash"     . ?t)))
+#+END_SRC
+****** Bookmarks
+Set bookmarks for easily finding messages
+#+BEGIN_SRC emacs-lisp
+(setq mu4e-bookmarks
+      `(("maildir:/Inbox" "Inbox" ?i)
+        ("maildir:/Drafts" "Drafts" ?d)
+        ("flag:unread AND maildir:/Inbox" "Unread messages" ?u)
+        ("flag:flagged" "Starred messages" ?s)
+        ("date:today..now" "Today's messages" ?t)
+        ("date:7d..now" "Last 7 days" ?w)
+        ("mime:image/*" "Messages with images" ?p)))
+
+#+END_SRC
+****** Icons
+#+BEGIN_SRC emacs-lisp
+(after! mu4e 
+  (setq mu4e-use-fancy-chars t)
+  (setq mu4e-headers-has-child-prefix '("+" . "◼")
+        mu4e-headers-empty-parent-prefix '("-" ."◽")
+        mu4e-headers-first-child-prefix '("\\" . "↳")
+        mu4e-headers-duplicate-prefix '("=" . "⚌")
+        mu4e-headers-default-prefix '("|" . "┃")
+        mu4e-headers-draft-mark '("D" . "📝 ")
+        mu4e-headers-flagged-mark '("F" . "🏴 ")
+        mu4e-headers-new-mark '("N" . "★ ")
+        mu4e-headers-passed-mark '("P" . "→ ")
+        mu4e-headers-replied-mark '("R" . "← ")
+        mu4e-headers-seen-mark '("S" . "✓ ")
+        mu4e-headers-trashed-mark '("T" . "✗ ")
+        mu4e-headers-attach-mark '("a" . "📎 ")
+        mu4e-headers-encrypted-mark '("x" . "🔐 ")
+        mu4e-headers-signed-mark '("s" . "🔏 ")
+        mu4e-headers-unread-mark '("u" . "✉ ")))
+#+END_SRC
+*** [[doom-modules:completion/company/][completion/company]]
+**** Set maximum candidates for ~company-box~
+#+BEGIN_SRC emacs-lisp
+(after! company-box
+  (setq company-box-max-candidates 5))
+#+END_SRC
+**** Setup ~company-perscient~
+#+BEGIN_SRC emacs-lisp
+(def-package! company-prescient
+  :after company
+  :hook (company-mode . company-prescient-mode))
+#+END_SRC
+**** Setup company ui
+#+BEGIN_SRC emacs-lisp
+(after! company
+  (setq company-tooltip-limit 5
+        company-tooltip-minimum-width 80
+        company-tooltip-minimum 5
+        company-backends
+        '(company-capf company-dabbrev company-files company-yasnippet)
+        company-global-modes '(not comint-mode erc-mode message-mode help-mode gud-mode)))
+#+END_SRC
+*** [[doom-modules:completion/ivy/][completion/ivy]]
+**** Set ripgrep as the default program for ivy project search
+#+BEGIN_SRC emacs-lisp
+(setq +ivy-project-search-engines '(rg))
+#+END_SRC
+**** Setup ~ivy-rich~
+#+BEGIN_SRC emacs-lisp
+(after! ivy-rich
+  (setq ivy-rich--display-transformers-list
+        '(ivy-switch-buffer
+          (:columns
+           ((ivy-rich-candidate (:width 30 :face bold))
+            (ivy-rich-switch-buffer-size (:width 7 :face font-lock-doc-face))
+            (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
+            (ivy-rich-switch-buffer-major-mode (:width 18 :face doom-modeline-buffer-major-mode))
+            (ivy-rich-switch-buffer-path (:width 50)))
+           :predicate
+           (lambda (cand) (get-buffer cand)))
+          +ivy/switch-workspace-buffer
+          (:columns
+           ((ivy-rich-candidate (:width 30 :face bold))
+            (ivy-rich-switch-buffer-size (:width 7 :face font-lock-doc-face))
+            (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
+            (ivy-rich-switch-buffer-major-mode (:width 18 :face doom-modeline-buffer-major-mode))
+            (ivy-rich-switch-buffer-path (:width 50)))
+           :predicate
+           (lambda (cand) (get-buffer cand)))
+          counsel-M-x
+          (:columns
+           ((counsel-M-x-transformer (:width 40))
+            (ivy-rich-counsel-function-docstring (:face font-lock-doc-face :width 80))))
+          counsel-describe-function
+          (:columns
+           ((counsel-describe-function-transformer (:width 40))
+            (ivy-rich-counsel-function-docstring (:face font-lock-doc-face :width 80))))
+          counsel-describe-variable
+          (:columns
+           ((counsel-describe-variable-transformer (:width 40))
+            (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face :width 80))))
+          counsel-recentf
+          (:columns
+           ((ivy-rich-candidate (:width 100))
+            (ivy-rich-file-last-modified-time (:face font-lock-doc-face)))))))
+
+(after! counsel
+  (setq counsel-evil-registers-height 20
+        counsel-yank-pop-height 20
+        counsel-org-goto-face-style 'org
+        counsel-org-headline-display-style 'title
+        counsel-org-headline-display-tags t
+        counsel-org-headline-display-todo t))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(after! ivy
+  (setq ivy-posframe-parameters
+        `((min-width . 160)
+          (min-height . ,ivy-height)
+          (left-fringe . 0)
+          (right-fringe . 0)
+          (internal-border-width . 10))
+        ivy-display-functions-alist
+        '((counsel-git-grep)
+          (counsel-grep)
+          (counsel-pt)
+          (counsel-ag)
+          (counsel-rg)
+          (counsel-notmuch)
+          (swiper)
+          (counsel-irony . ivy-display-function-overlay)
+          (ivy-completion-in-region . ivy-display-function-overlay)
+          (t . ivy-posframe-display-at-frame-center))))
+(after! ivy
+  (setq ivy-use-selectable-prompt t
+        ivy-auto-select-single-candidate t
+        ivy-rich-parse-remote-buffer nil
+        +ivy-buffer-icons nil
+        ivy-use-virtual-buffers nil
+        ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-cd-selected
+        ivy-height 20
+        ivy-rich-switch-buffer-name-max-length 50))
+#+END_SRC
+**** Add helpful action to ~counsel-M-x~
+#+BEGIN_SRC emacs-lisp
+(after! ivy
+  (ivy-add-actions
+   'counsel-M-x
+   `(("h" +ivy/helpful-function "Helpful"))))
+#+END_SRC
+**** Setup ~counsel-tramp~
+#+BEGIN_SRC emacs-lisp
+(def-package! counsel-tramp
+  :commands (counsel-tramp))
+#+END_SRC
+**** Setup [[github:asok/all-the-icons-ivy][all-the-icons-ivy]]
+#+BEGIN_SRC emacs-lisp
+(def-package! all-the-icons-ivy
+  :after ivy
+  :init
+  (dolist (cmd '( counsel-find-file
+                  counsel-file-jump
+                  projectile-find-file
+                  counsel-projectile-find-file
+                  counsel-dired-jump counsel-projectile-find-dir
+                  counsel-projectile-switch-project))
+    (ivy-set-display-transformer cmd #'all-the-icons-ivy-file-transformer)))
+#+END_SRC
+*** [[doom-modules:editor/lispy/][editor/lispy]]
+**** Set lispy outline
+#+BEGIN_SRC emacs-lisp
+(after! lispy
+  (setq lispy-outline "^;; \\(?:;[^#]\\|\\*+\\)"
+        lispy-outline-header ";;"))
+#+END_SRC
+*** [[doom-modules:emacs/dired/][emacs/dired]]
+**** Set ~dired-k~ to use human readable styles
+#+BEGIN_SRC emacs-lisp
+(after! dired-k
+  (setq dired-k-human-readable t))
+#+END_SRC
+**** Set ~dired-k~ filesize colors
+#+BEGIN_SRC emacs-lisp
+(after! dired-k
+  (setq dired-k-size-colors
+        `((1024 .   ,(doom-lighten (doom-color 'green) 0.3))
+          (2048 .   ,(doom-lighten (doom-color 'green) 0.2))
+          (3072 .   ,(doom-lighten (doom-color 'green) 0.1))
+          (5120 .   ,(doom-color 'green))
+          (10240 .  ,(doom-lighten (doom-color 'yellow) 0.2))
+          (20480 .  ,(doom-lighten (doom-color 'yellow) 0.1))
+          (40960 .  ,(doom-color 'yellow))
+          (102400 . ,(doom-lighten (doom-color 'orange) 0.2))
+          (262144 . ,(doom-lighten (doom-color 'orange) 0.1))
+          (524288 . ,(doom-color 'orange)))))
+#+END_SRC
+**** Enable ~diredfl-mode~ on ~dired~ buffers
+#+BEGIN_SRC emacs-lisp
+(def-package! diredfl
+  :hook (dired-mode . diredfl-mode))
+#+END_SRC
+**** Setup ~peep-dired~
+#+BEGIN_SRC emacs-lisp
+(def-package! peep-dired
+  :after dired
+  :defer t
+  :commands (peep-dired))
+#+END_SRC
+*** [[doom-modules:emacs/eshell/][emacs/eshell]]
+**** Set ~eshell~ aliases
+#+BEGIN_SRC emacs-lisp
+(after! eshell
+  (set-eshell-alias!
+   "f"   "find-file $1"
+   "l"   "ls -lh"
+   "d"   "dired $1"
+   "gl"  "(call-interactively 'magit-log-current)"
+   "gs"  "magit-status"
+   "gc"  "magit-commit"
+   "rg"  "rg --color=always $*"))
+#+END_SRC
+*** [[doom-modules:editor/parinfer/][editor/parinfer]]
+**** Automatically switch parinfer mode
+#+BEGIN_SRC emacs-lisp
+(after! parinfer
+  (setq parinfer-auto-switch-indent-mode t))
+#+END_SRC
+*** [[doom-modules:emacs/term/][emacs/term]]
+**** Set ~fish~ as my default shell
+#+BEGIN_SRC emacs-lisp
+(after! multi-term
+  (setq multi-term-program "/usr/bin/fish"))
+#+END_SRC
+*** [[doom-modules:emacs/vc/][emacs/vc]]
+**** Folow symlinks when opening files
+#+BEGIN_SRC emacs-lisp
+(setq vc-follow-symlinks t)
+#+END_SRC
+*** [[doom-modules:feature/evil/][feature/evil]]
+**** [[github:syl20bnr/evil-lisp-state][evil-lisp-state]]
+#+BEGIN_SRC emacs-lisp
+(def-package! evil-lisp-state
+  :init (setq evil-lisp-state-global t)
+  :config (evil-lisp-state-leader "SPC m l"))
+#+END_SRC
+*** [[doom-modules:feature/workspaces/][feature/workspaces]]
+**** Create new workspaces when switching projects
+#+BEGIN_SRC emacs-lisp
+(setq +workspaces-on-switch-project-behavior t)
+#+END_SRC
+*** [[doom-modules:lang/javascript/][lang/javascript]]
+**** Set the ~NODE_ENV~ environemnt variable
+#+BEGIN_SRC emacs-lisp
+(setenv "NODE_ENV" "development")
+#+END_SRC
+**** Set default indentation offset to 2 spaces
+#+BEGIN_SRC emacs-lisp
+(after! js2-mode (setq js2-basic-offset 2))
+#+END_SRC
+**** Enable bounce indentation
+#+BEGIN_SRC emacs-lisp
+(after! js2-mode (setq js2-bounce-indent-p t))
+#+END_SRC
+**** Auto format buffers
+#+BEGIN_SRC emacs-lisp
+(after! js2-mode (add-hook 'js2-mode-hook 'eslintd-fix-mode))
+#+END_SRC
+**** Add support for yarn
+#+BEGIN_SRC emacs-lisp
+(def-package! yarn
+  :after js2-mode
+  :config
+  (setq yarn-vars-test-cmd "yarn test"))
+#+END_SRC
+**** Add support for ~import-js~
+#+BEGIN_SRC emacs-lisp
+(def-package! import-js
+  :defer t
+  :init
+  (add-hook! (js2-mode rjsx-mode)
+    (add-hook 'after-save-hook #'import-js-fix nil t)))
+(advice-add '+javascript|cleanup-tide-processes :after 'kill-import-js)
+#+END_SRC
+*** [[doom-modules:lang/org/][lang/org]]
+**** Set default directories for org files
+#+BEGIN_SRC emacs-lisp
+(after! org-mode
+  (setq +org-directory (expand-file-name "~/usr/org")
+        org-agenda-files (list org-directory)))
+#+END_SRC
+**** Change the character that displays on collapsed headings
+#+BEGIN_SRC emacs-lisp
+(setq org-ellipsis " ▼ ")
+#+END_SRC
+**** Change the default bullet character
+#+BEGIN_SRC emacs-lisp
+(after! org-bullets
+  (setq org-bullets-bullet-list '("#")))
+#+END_SRC
+**** Set default notes filename
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (setq org-default-notes-file (expand-file-name "notes.org" org-directory)))
+#+END_SRC
+**** Set maximum number of files for refile
+#+BEGIN_SRC emacs-lisp
+(after! org
+  (setq
+   org-refile-targets '((nil :maxlevel . 5)
+                        (org-agenda-files :maxlevel . 5))))
+#+END_SRC
+**** Strike through done headlines
+#+BEGIN_SRC emacs-lisp
+(setq org-fontify-done-headline t)
+(custom-set-faces
+ '(org-done ((t (
+                 :weight bold
+                 :strike-through t))))
+ '(org-headline-done
+   ((((class color) (min-colors 16) (background dark))
+     (:strike-through t)))))
+#+END_SRC
+**** Aditional config
+#+BEGIN_SRC emacs-lisp
+(after! org
+  :config
+  (setq +org-dir org-directory
+        org-default-notes-file (expand-file-name "notes.org" org-directory)
+        org-capture-templates
+        '(("c" "Code Task" entry (file+headline org-default-notes-file "Coding Tasks")
+           "* TODO %?\n  Entered on: %U - %a\n")
+          ("t" "Task" entry (file+headline org-default-notes-file "Tasks")
+           "* TODO %?\n  Entered on: %U")
+          ("n" "Note" entry (file+olp+datetree org-default-notes-file)
+           "* %?\n\n"))))
+#+END_SRC
+*** [[doom-modules:lang/sh/][lang/sh]]
+**** Setup [[github:gnouc/flycheck-checkbashisms][flycheck-checkbashisms]]
+Flycheck checker for checking files begining with =#!/bin/sh= which also contain
+code exclusive to bash *requires:* ~checkbashisms~
+#+BEGIN_SRC emacs-lisp
+(def-package! flycheck-checkbashisms
+  :when (and (featurep! :feature syntax-checker)(featurep! :lang sh))
+  :after sh-mode
+  :hook (flycheck-mode . flycheck-checkbashisms-setup))
+#+END_SRC
+*** [[doom-modules:lang/web/][lang/web]]
+**** Set default indentation for css to 2 spaces
+#+BEGIN_SRC emacs-lisp
+(after! css-mode
+  (setq css-indent-offset 2))
+#+END_SRC
+*** [[doom-modules:tools/magit/][tools/magit]]
+**** Set default location for ~magit-list-repositories~
+#+BEGIN_SRC emacs-lisp
+(setq magit-repository-directories '(("~/src" . 3) ("~/.emacs.d") ("~/.config/doom")))
+#+END_SRC
+**** Be sure to automatically sign commits
+#+BEGIN_SRC emacs-lisp
+(after! magit
+  (setq magit-commit-arguments '("--gpg-sign=B511A07485FD1360")
+        magit-rebase-arguments '("--autostash" "--gpg-sign=B511A07485FD1360")
+        magit-pull-arguments   '("--rebase" "--autostash" "--gpg-sign=B511A07485FD1360"))
+  (magit-define-popup-option 'magit-rebase-popup
+    ?S "Sign using gpg" "--gpg-sign=" #'magit-read-gpg-secret-key))
+#+END_SRC
+**** Enable magithub
+#+BEGIN_SRC emacs-lisp
+(setq +magit-hub-features t)
+#+END_SRC
+**** Set the prefered git url method
+#+BEGIN_SRC emacs-lisp
+(after! magithub (setq magithub-preferred-remote-method 'git_url))
+#+END_SRC
+**** Set the default directory to clone new repos
+#+BEGIN_SRC emacs-lisp
+(after! magithub (setq magithub-clone-default-directory "~/src/github.com"))
+#+END_SRC
+*** [[doom-modules:tools/prodigy/][tools/prodigy]]
+Prodigy is a tool for defining services
+#+BEGIN_SRC emacs-lisp
+(after! prodigy
+  (prodigy-define-tag
+    :name 'webpack
+    :ready-message "Compiled successfully!")
+
+  (prodigy-define-tag
+    :name 'serve
+    :ready-message "Serving!")
+
+  (prodigy-define-service
+    :name "JnJ Podcasts"
+    :port 3000
+    :command "yarn"
+    :args '("serve")
+    :cwd "~/src/github.com/brettm12345/jnjpodcasts"
+    :tags '(serve))
+
+  (prodigy-define-service
+    :name "JnJ Podcasts Dev Server"
+    :port 5000
+    :command "yarn"
+    :args '("start")
+    :cwd "~/src/github.com/brettm12345/jnjpodcasts"
+    :tags '(webpack)))
+#+END_SRC
+*** [[doom-modules:tools/rgb/][tools/rgb]]
+**** Disable x colors in ~rainbow-mode~
+#+BEGIN_SRC emacs-lisp
+(after! rainbow-mode
+  (setq rainbow-x-colors nil))
+#+END_SRC
+*** [[doom-modules:ui/doom/][ui/doom]]
+Doom user interface settings
+**** Fonts
+I like to use [[github:be5invis/Iosevka][Iosevka]] as my programming font
+***** Default font
+~doom-font~ is the default font for emacs to use
+#+BEGIN_SRC emacs-lisp
+(setq doom-font (font-spec :family "Iosevka Term Custom Medium" :size 24))
+#+END_SRC
+***** Variable pitch
+~doom-variable-pitch-font~ is a proportonal font used for reading emails, doc etc.
+#+BEGIN_SRC emacs-lisp
+(setq doom-variable-pitch-font "Noto Sans ExtraCondensed Semibold")
+#+END_SRC
+***** Serif
+~doom-serif-font~ is a font used for the ~fixed-pitch-serif~ face
+#+BEGIN_SRC emacs-lisp
+(setq doom-serif-font (font-spec :family "Noto Serif" :weight 'semi-bold :width 'extra-condensed))
+#+END_SRC
+***** Big font
+~doom-big-font~ is the default font to use for ~doom-big-font-mode~
+#+BEGIN_SRC emacs-lisp
+(setq doom-big-font (font-spec :family "Iosevka Term Custom Medium" :size 30))
+#+END_SRC
+***** Unicode font
+~doom-unicode-font~ is the font used for displaying unicode characters outside
+the range of ~doom-font~
+#+BEGIN_SRC emacs-lisp
+(setq doom-unicode-font "Noto Sans ExtraCondensed Semibold")
+#+END_SRC
+**** Line Numbers
+Use vim-esque relative line numbers
+#+BEGIN_SRC emacs-lisp
+(setq display-line-numbers-type 'relative)
+#+END_SRC
+**** Theme
+#+BEGIN_SRC emacs-lisp
+(add-to-list '+doom-solaire-themes '(doom-palenight . t))
+(setq doom-theme 'doom-palenight)
+(after! doom-themes
+  (setq
+   doom-themes-enable-bold t
+   doom-themes-enable-italic t))
+#+END_SRC
+*** [[doom-modules:ui/doom-dashboard/][ui/doom-dashboard]]
+Set the doom-dashboard banner to
+[[./banners/default.png]]
+**** Set directory to look for banners
+#+BEGIN_SRC emacs-lisp
+(setq +doom-dashboard-banner-dir
+      (concat doom-private-dir "banners/"))
+#+END_SRC
+**** Set dashboard image padding
+#+begin_src emacs-lisp
+(setq +doom-dashboard-banner-padding '(4 . 10))
+#+end_src
+*** [[doom-modules:ui/modeline/][ui/modeline]]
+**** Setup [[github:seagle0128/doom-modeline][doom-modeline]]
+#+BEGIN_SRC emacs-lisp
+(def-package! doom-modeline
+  :defer t
+  :hook (after-init . doom-modeline-init))
+#+END_SRC
+**** Display color icons for ~major-mode~
+#+BEGIN_SRC emacs-lisp
+(after! doom-modeline
+  (setq doom-modeline-major-mode-color-icon t))
+#+END_SRC
+**** Set modeline width
+#+BEGIN_SRC emacs-lisp
+(after! doom-modeline
+  (setq doom-modeline-bar-width 3))
+#+END_SRC
+**** Set modeline height
+#+BEGIN_SRC emacs-lisp
+(after! doom-modeline
+  (setq doom-modeline-height 45))
+#+END_SRC
+**** Show github notifications
+#+BEGIN_SRC emacs-lisp
+(after! doom-modeline
+  (setq doom-modeline-github t))
+#+END_SRC
+**** Hide emacs version
+#+BEGIN_SRC emacs-lisp
+(after! doom-modeline
+  (setq doom-modeline-version nil))
+#+END_SRC
+**** Set buffer file name style
+***** Show filename relative from current project =emacs/lisp/comint.el=
+#+BEGIN_SRC emacs-lisp
+(after! doom-modeline
+  (setq doom-modeline-buffer-file-name-style 'relative-from-project))
+#+END_SRC
+***** Examples
+Given =~/Projects/FOSS/emacs/lisp/comint.el=
+| tunricate-upto-project   | ~/P/F/emacs/lisp/comint.el          |
+| turnicate-from-project   | ~/Projects/FOSS/emacs/l/comint.el   |
+| turnicate-with-project   | emacs/l/comint.el                   |
+| turnicate-except-project | ~/P/F/emacs/l/comint.el             |
+| turnicate-upto-root      | ~/P/F/e/lisp/comint.el              |
+| turnicate-all            | ~/P/F/e/l/comint.el                 |
+| relative-from-project    | emacs/lisp/comint.el                |
+| relative-to-project      | lisp/comint.el                      |
+| file-name                | comint.el                           |
+| buffer-name              | comint.el<2> (uniquify buffer name) |
+**** Setup anzu
+Anzu is a package for counting matches when a search is preformed
+#+BEGIN_SRC emacs-lisp
+(def-package! anzu
+  :after-call isearch-mode
+  :config
+  (setq anzu-cons-mode-line-p nil
+        anzu-minimum-input-length 1
+        anzu-search-threshold 250)
+  (global-anzu-mode +1)
+
+  (defun +modeline*fix-anzu-count (positions here)
+    (cl-loop for (start . end) in positions
+             collect t into before
+             when (and (>= here start) (<= here end))
+             return (length before)
+             finally return 0))
+  (advice-add #'anzu--where-is-here :override #'+modeline*fix-anzu-count)
+
+  ;; Avoid anzu conflicts across buffers
+  (mapc #'make-variable-buffer-local
+        '(anzu--total-matched anzu--current-position anzu--state
+          anzu--cached-count anzu--cached-positions anzu--last-command
+          anzu--last-isearch-string anzu--overflow-p))
+  ;; Ensure anzu state is cleared when searches & iedit are done
+  (add-hook 'isearch-mode-end-hook #'anzu--reset-status t)
+  (add-hook 'doom-escape-hook #'anzu--reset-status t)
+  (add-hook 'iedit-mode-end-hook #'anzu--reset-status))
+
+
+(def-package! evil-anzu
+  :when (featurep! :feature evil)
+  :after-call (evil-ex-start-search evil-ex-start-word-search))
+#+END_SRC
+*** [[doom-modules:ui/neotree/][ui/neotree]]
+**** Show file specific icons in neotree
+#+BEGIN_SRC emacs-lisp
+(after! doom-themes
+  (setq doom-neotree-file-icons t))
+#+END_SRC
+**** Use ~variable-pitch-mode~ for neotree buffers
+#+BEGIN_SRC emacs-lisp
+(after! doom-themes
+  (setq doom-neotree-enable-variable-pitch t))
+#+END_SRC
+**** When neotree is opened it will jump to the current file
+#+BEGIN_SRC emacs-lisp
+(after! neotree
+  (setq neo-smart-open t))
+#+END_SRC
+**** Hide the cursor in neotree
+#+BEGIN_SRC emacs-lisp
+(after! neotree
+  (setq neo-hide-cursor t))
+#+END_SRC
+*** [[doom-modules:ui/treemacs/][ui/treemacs]]
+**** Have treemacs follow the currently open file
+#+BEGIN_SRC emacs-lisp
+(add-hook 'treemacs-mode #'treemacs-follow-mode)
+#+END_SRC

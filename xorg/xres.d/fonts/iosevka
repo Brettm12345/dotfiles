@@ -1,0 +1,4 @@
+URxvt.font: xft:Iosevka Term Custom:size=14:style=medium
+st.font: Iosevka Term Custom:style=medium:size=14
+
+! vim:ft=xdefaults

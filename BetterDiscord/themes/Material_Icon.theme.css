@@ -1,0 +1,908 @@
+//META{"name":"Material_Icons","description":"Replaces Discord icons with material design icons <span style='position: absolute; bottom: 0; right: 14px;'>By <b><a href='https://github.com/Zerthox' target='_blank'>@Zerthox</a></b></span>","author":"Zerthox","version":"1.7"}*//{}
+/* "Discord Material Icons v1.7" by @Zerthox */
+
+.member-roles .member-role .member-role-remove {
+    background: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/close.svg) 50% no-repeat;
+    width: 8px;
+    height: 12px;
+    background-size: 150%;
+    opacity: .3;
+    transition: opacity .1s ease-in-out;
+}
+.member-roles .member-role:hover .member-role-remove {
+    opacity: .7;
+}
+.member-roles .member-role .member-role-add {
+    background: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/add.svg) 50% no-repeat;
+    width: 8px;
+    height: 12px;
+    background-size: 150%;
+    opacity: .7;
+    transition: opacity .1s ease-in-out;
+}
+.member-roles .member-role:hover .member-role-add {
+    opacity: 1;
+}
+#voice-connection .btn,
+.account .btn {
+    background: transparent !important;
+}
+#voice-connection .btn-disconnect,
+#voice-connection .btn-info,
+.account .btn-settings,
+.account .btn-deafen,
+.account .btn-mute {
+    -webkit-transition: all .1s ease-in-out;
+    transition: all .1s ease-in-out;
+    border-radius: 0px;
+}
+#voice-connection .btn-info:after {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/info.svg) !important;
+    background-position: center;
+    background-size: 65%;
+    opacity: .3;
+}
+#voice-connection .btn-disconnect:after {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/call_end.svg);
+    background-position: center;
+    background-size: 65%;
+    opacity: .3;
+}
+.account .btn-mute:after {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/mic.svg) !important;
+    background-position: center;
+    background-size: 65%;
+}
+.account .btn-mute:hover:after {
+    opacity: .6;
+}
+.account .btn-deafen:after {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/volume_up.svg) !important;
+    background-position: center;
+    background-size: 65%;
+}
+.account .btn-deafen:hover:after {
+    opacity: .6;
+}
+.account .btn-settings:after {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/settings.svg) !important;
+    background-position: center;
+    background-size: 65%;
+}
+.guild-channels .icon-settings {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/settings.svg) !important;
+    background-position: center;
+    background-size: 120%;
+}
+.icon-muted,
+.account .btn-mute.disabled:after {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/mic_off.svg) !important;
+    background-position: center;
+}
+.icon-deafened,
+.account .btn-deafen.disabled:after {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/volume_off.svg) !important;
+    background-position: center;
+}
+.account .btn-mute:hover:after,
+.account .btn-deafen:hover:after,
+.account .btn-settings:hover:after {
+    opacity: .7;
+}
+.guild-channels .channel .icon.popout-open,
+.guild-channels .channel .icon:hover {
+    opacity: .7 !important;
+}
+.message-group .btn-option {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/settings.svg) !important;
+    background-size: 120%;
+    background-position: center;
+    opacity: 0;
+    visibility: visible;
+    -webkit-transition: all .1s ease-in-out;
+    transition: all .1s ease-in-out;
+}
+.message-group .comment>div:hover .btn-option {
+    opacity: .3;
+}
+.message-group .btn-option.popout-open,
+.message-group .btn-option:hover {
+    background-size: 120%;
+    background-position: center;
+    opacity: .7 !important;
+}
+.guild-channels .icon+.icon {
+    margin-left: 3px;
+}
+.guilds-wrapper .guilds .guild.audio .guild-inner:after {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/volume_up.svg) !important;
+    background-position: center;
+    background-color: #000;
+    opacity: .7;
+}
+.guild-channels .icon-instant-invite {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/share.svg) !important;
+    background-position: center;
+    background-size: 110%;
+    margin-top: 1px;
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item {
+    padding-left: 50px;
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:after {
+    position: absolute;
+    left: 15px;
+    padding: 0px;
+    margin: 0px;
+    margin-top: -3px;
+    opacity: .3;
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:hover:after,
+.user-settings-modal .tab-bar.SIDE .tab-bar-item.selected:after,
+#bd-settings-new:hover:after,
+#bd-settings-new.selected:after,
+.change-log-button-container:hover:after {
+    opacity: 1;
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(2):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/person.svg);
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(3):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/wifi.svg);
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(4):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/group.svg);
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(5):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/chat.svg);
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(6):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/mic.svg);
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(7):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/notifications.svg);
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(8):after,
+.platform-win .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(9):after,
+.platform-osx .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(9):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/camera.svg);
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(9):after,
+.platform-win .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(12):after,
+.platform-osx .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(11):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/place.svg);
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(10):after,
+.platform-win .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(13):after,
+.platform-osx .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(12):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/videocam.svg);
+}
+.user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(11):after,
+.platform-win .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(14):after,
+.platform-osx .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(13):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/security.svg);
+}
+.platform-win .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(8):after,
+.platform-osx .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(8):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/keyboard.svg);
+}
+.platform-win .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(10):after,
+.platform-osx .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(10):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/games.svg);
+}
+.platform-win .user-settings-modal .tab-bar.SIDE .tab-bar-item:nth-of-type(11):after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/desktop_windows.svg);
+}
+#bd-settings-new::after {
+	content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/42bf9ad71835f8e75ebf7fbdd4fe7018ffbaa003/icons/betterdiscord.svg);
+}
+@-webkit-keyframes wiggle {
+    from {
+        -webkit-transform: rotate(-7deg);
+        transform: rotate(-7deg);
+    }
+    to {
+        -webkit-transform: rotate(7deg);
+        transform: rotate(7deg);
+    }
+}
+@keyframes wiggle {
+    from {
+        -webkit-transform: rotate(-7deg);
+        transform: rotate(-7deg);
+    }
+    to {
+        -webkit-transform: rotate(7deg);
+        transform: rotate(7deg);
+    }
+}
+@-webkit-keyframes wiggle-active {
+    from {
+        -webkit-transform: scale(.9) rotate(-7deg);
+        transform: scale(.9) rotate(-7deg);
+    }
+    to {
+        -webkit-transform: scale(.9) rotate(7deg);
+        transform: scale(.9) rotate(7deg);
+    }
+}
+@keyframes wiggle-active {
+    from {
+        -webkit-transform: scale(.9) rotate(-7deg);
+        transform: scale(.9) rotate(-7deg);
+    }
+    to {
+        -webkit-transform: scale(.9) rotate(7deg);
+        transform: scale(.9) rotate(7deg);
+    }
+}
+@-webkit-keyframes pulsate {
+    from {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    to {
+        -webkit-transform: scale(.9);
+        transform: scale(.9);
+    }
+}
+@keyframes pulsate {
+    from {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    to {
+        -webkit-transform: scale(.9);
+        transform: scale(.9);
+    }
+}
+@-webkit-keyframes pulsate-active {
+    from {
+        -webkit-transform: scale(.9);
+        transform: scale(.9);
+    }
+    to {
+        -webkit-transform: scale(.8);
+        transform: scale(.8);
+    }
+}
+@keyframes pulsate-active {
+    from {
+        -webkit-transform: scale(.9);
+        transform: scale(.9);
+    }
+    to {
+        -webkit-transform: scale(.8);
+        transform: scale(.8);
+    }
+}
+@-webkit-ekyframes pulsate-active {
+    from {
+        -webkit-transform: scale(.9);
+        transform: scale(.9);
+    }
+    to {
+        -webkit-transform: scale(.8);
+        transform: scale(.8);
+    }
+}
+@-webkit-keyframes opacity-fade {
+    50% {
+        opacity: .7;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes opacity-fade {
+    50% {
+        opacity: .7;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@-webkit-keyframes opacity-fade-reverse {
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: .7;
+    }
+}
+@keyframes opacity-fade-reverse {
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: .7;
+    }
+}
+#voice-connection .btn-disconnect:hover:after {
+    -webkit-animation: wiggle 70ms infinite alternate;
+    animation: wiggle 70ms infinite alternate;
+    z-index: 1;
+}
+#voice-connection .btn-disconnect:active:after {
+    -webkit-animation: wiggle-active 70ms infinite alternate;
+    animation: wiggle-active 70ms infinite alternate;
+    z-index: 1;
+}
+#voice-connection .btn-info:hover:after,
+#voice-connection .btn-info.popout-open:after {
+    -webkit-animation: pulsate 1s infinite alternate;
+    animation: pulsate 1s infinite alternate;
+    z-index: 1;
+}
+#voice-connection .btn-info:active:after {
+    -webkit-animation: pulsate-active 1s infinite alternate;
+    animation: pulsate-active 1s infinite alternate;
+    z-index: 1;
+}
+.account .btn:after {
+    -webkit-transition: -webkit-transform .1s ease-in-out;
+    transition: -webkit-transform .1s ease-in-out;
+    transition: transform .1s ease-in-out;
+    transition: transform .1s ease-in-out, -webkit-transform .1s ease-in-out;
+    opacity: .3;
+}
+.account .btn-deafen:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin-right: 5px;
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/volume_off.svg);
+    background-size: 65%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+}
+.account .btn-deafen:hover:before {
+    -webkit-animation: opacity-fade-reverse 2s infinite alternate;
+    animation: opacity-fade-reverse 2s infinite alternate;
+}
+.account .btn-deafen:hover:after {
+    -webkit-animation: opacity-fade 2s infinite alternate;
+    animation: opacity-fade 2s infinite alternate;
+}
+.account .btn-deafen:after,
+.account .btn-deafen:before {
+    -webkit-transition: opacity .1s ease-in-out, -webkit-transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, -webkit-transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out, -webkit-transform .1s ease-in-out;
+}
+.account .btn-deafen.disabled:before {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/volume_up.svg);
+    background-position: center;
+}
+.account .btn-mute:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin-right: 5px;
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/mic_off.svg);
+    background-size: 65%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+}
+.account .btn-mute:hover:before {
+    -webkit-animation: opacity-fade-reverse 2s infinite alternate;
+    animation: opacity-fade-reverse 2s infinite alternate;
+}
+.account .btn-mute:hover:after {
+    -webkit-animation: opacity-fade 2s infinite alternate;
+    animation: opacity-fade 2s infinite alternate;
+}
+.account .btn-mute:after,
+.account .btn-mute:before {
+    -webkit-transition: opacity .1s ease-in-out, -webkit-transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, -webkit-transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out, -webkit-transform .1s ease-in-out;
+}
+.account .btn-mute.disabled:before {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/mic.svg);
+    background-position: center;
+}
+.account .btn-mute:active:before,
+.account .btn-deafen:active:before {
+    -webkit-transform: scale(.9);
+    transform: scale(.9);
+}
+@-webkit-keyframes opacity-mute {
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes opacity-mute {
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@-webkit-keyframes opacity-mute-reverse {
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes opacity-mute-reverse {
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.fav {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/favorite.svg);
+    background-color: transparent;
+    opacity: .3;
+    -webkit-transition: opacity .1s ease-in-out, -webkit-transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, -webkit-transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out, -webkit-transform .1s ease-in-out;
+}
+.fav:hover {
+    opacity: .7;
+}
+.fav:focus {
+    outline: none;
+}
+.fav:active {
+    -webkit-transform: scale(.9);
+    transform: scale(.9);
+}
+.guild-channels .channel-voice .channel-arrow {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/navigate_next.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.guild-channels header button:after {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/add_circle.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 115%;
+    width: 15px;
+    margin-top: -2px;
+}
+.guilds-wrapper .guilds .friends-icon,
+.private-channels .channel .icon-friends {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/group.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 75%;
+}
+.private-channels .channel.selected .icon-friends {
+    opacity: 1;
+}
+.guild-channels .toggle-muted-text-channels a:before {
+    background: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/expand_more.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.markdown-modal .markdown-modal-header .markdown-modal-close {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/close.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+#user-profile-modal .header .additional-actions-icon {
+    background: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/expand_more.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 200% !important;
+}
+.theme-dark .messages-popout-wrap .messages-popout .message-group .action-buttons .close-button {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/close.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.recent-mentions-popout .mention-filter {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/expand_more.svg) !important;
+    background-repeat: no-repeat !important;
+    background-position: 133px top !important;
+    background-size: 18px !important;
+}
+.buttonClose {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/close.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.settings-connections-wrapper .authed-app .details .permission-checkmark {
+    background: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/check.svg) left no-repeat;
+    background-size: 18px;
+    opacity: .7;
+}
+.settings-connections-wrapper .user-settings-modal-connections .user-settings-modal-connections-list .connection .connection-header .btn-delete {
+    background: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/delete.svg) left no-repeat;
+    background-size: 20px;
+}
+.btn-confirm .icon.icon-logout,
+.btn-confirm .icon.icon-delete {
+    background-image: none !important;
+}
+.btn-confirm .icon:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+    opacity: .5;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+.btn-confirm .icon.icon-logout:after {
+    background-image: url(https://i.imgur.com/msG8Y1K.png);
+}
+.btn-confirm .icon.icon-delete:after {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/delete.svg);
+}
+.btn-confirm.active .icon:after,
+.btn-confirm:hover .icon:after {
+    opacity: 1;
+}
+.channel-mute-button {
+    background: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/notifications_black.svg) 50% no-repeat;
+    background-size: 18px;
+}
+.channel-mute-button.muted {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/notifications_black_off.svg);
+}
+.channel-mute-button:hover,
+ .user-settings-modal button.preview-sound:hover:before{
+	opacity: .7;
+}
+.color-picker .swatches .swatch.custom {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/colorize_black.svg);
+    background-size: 20px;
+}
+.color-picker .swatches .swatch.custom.light {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/colorize.svg);
+    background-size: 20px;
+}
+.guild-channels .icon-lock {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/lock.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 18px;
+    opacity: .3 !important;
+}
+.user-settings-modal button.preview-sound:before {
+	background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/volume_up_black.svg) !important;
+    background-position: center;
+	opacity: .3;
+}
+.ebr-themes:after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/palette.svg);
+    position: absolute;
+    left: 15px;
+    padding: 0px;
+    margin: 0px;
+    margin-top: -3px;
+    opacity: .3;
+}
+.ebr-plugins:after {
+    content: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/puzzle.svg);
+    position: absolute;
+    left: 15px;
+    padding: 0px;
+    margin: 0px;
+    margin-top: -3px;
+    opacity: .3;
+}
+.clipboard-input-inner button.tweet {
+	background-image: none;
+}
+.clipboard-input-inner button.copy {
+	background-image: none;
+}
+.clipboard-input-inner button:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	opacity: .5;
+}
+.clipboard-input-inner button.tweet:after {
+	background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/twitter_black.svg);
+}
+.clipboard-input-inner button.copy:after {
+	background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/copy_black.svg);
+}
+.clipboard-input-copied button:not(.tweet),
+.clipboard-input-tweeted button:not(.copy) {
+	background-image: none !important;
+}
+.system-message-icon[style*="PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGQ9Ik03Ljk3MDU2My02Ljk5OTk5OTc1TDI0Ljk0MTEyNTc1IDkuOTcwNTYzIDcuOTcwNTYzIDI2Ljk0MTEyNTc1LTguOTk5OTk5NzUgOS45NzA1NjMiLz4KICAgIDxwYXRoIGZpbGw9IiM5OUFBQjUiIGQ9Ik03Ljk3MDU2MyAxMi43OTg5OTAxMmw2LjM2Mzk2MTAzLTYuMzYzOTYxMDMtMi44Mjg0MjcxMi0yLjgyODQyNzE2TDUuMTQyMTM1OSA5Ljk3MDU2M2wtLjM1OTkxMzctLjM1OTkxMzdjLS4xODYwNTcyNS0uMTg2MDU3MjUtLjUwNTQ4NDMtLjE4ODkwMTg1LS43MDA3NDY0OC4wMDYzNjAzLS4xODk1NTE1Ny4xODk1NTE1OC0uMTk4MTA5NzQuNTA4OTk3MDQtLjAwNjM2MDMuNzAwNzQ2NWwzLjU0ODI1NDUgMy41NDgyNTQ1Yy4xODYwNTcyNy4xODYwNTcyNS41MDU0ODQzMy4xODg5MDE4Ni43MDA3NDY1LS4wMDYzNjAzLjE4OTU1MTU2LS4xODk1NTE1Ny4xOTgxMDk3NC0uNTA4OTk3MDQuMDA2MzYwMy0uNzAwNzQ2NWwtLjM1OTkxMzctLjM1OTkxMzY4em03Ljc3ODE3NDYtNC45NDk3NDc0NmwuNzA3MTA2NzcuNzA3MTA2NzggMS40MTQyMTM1Ny0xLjQxNDIxMzU2TDEwLjc5ODk5MDEyLjA3MTA2ODA2IDkuMzg0Nzc2NTYgMS40ODUyODE2M2wuNzA3MTA2NzguNzA3MTA2NzhMNC40MzUwMjkxIDcuODQ5MjQyN0gxLjYwNjYwMTk2TC4xOTIzODg0IDkuMjYzNDU2MjJsMy42NzY5NTUyNyAzLjY3Njk1NTI2LTIuODI4NDI3MTMgMi44Mjg0MjcxMyAxLjEzMTM3MDg2IDEuMTMxMzcwOSAyLjgyODQyNzEtMi44Mjg0MjcxMyAzLjY3Njk1NTI2IDMuNjc2OTU1MjYgMS40MTQyMTM1Ni0xLjQxNDIxMzU2VjEzLjUwNjA5NjlsNS42NTY4NTQyNS01LjY1Njg1NDI0eiIvPgogIDwvZz4KPC9zdmc+"] {
+	background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/pin.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+    transform: rotate(45deg);
+    opacity: .5;
+    height: 24px;
+    margin-top: -3px;
+}
+.notice .notice-dismiss {
+	background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/close.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+
+/* HEADER TOOLBAR ICONS */
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPHBhdGggZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMDA2Mjg2NjIgMjJjMSAwIDEuNzE0Mjg1NzItLjQwMTk1MzEgMS45OTk5OTk5OC0xLjAwNDg4MjhoLTMuOTk5OTk5OThjLjI4NTcxNDMuNjAyOTI5NyAxIDEuMDA0ODgyOCAyIDEuMDA0ODgyOHptNi45ODA1Mjk3OC0zLjk2MzQzOTlWMTBjMC0yLjY0LTIuMzAyODY2OC00Ljk3NTAzNjYyLTUuMDEwNTU5MDgtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1MTctMS4wMjk4NDYyLTEuOTczMTE0LTEuMDI5ODQ2Mi0xLjYyOTA1ODg1IDAtMS45NjU4NTA4NC4zMDk4NDYyLTEuOTY1ODUwODQgMS4wMjk4NDYyQzguMzI5NjAwMTggNS4wMjQ5NjMzOCA1Ljk5NTQ4MzQgNy4zNiA1Ljk5NTQ4MzQgMTB2OC4wMzY1NjAxaC0uOTg5MTk2Nzh2MS45NTE0MTZIMjF2LTEuOTUxNDE2aC0xLjAxMzE4MzZ6TTE4IDE4SDh2LTcuN0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzNEMxNi41NTU1NTU2IDcgMTggOC40MyAxOCAxMC4zVjE4eiIvPgo8L3N2Zz4=");'],
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik0xMy4wMDYyODY2MiAyMmMuOTk5OTk5OTggMCAxLjcxNDI4NTY4LS40MDE5NTMxIDEuOTk5OTk5OTgtMS4wMDQ4ODI4aC0zLjk5OTk5OTk4Yy4yODU3MTQzLjYwMjkyOTcgMSAxLjAwNDg4MjggMiAxLjAwNDg4Mjh6bTYuOTgwNTI5NzgtMy45NjM0Mzk5VjEwYzAtMi42NC0yLjMwMjg2NjgtNC45NzUwMzY2Mi01LjAxMDU1OTEtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1Mi0xLjAyOTg0NjItMS45NzMxMTQtMS4wMjk4NDYyLTEuNjI5MDU4ODMgMC0xLjk2NTg1MDgyLjMwOTg0NjItMS45NjU4NTA4MiAxLjAyOTg0NjJDOC4zMjk2MDAxOCA1LjAyNDk2MzM4IDUuOTk1NDgzNCA3LjM2IDUuOTk1NDgzNCAxMHY4LjAzNjU2MDFoLS45ODkxOTY3OHYxLjk1MTQxNkgyMXYtMS45NTE0MTZoLTEuMDEzMTgzNnpNMTMuMDgzODk2MTYgMThsLTIuMDc4OTMwODIgMi4wMjcyMDQ1SDQuOTQxNjIwMzhWMThINnYtM2wyLTIuMDgyOTQyOTJWMTAuM0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzN2MuMjA1ODcyMSAwIDEuMzU3OTgyNS0xLjkwOTA0NTggMS4zNTc5ODI1LTEuOTA5MDQ1OHMxLjMxODM5MDguMjc5MTU2OTIgMi41NTU1MzQzIDEuNTk4ODMzNjdjMS4yMzcxNDM2IDEuMzE5Njc2NzYgMS4zMjUzODg5IDMuMjUxOTI3NzQgMS4zMjUzODg5IDMuMjUxOTI3NzRMMTggMTIuOTQ1NDcyNTZWMThoLTQuOTE2MTAzODR6Ii8+CiAgICA8cGF0aCBzdHJva2U9IiNGMDQ3NDciIHN0cm9rZS13aWR0aD0iMiIgZD0iTTIxIDVMNSAyMSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPgogIDwvZz4KPC9zdmc+");'],
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPHBhdGggZmlsbD0iIzk5QUFCNSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMDA2Mjg2NjIgMjJjMSAwIDEuNzE0Mjg1NzItLjQwMTk1MzEgMS45OTk5OTk5OC0xLjAwNDg4MjhoLTMuOTk5OTk5OThjLjI4NTcxNDMuNjAyOTI5NyAxIDEuMDA0ODgyOCAyIDEuMDA0ODgyOHptNi45ODA1Mjk3OC0zLjk2MzQzOTlWMTBjMC0yLjY0LTIuMzAyODY2OC00Ljk3NTAzNjYyLTUuMDEwNTU5MDgtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1MTctMS4wMjk4NDYyLTEuOTczMTE0LTEuMDI5ODQ2Mi0xLjYyOTA1ODg1IDAtMS45NjU4NTA4NC4zMDk4NDYyLTEuOTY1ODUwODQgMS4wMjk4NDYyQzguMzI5NjAwMTggNS4wMjQ5NjMzOCA1Ljk5NTQ4MzQgNy4zNiA1Ljk5NTQ4MzQgMTB2OC4wMzY1NjAxaC0uOTg5MTk2Nzh2MS45NTE0MTZIMjF2LTEuOTUxNDE2aC0xLjAxMzE4MzZ6TTE4IDE4SDh2LTcuN0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzNEMxNi41NTU1NTU2IDcgMTggOC40MyAxOCAxMC4zVjE4eiIvPgo8L3N2Zz4=");'],
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGZpbGw9IiM5OUFBQjUiIGQ9Ik0xMy4wMDYyODY2MiAyMmMuOTk5OTk5OTggMCAxLjcxNDI4NTY4LS40MDE5NTMxIDEuOTk5OTk5OTgtMS4wMDQ4ODI4aC0zLjk5OTk5OTk4Yy4yODU3MTQzLjYwMjkyOTcgMSAxLjAwNDg4MjggMiAxLjAwNDg4Mjh6bTYuOTgwNTI5NzgtMy45NjM0Mzk5VjEwYzAtMi42NC0yLjMwMjg2NjgtNC45NzUwMzY2Mi01LjAxMDU1OTEtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1Mi0xLjAyOTg0NjItMS45NzMxMTQtMS4wMjk4NDYyLTEuNjI5MDU4ODMgMC0xLjk2NTg1MDgyLjMwOTg0NjItMS45NjU4NTA4MiAxLjAyOTg0NjJDOC4zMjk2MDAxOCA1LjAyNDk2MzM4IDUuOTk1NDgzNCA3LjM2IDUuOTk1NDgzNCAxMHY4LjAzNjU2MDFoLS45ODkxOTY3OHYxLjk1MTQxNkgyMXYtMS45NTE0MTZoLTEuMDEzMTgzNnpNMTMuMDgzODk2MTYgMThsLTIuMDc4OTMwODIgMi4wMjcyMDQ1SDQuOTQxNjIwMzhWMThINnYtM2wyLTIuMDgyOTQyOTJWMTAuM0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzN2MuMjA1ODcyMSAwIDEuMzU3OTgyNS0xLjkwOTA0NTggMS4zNTc5ODI1LTEuOTA5MDQ1OHMxLjMxODM5MDguMjc5MTU2OTIgMi41NTU1MzQzIDEuNTk4ODMzNjdjMS4yMzcxNDM2IDEuMzE5Njc2NzYgMS4zMjUzODg5IDMuMjUxOTI3NzQgMS4zMjUzODg5IDMuMjUxOTI3NzRMMTggMTIuOTQ1NDcyNTZWMThoLTQuOTE2MTAzODR6Ii8+CiAgICA8cGF0aCBzdHJva2U9IiNGMDQ3NDciIHN0cm9rZS13aWR0aD0iMiIgZD0iTTIxIDVMNSAyMSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPgogIDwvZz4KPC9zdmc+");'] {
+    background: transparent !important;
+    position: relative;
+}
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPHBhdGggZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMDA2Mjg2NjIgMjJjMSAwIDEuNzE0Mjg1NzItLjQwMTk1MzEgMS45OTk5OTk5OC0xLjAwNDg4MjhoLTMuOTk5OTk5OThjLjI4NTcxNDMuNjAyOTI5NyAxIDEuMDA0ODgyOCAyIDEuMDA0ODgyOHptNi45ODA1Mjk3OC0zLjk2MzQzOTlWMTBjMC0yLjY0LTIuMzAyODY2OC00Ljk3NTAzNjYyLTUuMDEwNTU5MDgtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1MTctMS4wMjk4NDYyLTEuOTczMTE0LTEuMDI5ODQ2Mi0xLjYyOTA1ODg1IDAtMS45NjU4NTA4NC4zMDk4NDYyLTEuOTY1ODUwODQgMS4wMjk4NDYyQzguMzI5NjAwMTggNS4wMjQ5NjMzOCA1Ljk5NTQ4MzQgNy4zNiA1Ljk5NTQ4MzQgMTB2OC4wMzY1NjAxaC0uOTg5MTk2Nzh2MS45NTE0MTZIMjF2LTEuOTUxNDE2aC0xLjAxMzE4MzZ6TTE4IDE4SDh2LTcuN0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzNEMxNi41NTU1NTU2IDcgMTggOC40MyAxOCAxMC4zVjE4eiIvPgo8L3N2Zz4=");']::after,
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik0xMy4wMDYyODY2MiAyMmMuOTk5OTk5OTggMCAxLjcxNDI4NTY4LS40MDE5NTMxIDEuOTk5OTk5OTgtMS4wMDQ4ODI4aC0zLjk5OTk5OTk4Yy4yODU3MTQzLjYwMjkyOTcgMSAxLjAwNDg4MjggMiAxLjAwNDg4Mjh6bTYuOTgwNTI5NzgtMy45NjM0Mzk5VjEwYzAtMi42NC0yLjMwMjg2NjgtNC45NzUwMzY2Mi01LjAxMDU1OTEtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1Mi0xLjAyOTg0NjItMS45NzMxMTQtMS4wMjk4NDYyLTEuNjI5MDU4ODMgMC0xLjk2NTg1MDgyLjMwOTg0NjItMS45NjU4NTA4MiAxLjAyOTg0NjJDOC4zMjk2MDAxOCA1LjAyNDk2MzM4IDUuOTk1NDgzNCA3LjM2IDUuOTk1NDgzNCAxMHY4LjAzNjU2MDFoLS45ODkxOTY3OHYxLjk1MTQxNkgyMXYtMS45NTE0MTZoLTEuMDEzMTgzNnpNMTMuMDgzODk2MTYgMThsLTIuMDc4OTMwODIgMi4wMjcyMDQ1SDQuOTQxNjIwMzhWMThINnYtM2wyLTIuMDgyOTQyOTJWMTAuM0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzN2MuMjA1ODcyMSAwIDEuMzU3OTgyNS0xLjkwOTA0NTggMS4zNTc5ODI1LTEuOTA5MDQ1OHMxLjMxODM5MDguMjc5MTU2OTIgMi41NTU1MzQzIDEuNTk4ODMzNjdjMS4yMzcxNDM2IDEuMzE5Njc2NzYgMS4zMjUzODg5IDMuMjUxOTI3NzQgMS4zMjUzODg5IDMuMjUxOTI3NzRMMTggMTIuOTQ1NDcyNTZWMThoLTQuOTE2MTAzODR6Ii8+CiAgICA8cGF0aCBzdHJva2U9IiNGMDQ3NDciIHN0cm9rZS13aWR0aD0iMiIgZD0iTTIxIDVMNSAyMSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPgogIDwvZz4KPC9zdmc+");']::before,
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPHBhdGggZmlsbD0iIzk5QUFCNSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMDA2Mjg2NjIgMjJjMSAwIDEuNzE0Mjg1NzItLjQwMTk1MzEgMS45OTk5OTk5OC0xLjAwNDg4MjhoLTMuOTk5OTk5OThjLjI4NTcxNDMuNjAyOTI5NyAxIDEuMDA0ODgyOCAyIDEuMDA0ODgyOHptNi45ODA1Mjk3OC0zLjk2MzQzOTlWMTBjMC0yLjY0LTIuMzAyODY2OC00Ljk3NTAzNjYyLTUuMDEwNTU5MDgtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1MTctMS4wMjk4NDYyLTEuOTczMTE0LTEuMDI5ODQ2Mi0xLjYyOTA1ODg1IDAtMS45NjU4NTA4NC4zMDk4NDYyLTEuOTY1ODUwODQgMS4wMjk4NDYyQzguMzI5NjAwMTggNS4wMjQ5NjMzOCA1Ljk5NTQ4MzQgNy4zNiA1Ljk5NTQ4MzQgMTB2OC4wMzY1NjAxaC0uOTg5MTk2Nzh2MS45NTE0MTZIMjF2LTEuOTUxNDE2aC0xLjAxMzE4MzZ6TTE4IDE4SDh2LTcuN0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzNEMxNi41NTU1NTU2IDcgMTggOC40MyAxOCAxMC4zVjE4eiIvPgo8L3N2Zz4=");']::after,
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGZpbGw9IiM5OUFBQjUiIGQ9Ik0xMy4wMDYyODY2MiAyMmMuOTk5OTk5OTggMCAxLjcxNDI4NTY4LS40MDE5NTMxIDEuOTk5OTk5OTgtMS4wMDQ4ODI4aC0zLjk5OTk5OTk4Yy4yODU3MTQzLjYwMjkyOTcgMSAxLjAwNDg4MjggMiAxLjAwNDg4Mjh6bTYuOTgwNTI5NzgtMy45NjM0Mzk5VjEwYzAtMi42NC0yLjMwMjg2NjgtNC45NzUwMzY2Mi01LjAxMDU1OTEtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1Mi0xLjAyOTg0NjItMS45NzMxMTQtMS4wMjk4NDYyLTEuNjI5MDU4ODMgMC0xLjk2NTg1MDgyLjMwOTg0NjItMS45NjU4NTA4MiAxLjAyOTg0NjJDOC4zMjk2MDAxOCA1LjAyNDk2MzM4IDUuOTk1NDgzNCA3LjM2IDUuOTk1NDgzNCAxMHY4LjAzNjU2MDFoLS45ODkxOTY3OHYxLjk1MTQxNkgyMXYtMS45NTE0MTZoLTEuMDEzMTgzNnpNMTMuMDgzODk2MTYgMThsLTIuMDc4OTMwODIgMi4wMjcyMDQ1SDQuOTQxNjIwMzhWMThINnYtM2wyLTIuMDgyOTQyOTJWMTAuM0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzN2MuMjA1ODcyMSAwIDEuMzU3OTgyNS0xLjkwOTA0NTggMS4zNTc5ODI1LTEuOTA5MDQ1OHMxLjMxODM5MDguMjc5MTU2OTIgMi41NTU1MzQzIDEuNTk4ODMzNjdjMS4yMzcxNDM2IDEuMzE5Njc2NzYgMS4zMjUzODg5IDMuMjUxOTI3NzQgMS4zMjUzODg5IDMuMjUxOTI3NzRMMTggMTIuOTQ1NDcyNTZWMThoLTQuOTE2MTAzODR6Ii8+CiAgICA8cGF0aCBzdHJva2U9IiNGMDQ3NDciIHN0cm9rZS13aWR0aD0iMiIgZD0iTTIxIDVMNSAyMSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPgogIDwvZz4KPC9zdmc+");']::before {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/notifications.svg) !important;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin-right: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+}
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPHBhdGggZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMDA2Mjg2NjIgMjJjMSAwIDEuNzE0Mjg1NzItLjQwMTk1MzEgMS45OTk5OTk5OC0xLjAwNDg4MjhoLTMuOTk5OTk5OThjLjI4NTcxNDMuNjAyOTI5NyAxIDEuMDA0ODgyOCAyIDEuMDA0ODgyOHptNi45ODA1Mjk3OC0zLjk2MzQzOTlWMTBjMC0yLjY0LTIuMzAyODY2OC00Ljk3NTAzNjYyLTUuMDEwNTU5MDgtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1MTctMS4wMjk4NDYyLTEuOTczMTE0LTEuMDI5ODQ2Mi0xLjYyOTA1ODg1IDAtMS45NjU4NTA4NC4zMDk4NDYyLTEuOTY1ODUwODQgMS4wMjk4NDYyQzguMzI5NjAwMTggNS4wMjQ5NjMzOCA1Ljk5NTQ4MzQgNy4zNiA1Ljk5NTQ4MzQgMTB2OC4wMzY1NjAxaC0uOTg5MTk2Nzh2MS45NTE0MTZIMjF2LTEuOTUxNDE2aC0xLjAxMzE4MzZ6TTE4IDE4SDh2LTcuN0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzNEMxNi41NTU1NTU2IDcgMTggOC40MyAxOCAxMC4zVjE4eiIvPgo8L3N2Zz4=");']::after,
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPHBhdGggZmlsbD0iIzk5QUFCNSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMDA2Mjg2NjIgMjJjMSAwIDEuNzE0Mjg1NzItLjQwMTk1MzEgMS45OTk5OTk5OC0xLjAwNDg4MjhoLTMuOTk5OTk5OThjLjI4NTcxNDMuNjAyOTI5NyAxIDEuMDA0ODgyOCAyIDEuMDA0ODgyOHptNi45ODA1Mjk3OC0zLjk2MzQzOTlWMTBjMC0yLjY0LTIuMzAyODY2OC00Ljk3NTAzNjYyLTUuMDEwNTU5MDgtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1MTctMS4wMjk4NDYyLTEuOTczMTE0LTEuMDI5ODQ2Mi0xLjYyOTA1ODg1IDAtMS45NjU4NTA4NC4zMDk4NDYyLTEuOTY1ODUwODQgMS4wMjk4NDYyQzguMzI5NjAwMTggNS4wMjQ5NjMzOCA1Ljk5NTQ4MzQgNy4zNiA1Ljk5NTQ4MzQgMTB2OC4wMzY1NjAxaC0uOTg5MTk2Nzh2MS45NTE0MTZIMjF2LTEuOTUxNDE2aC0xLjAxMzE4MzZ6TTE4IDE4SDh2LTcuN0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzNEMxNi41NTU1NTU2IDcgMTggOC40MyAxOCAxMC4zVjE4eiIvPgo8L3N2Zz4=");']::after {
+    opacity: 1;
+}
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik0xMy4wMDYyODY2MiAyMmMuOTk5OTk5OTggMCAxLjcxNDI4NTY4LS40MDE5NTMxIDEuOTk5OTk5OTgtMS4wMDQ4ODI4aC0zLjk5OTk5OTk4Yy4yODU3MTQzLjYwMjkyOTcgMSAxLjAwNDg4MjggMiAxLjAwNDg4Mjh6bTYuOTgwNTI5NzgtMy45NjM0Mzk5VjEwYzAtMi42NC0yLjMwMjg2NjgtNC45NzUwMzY2Mi01LjAxMDU1OTEtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1Mi0xLjAyOTg0NjItMS45NzMxMTQtMS4wMjk4NDYyLTEuNjI5MDU4ODMgMC0xLjk2NTg1MDgyLjMwOTg0NjItMS45NjU4NTA4MiAxLjAyOTg0NjJDOC4zMjk2MDAxOCA1LjAyNDk2MzM4IDUuOTk1NDgzNCA3LjM2IDUuOTk1NDgzNCAxMHY4LjAzNjU2MDFoLS45ODkxOTY3OHYxLjk1MTQxNkgyMXYtMS45NTE0MTZoLTEuMDEzMTgzNnpNMTMuMDgzODk2MTYgMThsLTIuMDc4OTMwODIgMi4wMjcyMDQ1SDQuOTQxNjIwMzhWMThINnYtM2wyLTIuMDgyOTQyOTJWMTAuM0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzN2MuMjA1ODcyMSAwIDEuMzU3OTgyNS0xLjkwOTA0NTggMS4zNTc5ODI1LTEuOTA5MDQ1OHMxLjMxODM5MDguMjc5MTU2OTIgMi41NTU1MzQzIDEuNTk4ODMzNjdjMS4yMzcxNDM2IDEuMzE5Njc2NzYgMS4zMjUzODg5IDMuMjUxOTI3NzQgMS4zMjUzODg5IDMuMjUxOTI3NzRMMTggMTIuOTQ1NDcyNTZWMThoLTQuOTE2MTAzODR6Ii8+CiAgICA8cGF0aCBzdHJva2U9IiNGMDQ3NDciIHN0cm9rZS13aWR0aD0iMiIgZD0iTTIxIDVMNSAyMSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPgogIDwvZz4KPC9zdmc+");']::before,
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGZpbGw9IiM5OUFBQjUiIGQ9Ik0xMy4wMDYyODY2MiAyMmMuOTk5OTk5OTggMCAxLjcxNDI4NTY4LS40MDE5NTMxIDEuOTk5OTk5OTgtMS4wMDQ4ODI4aC0zLjk5OTk5OTk4Yy4yODU3MTQzLjYwMjkyOTcgMSAxLjAwNDg4MjggMiAxLjAwNDg4Mjh6bTYuOTgwNTI5NzgtMy45NjM0Mzk5VjEwYzAtMi42NC0yLjMwMjg2NjgtNC45NzUwMzY2Mi01LjAxMDU1OTEtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1Mi0xLjAyOTg0NjItMS45NzMxMTQtMS4wMjk4NDYyLTEuNjI5MDU4ODMgMC0xLjk2NTg1MDgyLjMwOTg0NjItMS45NjU4NTA4MiAxLjAyOTg0NjJDOC4zMjk2MDAxOCA1LjAyNDk2MzM4IDUuOTk1NDgzNCA3LjM2IDUuOTk1NDgzNCAxMHY4LjAzNjU2MDFoLS45ODkxOTY3OHYxLjk1MTQxNkgyMXYtMS45NTE0MTZoLTEuMDEzMTgzNnpNMTMuMDgzODk2MTYgMThsLTIuMDc4OTMwODIgMi4wMjcyMDQ1SDQuOTQxNjIwMzhWMThINnYtM2wyLTIuMDgyOTQyOTJWMTAuM0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzN2MuMjA1ODcyMSAwIDEuMzU3OTgyNS0xLjkwOTA0NTggMS4zNTc5ODI1LTEuOTA5MDQ1OHMxLjMxODM5MDguMjc5MTU2OTIgMi41NTU1MzQzIDEuNTk4ODMzNjdjMS4yMzcxNDM2IDEuMzE5Njc2NzYgMS4zMjUzODg5IDMuMjUxOTI3NzQgMS4zMjUzODg5IDMuMjUxOTI3NzRMMTggMTIuOTQ1NDcyNTZWMThoLTQuOTE2MTAzODR6Ii8+CiAgICA8cGF0aCBzdHJva2U9IiNGMDQ3NDciIHN0cm9rZS13aWR0aD0iMiIgZD0iTTIxIDVMNSAyMSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPgogIDwvZz4KPC9zdmc+");']::before {
+    opacity: 0;
+}
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPHBhdGggZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMDA2Mjg2NjIgMjJjMSAwIDEuNzE0Mjg1NzItLjQwMTk1MzEgMS45OTk5OTk5OC0xLjAwNDg4MjhoLTMuOTk5OTk5OThjLjI4NTcxNDMuNjAyOTI5NyAxIDEuMDA0ODgyOCAyIDEuMDA0ODgyOHptNi45ODA1Mjk3OC0zLjk2MzQzOTlWMTBjMC0yLjY0LTIuMzAyODY2OC00Ljk3NTAzNjYyLTUuMDEwNTU5MDgtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1MTctMS4wMjk4NDYyLTEuOTczMTE0LTEuMDI5ODQ2Mi0xLjYyOTA1ODg1IDAtMS45NjU4NTA4NC4zMDk4NDYyLTEuOTY1ODUwODQgMS4wMjk4NDYyQzguMzI5NjAwMTggNS4wMjQ5NjMzOCA1Ljk5NTQ4MzQgNy4zNiA1Ljk5NTQ4MzQgMTB2OC4wMzY1NjAxaC0uOTg5MTk2Nzh2MS45NTE0MTZIMjF2LTEuOTUxNDE2aC0xLjAxMzE4MzZ6TTE4IDE4SDh2LTcuN0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzNEMxNi41NTU1NTU2IDcgMTggOC40MyAxOCAxMC4zVjE4eiIvPgo8L3N2Zz4=");']::before,
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik0xMy4wMDYyODY2MiAyMmMuOTk5OTk5OTggMCAxLjcxNDI4NTY4LS40MDE5NTMxIDEuOTk5OTk5OTgtMS4wMDQ4ODI4aC0zLjk5OTk5OTk4Yy4yODU3MTQzLjYwMjkyOTcgMSAxLjAwNDg4MjggMiAxLjAwNDg4Mjh6bTYuOTgwNTI5NzgtMy45NjM0Mzk5VjEwYzAtMi42NC0yLjMwMjg2NjgtNC45NzUwMzY2Mi01LjAxMDU1OTEtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1Mi0xLjAyOTg0NjItMS45NzMxMTQtMS4wMjk4NDYyLTEuNjI5MDU4ODMgMC0xLjk2NTg1MDgyLjMwOTg0NjItMS45NjU4NTA4MiAxLjAyOTg0NjJDOC4zMjk2MDAxOCA1LjAyNDk2MzM4IDUuOTk1NDgzNCA3LjM2IDUuOTk1NDgzNCAxMHY4LjAzNjU2MDFoLS45ODkxOTY3OHYxLjk1MTQxNkgyMXYtMS45NTE0MTZoLTEuMDEzMTgzNnpNMTMuMDgzODk2MTYgMThsLTIuMDc4OTMwODIgMi4wMjcyMDQ1SDQuOTQxNjIwMzhWMThINnYtM2wyLTIuMDgyOTQyOTJWMTAuM0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzN2MuMjA1ODcyMSAwIDEuMzU3OTgyNS0xLjkwOTA0NTggMS4zNTc5ODI1LTEuOTA5MDQ1OHMxLjMxODM5MDguMjc5MTU2OTIgMi41NTU1MzQzIDEuNTk4ODMzNjdjMS4yMzcxNDM2IDEuMzE5Njc2NzYgMS4zMjUzODg5IDMuMjUxOTI3NzQgMS4zMjUzODg5IDMuMjUxOTI3NzRMMTggMTIuOTQ1NDcyNTZWMThoLTQuOTE2MTAzODR6Ii8+CiAgICA8cGF0aCBzdHJva2U9IiNGMDQ3NDciIHN0cm9rZS13aWR0aD0iMiIgZD0iTTIxIDVMNSAyMSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPgogIDwvZz4KPC9zdmc+");']::after,
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPHBhdGggZmlsbD0iIzk5QUFCNSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMDA2Mjg2NjIgMjJjMSAwIDEuNzE0Mjg1NzItLjQwMTk1MzEgMS45OTk5OTk5OC0xLjAwNDg4MjhoLTMuOTk5OTk5OThjLjI4NTcxNDMuNjAyOTI5NyAxIDEuMDA0ODgyOCAyIDEuMDA0ODgyOHptNi45ODA1Mjk3OC0zLjk2MzQzOTlWMTBjMC0yLjY0LTIuMzAyODY2OC00Ljk3NTAzNjYyLTUuMDEwNTU5MDgtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1MTctMS4wMjk4NDYyLTEuOTczMTE0LTEuMDI5ODQ2Mi0xLjYyOTA1ODg1IDAtMS45NjU4NTA4NC4zMDk4NDYyLTEuOTY1ODUwODQgMS4wMjk4NDYyQzguMzI5NjAwMTggNS4wMjQ5NjMzOCA1Ljk5NTQ4MzQgNy4zNiA1Ljk5NTQ4MzQgMTB2OC4wMzY1NjAxaC0uOTg5MTk2Nzh2MS45NTE0MTZIMjF2LTEuOTUxNDE2aC0xLjAxMzE4MzZ6TTE4IDE4SDh2LTcuN0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzNEMxNi41NTU1NTU2IDcgMTggOC40MyAxOCAxMC4zVjE4eiIvPgo8L3N2Zz4=");']::before,
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGZpbGw9IiM5OUFBQjUiIGQ9Ik0xMy4wMDYyODY2MiAyMmMuOTk5OTk5OTggMCAxLjcxNDI4NTY4LS40MDE5NTMxIDEuOTk5OTk5OTgtMS4wMDQ4ODI4aC0zLjk5OTk5OTk4Yy4yODU3MTQzLjYwMjkyOTcgMSAxLjAwNDg4MjggMiAxLjAwNDg4Mjh6bTYuOTgwNTI5NzgtMy45NjM0Mzk5VjEwYzAtMi42NC0yLjMwMjg2NjgtNC45NzUwMzY2Mi01LjAxMDU1OTEtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1Mi0xLjAyOTg0NjItMS45NzMxMTQtMS4wMjk4NDYyLTEuNjI5MDU4ODMgMC0xLjk2NTg1MDgyLjMwOTg0NjItMS45NjU4NTA4MiAxLjAyOTg0NjJDOC4zMjk2MDAxOCA1LjAyNDk2MzM4IDUuOTk1NDgzNCA3LjM2IDUuOTk1NDgzNCAxMHY4LjAzNjU2MDFoLS45ODkxOTY3OHYxLjk1MTQxNkgyMXYtMS45NTE0MTZoLTEuMDEzMTgzNnpNMTMuMDgzODk2MTYgMThsLTIuMDc4OTMwODIgMi4wMjcyMDQ1SDQuOTQxNjIwMzhWMThINnYtM2wyLTIuMDgyOTQyOTJWMTAuM0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzN2MuMjA1ODcyMSAwIDEuMzU3OTgyNS0xLjkwOTA0NTggMS4zNTc5ODI1LTEuOTA5MDQ1OHMxLjMxODM5MDguMjc5MTU2OTIgMi41NTU1MzQzIDEuNTk4ODMzNjdjMS4yMzcxNDM2IDEuMzE5Njc2NzYgMS4zMjUzODg5IDMuMjUxOTI3NzQgMS4zMjUzODg5IDMuMjUxOTI3NzRMMTggMTIuOTQ1NDcyNTZWMThoLTQuOTE2MTAzODR6Ii8+CiAgICA8cGF0aCBzdHJva2U9IiNGMDQ3NDciIHN0cm9rZS13aWR0aD0iMiIgZD0iTTIxIDVMNSAyMSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPgogIDwvZz4KPC9zdmc+");']::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin-right: 5px;
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/notifications_off.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+}
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPHBhdGggZmlsbD0iI0ZGRiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMDA2Mjg2NjIgMjJjMSAwIDEuNzE0Mjg1NzItLjQwMTk1MzEgMS45OTk5OTk5OC0xLjAwNDg4MjhoLTMuOTk5OTk5OThjLjI4NTcxNDMuNjAyOTI5NyAxIDEuMDA0ODgyOCAyIDEuMDA0ODgyOHptNi45ODA1Mjk3OC0zLjk2MzQzOTlWMTBjMC0yLjY0LTIuMzAyODY2OC00Ljk3NTAzNjYyLTUuMDEwNTU5MDgtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1MTctMS4wMjk4NDYyLTEuOTczMTE0LTEuMDI5ODQ2Mi0xLjYyOTA1ODg1IDAtMS45NjU4NTA4NC4zMDk4NDYyLTEuOTY1ODUwODQgMS4wMjk4NDYyQzguMzI5NjAwMTggNS4wMjQ5NjMzOCA1Ljk5NTQ4MzQgNy4zNiA1Ljk5NTQ4MzQgMTB2OC4wMzY1NjAxaC0uOTg5MTk2Nzh2MS45NTE0MTZIMjF2LTEuOTUxNDE2aC0xLjAxMzE4MzZ6TTE4IDE4SDh2LTcuN0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzNEMxNi41NTU1NTU2IDcgMTggOC40MyAxOCAxMC4zVjE4eiIvPgo8L3N2Zz4=");']::before,
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPHBhdGggZmlsbD0iIzk5QUFCNSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMDA2Mjg2NjIgMjJjMSAwIDEuNzE0Mjg1NzItLjQwMTk1MzEgMS45OTk5OTk5OC0xLjAwNDg4MjhoLTMuOTk5OTk5OThjLjI4NTcxNDMuNjAyOTI5NyAxIDEuMDA0ODgyOCAyIDEuMDA0ODgyOHptNi45ODA1Mjk3OC0zLjk2MzQzOTlWMTBjMC0yLjY0LTIuMzAyODY2OC00Ljk3NTAzNjYyLTUuMDEwNTU5MDgtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1MTctMS4wMjk4NDYyLTEuOTczMTE0LTEuMDI5ODQ2Mi0xLjYyOTA1ODg1IDAtMS45NjU4NTA4NC4zMDk4NDYyLTEuOTY1ODUwODQgMS4wMjk4NDYyQzguMzI5NjAwMTggNS4wMjQ5NjMzOCA1Ljk5NTQ4MzQgNy4zNiA1Ljk5NTQ4MzQgMTB2OC4wMzY1NjAxaC0uOTg5MTk2Nzh2MS45NTE0MTZIMjF2LTEuOTUxNDE2aC0xLjAxMzE4MzZ6TTE4IDE4SDh2LTcuN0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzNEMxNi41NTU1NTU2IDcgMTggOC40MyAxOCAxMC4zVjE4eiIvPgo8L3N2Zz4=");']::before {
+    opacity: 0;
+}
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik0xMy4wMDYyODY2MiAyMmMuOTk5OTk5OTggMCAxLjcxNDI4NTY4LS40MDE5NTMxIDEuOTk5OTk5OTgtMS4wMDQ4ODI4aC0zLjk5OTk5OTk4Yy4yODU3MTQzLjYwMjkyOTcgMSAxLjAwNDg4MjggMiAxLjAwNDg4Mjh6bTYuOTgwNTI5NzgtMy45NjM0Mzk5VjEwYzAtMi42NC0yLjMwMjg2NjgtNC45NzUwMzY2Mi01LjAxMDU1OTEtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1Mi0xLjAyOTg0NjItMS45NzMxMTQtMS4wMjk4NDYyLTEuNjI5MDU4ODMgMC0xLjk2NTg1MDgyLjMwOTg0NjItMS45NjU4NTA4MiAxLjAyOTg0NjJDOC4zMjk2MDAxOCA1LjAyNDk2MzM4IDUuOTk1NDgzNCA3LjM2IDUuOTk1NDgzNCAxMHY4LjAzNjU2MDFoLS45ODkxOTY3OHYxLjk1MTQxNkgyMXYtMS45NTE0MTZoLTEuMDEzMTgzNnpNMTMuMDgzODk2MTYgMThsLTIuMDc4OTMwODIgMi4wMjcyMDQ1SDQuOTQxNjIwMzhWMThINnYtM2wyLTIuMDgyOTQyOTJWMTAuM0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzN2MuMjA1ODcyMSAwIDEuMzU3OTgyNS0xLjkwOTA0NTggMS4zNTc5ODI1LTEuOTA5MDQ1OHMxLjMxODM5MDguMjc5MTU2OTIgMi41NTU1MzQzIDEuNTk4ODMzNjdjMS4yMzcxNDM2IDEuMzE5Njc2NzYgMS4zMjUzODg5IDMuMjUxOTI3NzQgMS4zMjUzODg5IDMuMjUxOTI3NzRMMTggMTIuOTQ1NDcyNTZWMThoLTQuOTE2MTAzODR6Ii8+CiAgICA8cGF0aCBzdHJva2U9IiNGMDQ3NDciIHN0cm9rZS13aWR0aD0iMiIgZD0iTTIxIDVMNSAyMSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPgogIDwvZz4KPC9zdmc+");']::after,
+span[style='background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGZpbGw9IiM5OUFBQjUiIGQ9Ik0xMy4wMDYyODY2MiAyMmMuOTk5OTk5OTggMCAxLjcxNDI4NTY4LS40MDE5NTMxIDEuOTk5OTk5OTgtMS4wMDQ4ODI4aC0zLjk5OTk5OTk4Yy4yODU3MTQzLjYwMjkyOTcgMSAxLjAwNDg4MjggMiAxLjAwNDg4Mjh6bTYuOTgwNTI5NzgtMy45NjM0Mzk5VjEwYzAtMi42NC0yLjMwMjg2NjgtNC45NzUwMzY2Mi01LjAxMDU1OTEtNC45NzUwMzY2MiAwLS43Mi0uMzQ0MDU1Mi0xLjAyOTg0NjItMS45NzMxMTQtMS4wMjk4NDYyLTEuNjI5MDU4ODMgMC0xLjk2NTg1MDgyLjMwOTg0NjItMS45NjU4NTA4MiAxLjAyOTg0NjJDOC4zMjk2MDAxOCA1LjAyNDk2MzM4IDUuOTk1NDgzNCA3LjM2IDUuOTk1NDgzNCAxMHY4LjAzNjU2MDFoLS45ODkxOTY3OHYxLjk1MTQxNkgyMXYtMS45NTE0MTZoLTEuMDEzMTgzNnpNMTMuMDgzODk2MTYgMThsLTIuMDc4OTMwODIgMi4wMjcyMDQ1SDQuOTQxNjIwMzhWMThINnYtM2wyLTIuMDgyOTQyOTJWMTAuM0M4IDguNDMgOS40NDQ0NDQ0NCA3IDExLjMzMzMzMzMzIDdoMy4zMzMzMzMzN2MuMjA1ODcyMSAwIDEuMzU3OTgyNS0xLjkwOTA0NTggMS4zNTc5ODI1LTEuOTA5MDQ1OHMxLjMxODM5MDguMjc5MTU2OTIgMi41NTU1MzQzIDEuNTk4ODMzNjdjMS4yMzcxNDM2IDEuMzE5Njc2NzYgMS4zMjUzODg5IDMuMjUxOTI3NzQgMS4zMjUzODg5IDMuMjUxOTI3NzRMMTggMTIuOTQ1NDcyNTZWMThoLTQuOTE2MTAzODR6Ii8+CiAgICA8cGF0aCBzdHJva2U9IiNGMDQ3NDciIHN0cm9rZS13aWR0aD0iMiIgZD0iTTIxIDVMNSAyMSIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIvPgogIDwvZz4KPC9zdmc+");']::after {
+    opacity: 1;
+}
+.header-toolbar button:nth-child(1) span:hover::before {
+    -webkit-animation: opacity-mute-reverse 2s infinite alternate;
+    animation: opacity-mute-reverse 2s infinite alternate;
+}
+.header-toolbar button:nth-child(1) span:hover::after {
+    -webkit-animation: opacity-mute 2s infinite alternate;
+    animation: opacity-mute 2s infinite alternate;
+}
+.header-toolbar button:nth-child(1) span::after,
+.header-toolbar button:nth-child(1) span::before {
+    -webkit-transition: opacity .1s ease-in-out, -webkit-transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, -webkit-transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out, -webkit-transform .1s ease-in-out;
+}
+.header-toolbar button span {
+    opacity: .7;
+}
+.header-toolbar button:nth-child(3) span,
+.private .channel-group-dm + .header-toolbar button:nth-child(4) span {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/group.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.header-toolbar span[style*="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiI+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxwYXRoIGQ9Ik0xIDFoMjR2MjRIMSIvPgogICAgPHBhdGggZmlsbD0iI0ZGRiIgZD0iTTE1IDE1VjZoLTR2OWgtLjUwODk5NDgyQzEwLjIyNzg4MDQ4IDE1IDEwIDE1LjIyMzg1NzYgMTAgMTUuNWMwIC4yNjgwNjY0LjIxOTgzMDUuNS40OTEwMDUxOC41aDUuMDE3OTg5NjRDMTUuNzcyMTE5NTIgMTYgMTYgMTUuNzc2MTQyNCAxNiAxNS41YzAtLjI2ODA2NjQtLjIxOTgzMDUtLjUtLjQ5MTAwNTE4LS41SDE1em0yLTloMVY0SDh2MmgxdjhsLTIgMnYyaDUuMnY0aDEuNnYtNEgxOXYtMmwtMi0yVjZ6Ii8+CiAgPC9nPgo8L3N2Zz4="] {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/pin.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.header-toolbar button:nth-last-of-type(2) span {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/mail.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.header-toolbar button:last-of-type span {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/help.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+#friends .header-toolbar button:nth-child(1) span {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/group_add.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.private .header-toolbar .private-channel-call-btn span {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/call.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.private .header-toolbar button:nth-child(3) span,
+.private .channel-group-dm + .header-toolbar button:nth-child(5) span {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/person_add.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.header-toolbar .auto-update.auto-update-checking span {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/refresh.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.win-buttons button {
+    width: 26px;
+    height: 26px;
+    margin-left: 5px;
+	opacity: .7;
+	-webkit-transition: all .1s ease-in-out;
+	transition: all .1s ease-in-out;
+}
+.win-buttons .win-minimize {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/remove.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center 7px;
+    background-size: 24px;
+}
+.win-buttons .win-maximize {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/fullscreen.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.win-buttons .win-close {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/close.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+
+/* FRIENDS PAGE ICONS */
+#friends .friends-table .friends-row .friends-column-actions .friends-action.friends-action-add {
+	background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/person_add.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+#friends .friends-table .friends-row .friends-column-actions .friends-action.friends-action-ignore,
+#friends .friends-table .friends-row .friends-column-actions .friends-action.friends-action-remove {
+  	background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/close.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+.private-channels .channel .close {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/close.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 18px;
+}
+.private-channel-call .btn-icon-settings:after {
+	background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/settings.svg) !important;
+    background-position: center;
+}
+.private-channel-call .btn-icon-mute:after {
+	background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/mic.svg) !important;
+    background-position: center;
+}
+.private-channel-call .btn-icon-mute.mute:after {
+	background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/mic_off.svg) !important;
+    background-position: center;
+}
+.private-channel-call .status-deafened:after, .private-channel-call .status-muted:after {
+    background-image: url(https://cdn.rawgit.com/Zerthox/Material-Icon-Theme/master/icons/mic_off.svg) !important;
+    background-position: center;
+    background-size: 18px;
+}
+
+/* MEMBER ROLE ADD ICON */
+.member-roles .member-role.member-role-add button {
+	background-image: url(https://cdn.rawgit.com/Zerthox/ClearVision/master/icons/add.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+    background-size: 170%;
+    opacity: .3;
+    -webkit-transition: opacity .1s ease-in-out;
+    transition: opacity .1s ease-in-out;
+}
+.member-roles .member-role.member-role-add:hover button {
+	opacity: .7;
+}
+
+/* FILE ICONS */
+.icon.icon-file,
+.upload-modal .inner .file .icon {
+	background-image: url(https://cdn.rawgit.com/Zerthox/ClearVision/master/icons/file.svg) !important;
+	background-repeat: no-repeat;
+    background-position: center;
+	opacity: .5;
+}
+.icon.icon-file {
+	background-size: 48px;
+}
+.upload-modal .inner .file .icon {
+	background-size: 96px;
+}
+.icon.icon-file.code,
+.upload-modal .inner .file .icon.code,
+.icon.icon-file.webcode,
+.upload-modal .inner .file .icon.webcode {
+	background-image: url(https://cdn.rawgit.com/Zerthox/ClearVision/master/icons/file_code.svg) !important;
+}
+.icon.icon-file.document,
+.upload-modal .inner .file .icon.document {
+	background-image: url(https://cdn.rawgit.com/Zerthox/ClearVision/master/icons/file_document.svg) !important;
+}
+.icon.icon-file.archive,
+.upload-modal .inner .file .icon.archive {
+	background-image: url(https://cdn.rawgit.com/Zerthox/ClearVision/master/icons/file_archive.svg) !important;
+}
+
+/* TEXTAREA UPLOAD ICON */
+.channel-textarea-upload::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url(https://cdn.rawgit.com/Zerthox/ClearVision/master/icons/file_upload.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	opacity: .3;
+	pointer-events: none;
+}
+.channel-textarea-upload:hover::after {
+	opacity: .7;
+}

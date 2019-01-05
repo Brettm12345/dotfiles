@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: propTypeEnumRequired
+# key: pter
+# --
+PropTypes.enum.isRequired,

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: propTypeArrayOf
+# key: ptao
+# --
+PropTypes.arrayOf($1),

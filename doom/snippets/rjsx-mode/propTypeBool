@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: propTypeBool
+# key: ptb
+# --
+PropTypes.bool,

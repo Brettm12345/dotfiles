@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: propTypeElementRequired
+# key: ptelr
+# --
+PropTypes.Element.isRequired,
