@@ -22,18 +22,21 @@
 * terminal font: `Iosevka Term Custom`
 * terminal: `Termite`
 
+
 ## Instalation
 Set `DOTFILES` to whatever you want.
-I personally use `~/etc`
+I personally use `~/etc`.
+Make sure the enviroment variables `$XDG_CONFIG_HOME` and `$XDG_DATA_HOME` are
+set.
+### Dependencies
+* git 
+* Go (required for installation)
+* Dotbro (installed with install.sh, is used to symlink files)
 ``` shell
 export DOTFILES="${HOME}/etc"
 git clone git://github.com/Brettm12345/dotfiles "$DOTFILES"
 eval "$DOTFILES"/install.sh
 ```
-
-## Other repositories
-* [Doom Emacs](https://github.com/Brettm12345/doom-emacs-literate-config "Doom Emacs literate config")
-* [Neovim](https://github.com/Brettm12345/vim-config "Neovim configuration")
 
 ## File Structure
 ```
