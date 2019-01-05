@@ -1,6 +1,7 @@
 .DS_Store
 .idea
 *.log
+fish/fishd.*
 session*
 tmp/
 .dotbro
