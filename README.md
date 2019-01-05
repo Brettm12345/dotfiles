@@ -1,4 +1,8 @@
 # Dotfiles :fire::fire:
+
+![xkcd](https://imgs.xkcd.com/comics/automation.png)
+
+## System info
 * os: `arch linux`
 * browser: `chromium`
 * shell: `fish`
@@ -9,8 +13,7 @@
 * editor: `emacs`
 * terminal editor: `neovim`
 * launcher: `kde`
-
-![xkcd](https://imgs.xkcd.com/comics/automation.png)
+* resolution: `3440x1440`
 
 ## Instalation
 Set `DOTFILES` to whatever you want.
