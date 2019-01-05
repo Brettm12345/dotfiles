@@ -2,30 +2,21 @@
 
 . $HOME/.profile
 
-preview="pkg-info '{2}'"
-cmd="
-yay -Ss "$1" |
-      gawk '{
-        getline descr;
-        sub(/ */,"", descr);
-        repo = blue "[" gensub(/\/.*/, "", 1) "]" reset;
-        name = green gensub(/.*\//, "", 1, $1) reset;
-        info = gensub(/[^ ]* /, "", 1);
-        print repo, name, info, descr;
-      "
-
 packages="$(sk \
-    --cmd-prompt 'install > '\
-    --delimiter ' ' \
-    --nth 2 \
-    --no-hscroll \
-    --multi \
-    --interactive \
-    --preview="$preview" \
-    --preview-window right:50%:wrap:hidden \
+    --ansi \
     --bind 'ctrl-p:toggle-preview' \
-    --cmd "$cmd" \
+    --cmd 'aursearch "{}"' \
+    --cmd-prompt 'install > '\
+    --cmd-query "$1" \
+    --delimiter ' ' \
+    --interactive \
+    --multi \
+    --no-hscroll \
+    --nth 2 \
+    --preview "yay -Si {2}" \
+    --tac \
+    --preview-window right:50%:wrap:hidden \
     | cut -d ' ' -f 2 \
     | tr '\n' ' ' )"
 
-test -n "$packages" && sudo xbps-install -S $packages
+test -n "$packages" && yay -S $packages
