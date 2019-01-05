@@ -1,7 +1,9 @@
 # Dotfiles :fire::fire:
 
 <p align="center">
-  <img src="https://imgs.xkcd.com/comics/automation.png" />
+  <a href="https://xkcd.com/1319/">
+    <img src="https://imgs.xkcd.com/comics/automation.png" />
+  </a>
 </p>
 
 ## System info
