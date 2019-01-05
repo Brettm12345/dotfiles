@@ -72,10 +72,16 @@ eval "$DOTFILES"/install.sh
 ```
 
 ## Screenshots
+### Emacs/Chromium
 ![screenshot](https://i.redd.it/iohg4qda05721.png)
+### Window settings
 ![screenshot](https://ptpimg.me/qpq64p.png)
+### Ncmpcpp/Cava/Tmux
 ![screenshot](https://ptpimg.me/1yf338.png)
+### Tmux/Neovim
 ![screenshot](https://ptpimg.me/gvv9l9.png)
+### Discord
 ![screenshot](https://ptpimg.me/hzo19i.png)
+### File manager
 ![screenshot](https://ptpimg.me/5a7yiw.png)
 
