@@ -2,7 +2,7 @@
 
 BASEDIR=$(dirname "$0")
 
-if command -v neovim > /dev/null; then
+if command -v emacs > /dev/null; then
     echo "Installing doom emacs..."
     git clone git@github.com:/hlissner/doom-emacs "$HOME"/.emacs.d
     echo "Cloning emacs configuration..."
@@ -11,7 +11,7 @@ else
     echo "Emacs is not installed skipping emacs config"
 fi
 
-if command -v neovim > /dev/null; then
+if command -v nvim > /dev/null; then
     echo "Cloning neovim configuration..."
     git clone git@github.com:/Brettm12345/vim-config "$HOME"/.config/nvim
 else
