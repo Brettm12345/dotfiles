@@ -2,21 +2,50 @@
 
 BASEDIR=$(dirname "$0")
 
-if command -v emacs > /dev/null; then
-    echo "Installing doom emacs..."
-    git clone git@github.com:/hlissner/doom-emacs "$HOME"/.emacs.d
-    echo "Cloning emacs configuration..."
-    git clone git@github.com:/Brettm12345/doom-emacs-literate-config "$HOME"/.config/doom
-else
-    echo "Emacs is not installed skipping emacs config"
-fi
+setupFish() {
+    if command -v fish > /dev/null; then
+        echo "Installing fisher..."
+        curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish > /dev/null
+        echo "Installing plugins..."
+        fish -c fisher > /dev/null
+        read -p "Do you wish to setup neovim (y/n)" yn
+        case $yn in
+            [Yy]* ) chsh -s /usr/bin/fish;;
+            [Nn]* ) echo "Keeping default shell..."
+        esac
+    else
+        echo "Please install fish-shell"
+    fi
+}
 
-if command -v nvim > /dev/null; then
-    echo "Cloning neovim configuration..."
-    git clone git@github.com:/Brettm12345/vim-config "$HOME"/.config/nvim
-else
-    echo "Neovim is not installed skipping neovim config"
-fi
+setupEmacs() {
+    if command -v emacs > /dev/null; then
+        cd "$HOME"/.emacs.d
+        make
+    else
+        echo "Please install emacs"
+    fi
+}
+
+setupNvim() {
+    if command -v nvim > /dev/null; then
+        cd "$BASEDIR"/nvim
+        if command -v pip3 > /dev/null; then
+            echo "Setting up python virtual environment..."
+            ./venv.sh > /dev/null
+            echo "Installing plugins..."
+            make > /dev/null
+            echo "Setting colorscheme..."
+            nvim --cmd 'set t_ti= t_te= nomore' -N -U NONE -i NONE \
+                -c "try | colorscheme palenight | finally | call confirm('') | qall! | endtry"
+        else
+            echo "Please install python 3"
+        fi
+        cd ../
+    else
+        echo "Please install neovim"
+    fi
+}
 
 if command -v go > /dev/null; then
     if test ! -x "$GOPATH"/bin/dotbro; then
@@ -26,7 +55,26 @@ if command -v go > /dev/null; then
     echo "Symlinking dotfiles..."
     eval "$GOPATH"/bin/dotbro --config "$BASEDIR"/dotbro/config.toml
 else
-    echo "Go is not installed. Cannot install dotbro"
+    echo "Please install go. Cannot install dotbro"
+    exit 1
 fi
 
-echo "Install finished"
+read -p "Do you wish to setup neovim (y/n)" yn
+case $yn in
+    [Yy]* ) setupNvim;;
+    [Nn]* ) echo "Skipping neovim setup..."
+esac
+
+read -p "Do you wish to setup emacs (y/n)" yn
+case $yn in
+    [Yy]* ) setupEmacs;;
+    [Nn]* ) echo "Skipping emacs setup..."
+esac
+
+read -p "Do you wish to setup fish-shell (y/n)" yn
+case $yn in
+    [Yy]* ) setupFish;;
+    [Nn]* ) echo "Skipping fish setup..."
+esac
+
+echo "Install finished!"
