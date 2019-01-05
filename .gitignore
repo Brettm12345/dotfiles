@@ -3,6 +3,11 @@
 *.log
 fish/fishd.*
 session*
+mpd/lyrics/
+mpd/state
+mpd/sticker.sql
+mpd/database
+mpv/watch_later/
 tmp/
 .dotbro
 .tmux
