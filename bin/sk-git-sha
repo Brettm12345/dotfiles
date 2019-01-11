@@ -7,5 +7,5 @@
 #  + git commit --fixup `sk-git-sha`
 
 commits=$(git log --color=always --abbrev-commit --reverse --format="%C(auto)%h%d %s %C(black)%C(bold)%cr") &&
-  commit=$(echo "$commits" | sk --tac --no-sort -e --ansi) &&
+  commit=$(echo "$commits" | sk --tac --no-sort -e --ansi --preview 'git show --color=always {1}') &&
   echo -n $(echo "$commit" | sed "s/ .*//")

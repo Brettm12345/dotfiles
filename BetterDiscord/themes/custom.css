@@ -1,11 +1,209 @@
+:root {
+  --accent-color: #c792ea;
+  --accent-color-hover: #bb80b3;
+  --accent-color-active: #bb80b3;
+  --accent-rgb: rgba(210, 167, 238, 0.3);
+
+  --card-color: #1e212e;
+  --card-games: #242837;
+  --card-shadow-border: 0 1px 0 0 #333;
+
+  --success-color: #43b581;
+
+  --alert-color: #f04747;
+  --alert-color-hover: #f74a4a;
+  --alert-color-active: #fa5c5c;
+
+  --main-color: #1c1f2b;
+  --main-alt: #1e212e;
+  --message-color: #242837;
+  --message-alt: #232635;
+
+  --chat-color: #292d3e;
+  --popout-color: #242837;
+  --popout-alt: #292d3e;
+  --server-bg: #232635;
+
+  --spotify-color: #1db954;
+  --stream-color: #593695;
+
+  --input-color: #232635;
+  --hover-color: rgba(255, 255, 255, 0.05);
+
+  --border-radius: 4px;
+  --border-radius-big: 8px;
+  --border-radius-bar: 3px;
+
+  --slider-background: #4f545c;
+
+  --default-animation: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --shadow-1dp: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  --shadow-2dp: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+    0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-3dp: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+
+  --shadow-button: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  --shadow-button-hover: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+  --shadow-button-active: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
 code {
-    font-family: "Iosevka Term Custom Medium";
+  font-family: "Iosevka Term Custom Medium" !important;
 }
 code.inline {
-    font-family: "Iosevka Term Custom Medium";
+  font-family: "Iosevka Term Custom Medium" !important;
 }
 
-a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, ul, var {
-    font-family: "Noto Sans";
-    font-weight: 500;
+* {
+  font-family: "Noto Sans" !important;
+  font-weight: 500;
+  font-stretch: extra-condensed !important;
+}
+
+.markup-2BOw-j pre,
+.markup-2BOw-j pre *,
+.markup-2BOw-j pre code,
+.markup-2BOw-j pre code *,
+.markup-2BOw-j code.inline {
+  font-family: "Iosevka Term Custom" !important;
+  font-weight: 500 !important;
+}
+
+.pickerButtons-v-PPYK {
+  width: 70px;
+  height: 68px;
+  top: 0;
+  right: 12px;
+  position: absolute;
+}
+
+.guild-1EfMGQ.unread-qLkInr:before,
+.guild-1EfMGQ.selected-ML3OIq.unread-qLkInr:before {
+  display: none !important;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em !important;
+  background: #292d3e !important;
+}
+
+.hljs-built_in,
+.hljs-selector-tag,
+.hljs-section,
+.hljs-link {
+  color: #82aaff !important;
+}
+
+.hljs-keyword {
+  color: #c792ea !important;
+}
+
+.hljs,
+.hljs-subst {
+  color: #eeffff !important;
+}
+
+.hljs-title {
+  color: #c3e88d !important;
+}
+
+.hljs-string,
+.hljs-meta,
+.hljs-name,
+.hljs-type,
+.hljs-attr,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-tag,
+.hljs-template-variable {
+  color: #ffcb6b !important;
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion {
+  color: #78ccf0 !important;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-title,
+.hljs-section,
+.hljs-doctag,
+.hljs-type,
+.hljs-name,
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-literal,
+.hljs-number {
+  color: #ffcb6b !important;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+.theme-dark .header-ykumBX {
+  background-color: "inherit";
+}
+.dividerContent-2L12VI:before,
+.dividerContent-2L12VI:after {
+  background-color: #3c435e !important;
+}
+
+.divider-3gKybi > span {
+  color: #a6accd;
+}
+
+.divider-3gKybi > span {
+  background-color: #3c435e !important;
+}
+
+.theme-dark .embedInner-1-fpTo {
+  background-color: #1c1f2b;
+}
+
+.queryText-3xoOY7 {
+  background-color: #fff;
+}
+
+.content-20Aix8.contentSelectedText-3wUhMi,
+.privateChannels-1nO12o .channel-2QD9_O.selected a {
+  background-color: #242837;
+}
+
+.theme-dark .markup-2BOw-j code,
+.theme-dark .markup-2BOw-j code.inline {
+  background-color: #292d3e;
+}
+
+.markup-2BOw-j code.inline,
+.markup-2BOw-j pre,
+.markup-2BOw-j pre code {
+  background-color: var(--card-color) !important;
+}
+
+code {
+  font-family: "Iosevka Term Custom Medium";
+}
+
+code.inline {
+  font-family: "Iosevka Term Custom Medium";
+}
+
+* {
+  font-family: "Noto Sans";
+  font-stretch: extra-condensed;
+  font-weight: 500;
 }

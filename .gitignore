@@ -8,6 +8,8 @@ mpd/state
 mpd/sticker.sql
 mpd/database
 mpv/watch_later/
+beets/library.db
+beets/state.pickle
 tmp/
 .dotbro
 .tmux

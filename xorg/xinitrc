@@ -9,4 +9,5 @@ xsetroot -cursor_name left_ptr &
 # pgrep librespot  || lnch librespot -n "uwu" -b 320
 # pgrep unclutter  || lnch unclutter
 
-exec startkde
+export GDK_BACKEND=x11
+exec gnome-session

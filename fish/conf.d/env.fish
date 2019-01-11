@@ -43,11 +43,11 @@ set -x TMUX_PLUGIN_MANAGER_PATH "$TMUX_HOME/plugins"
 
 # FZF
 set -x FZF_DEFAULT_COMMAND "sh -c 'git ls-tree -r --name-only HEAD 2> /dev/null || fd -H --type f --ignore-file $XDG_CONFIG_HOME/git/ignore . $HOME'"
-set -x FZF_DEFAULT_OPTIONS "--color=16,fg+:2,bg+:0,hl:4,hl+:4,prompt:4,pointer:8 --border"
+set -x FZF_DEFAULT_OPTIONS "--cycle --color=16,fg+:2,bg+:0,hl:4,hl+:4,prompt:4,pointer:8 --border"
 
 # Skim
 set -x SKIM_DEFAULT_COMMAND "sh -c 'git ls-tree -r --name-only HEAD 2> /dev/null || fd -H --type f --ignore-file $XDG_CONFIG_HOME/git/ignore . $HOME'"
-set -x SKIM_DEFAULT_OPTIONS "--color=16,fg+:16,bg+:0,hl:4,hl+:4,prompt:4,pointer:8"
+set -x SKIM_DEFAULT_OPTIONS "--cycle --color=16,fg+:2,bg+:0,hl:4,hl+:4,prompt:4,pointer:8 --border"
 
 # Faster compilation
 set -x CFLAGS "-march=znver1"

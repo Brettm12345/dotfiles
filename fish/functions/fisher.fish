@@ -1,4 +1,4 @@
-set -g fisher_version 3.2.1
+set -g fisher_version 3.2.2
 
 function fisher -a cmd -d "fish package manager"
     set -q XDG_CACHE_HOME; or set XDG_CACHE_HOME ~/.cache
@@ -53,7 +53,7 @@ function fisher -a cmd -d "fish package manager"
         case -h {,--}help
             _fisher_help
         case ""
-            _fisher_commit -- $argv
+            _fisher_commit --
         case add rm
             if not isatty
                 while read -l arg
@@ -76,7 +76,7 @@ function fisher -a cmd -d "fish package manager"
 end
 
 function _fisher_self_complete
-    complete -c fisher --erase
+    complete -ec fisher
     complete -xc fisher -n __fish_use_subcommand -a add -d "Add packages"
     complete -xc fisher -n __fish_use_subcommand -a rm -d "Remove packages"
     complete -xc fisher -n __fish_use_subcommand -a ls -d "List added packages"
@@ -237,7 +237,7 @@ function _fisher_commit -a cmd
 end
 
 function _fisher_fmt
-    command sed "s|^[ \t]*||;s|^$fisher_config/||;s|^$HOME|~|;s|^\.\/|$PWD/|;s|^github\.com/||;s|^https*://||;s|/*\$||"
+    command sed "s|^[[:space:]]*||;s|^$fisher_config/||;s|^$HOME|~|;s|^\.\/|$PWD/|;s|^github\.com/||;s|^https*://||;s|/*\$||"
 end
 
 function _fisher_read -a cmd

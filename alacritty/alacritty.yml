@@ -26,7 +26,7 @@ draw_bold_text_with_bright_colors: false
 font:
   normal:
     family: Iosevka Term Custom
-    hintstyle: hintnone
+    hintstyle: hintslight
     antialias: true
     lsdfilter: lcddefault
     rgba: rgb
@@ -38,7 +38,7 @@ font:
     antialias: true
     lsdfilter: lcddefault
     rgba: rgb
-    style: Bold
+    style: Semibold
 
   italic:
     family: Iosevka Term Custom
@@ -51,7 +51,7 @@ font:
   size: 16.0
 
   offset:
-    x: -2
+    x: -1
     y: 0
 
   glyph_offset:

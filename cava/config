@@ -1,8 +1,7 @@
 [general]
-mode = waves
+bar_width = 2
 framerate = 60
 autosens = 1
-sensitivity = 1
 
 [input]
 method = fifo
@@ -21,9 +20,9 @@ foreground = blue
 gradient = 0
 
 [smoothing]
-integral = 95
+integral = 90
 monstercat = 1
-waves = 1
-gravity = 70
+waves = 0
+gravity = 100
 
 # vim:ft=config

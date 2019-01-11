@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sk --ansi --cmd-prompt 'rg > ' --cmd-query "$1" -i -c 'rg --color=always --ignore-file ~/.config/git/ignore --line-number "{}"'

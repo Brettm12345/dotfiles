@@ -1,10 +1,10 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR CMD_DURATION:0
+SETUVAR CMD_DURATION:2374
 SETUVAR FZF_CD_COMMAND:command\x20fd\x20\x2dt\x20d\x20\x2dd\x205\x20\x2dL\x20\x2dp\x20\x24dir
 SETUVAR FZF_CD_WITH_HIDDEN_COMMAND:command\x20fd\x20\x2dH\x20\x2dt\x20d\x20\x2dd\x205\x20\x2dL\x20\x2dp\x20\x24dir
 SETUVAR FZF_COMPLETE:1
-SETUVAR --export FZF_DEFAULT_OPTS:\x2d\x2dreverse\x20\x2d\x2dcolor\x3d16\x2cfg\x2b\x3a2\x2cbg\x2b\x3a0\x2chl\x3a4\x2chl\x2b\x3a4\x2cprompt\x3a4\x2cpointer\x3a8
+SETUVAR FZF_DEFAULT_OPTS:\x2d\x2dreverse\x20\x2d\x2dcolor\x3d16\x2cfg\x2b\x3a2\x2cbg\x2b\x3a0\x2chl\x3a4\x2chl\x2b\x3a4\x2cprompt\x3a4\x2cpointer\x3a8
 SETUVAR FZF_FIND_FILE_COMMAND:command\x20fd\x20\x2dH\x20\x2dt\x20f\x20\x2dL\x20\x2dp\x20\x2d\x2dignore\x2dfile\x20/home/brett/\x2econfig/git/ignore\x20\x24dir
 SETUVAR FZF_LEGACY_KEYBINDINGS:0
 SETUVAR FZF_OPEN_COMMAND:command\x20fd\x20\x2dH\x20\x2dt\x20f\x20\x2dL\x20\x2dp\x20\x2d\x2dignore\x2dfile\x20/home/brett/\x2econfig/git/ignore\x20\x24dir
@@ -20,7 +20,11 @@ SETUVAR NEET_LIST_FILE:/home/brett/usr/share/neet/list
 SETUVAR NEET_MEDIA_DIR:/mnt/media/Videos
 SETUVAR NEET_ON_PLAY:__neet_on_play
 SETUVAR NEET_PLAYER_COMMAND:mpv\x20\x2d\x2dfullscreen\x20\x2d\x2dno\x2dpause
+SETUVAR ZO_CMD:zo
+SETUVAR Z_CMD:z
+SETUVAR Z_DATA:/home/brett/usr/share/z/data
 SETUVAR Z_DATA_DIR:/home/brett/usr/share/z
+SETUVAR Z_EXCLUDE:/home/brett
 SETUVAR __done_notification_command:notify\x2dsend\x2esh\x20\x2d\x2dapp\x2dname\x3dfish\x20\x22\x24title\x22\x20\x22\x24message\x22
 SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d
@@ -28,6 +32,8 @@ SETUVAR __fish_init_3_x:\x1d
 SETUVAR _fish_abbr_c:clear
 SETUVAR _fish_abbr_chmox:chmod\x20\x2bx
 SETUVAR _fish_abbr_s:sudo
+SETUVAR _fish_abbr_sc:sudo\x20systemctl
+SETUVAR _fish_abbr_scu:systemctl\x20\x2d\x2duser
 SETUVAR _fish_abbr_v:nvim
 SETUVAR _fish_abbr_xi:xbps\x2dinstall
 SETUVAR _fish_abbr_xr:xbps\x2dremove
@@ -153,3 +159,4 @@ SETUVAR prompt_slimfish_gitline_7973:\ue0a0\x20\U0001d62e\x20\x1b\x5b32m\u2190\x
 SETUVAR prompt_slimfish_gitline_8151:\x1d
 SETUVAR prompt_slimfish_gitline_9580:\x1b\x5b0m\ue0a0\x20\x1b\x5b32m\u2192\x1b\x5b0m2848\x20\x5b\x1b\x5b34mdevelop\x1b\x5b0m\x5d
 SETUVAR prompt_slimfish_gitline_9854:\x1b\x5b0m\u16b4\x20\U0001d62e\x20\x1b\x5b32m\u2190\x1b\x5b0m2820\x20develop\x2028\x1b\x5b32m\u2191\x1b\x5b0m
+SETUVAR pure_version:1\x2e13\x2e0

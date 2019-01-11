@@ -1,0 +1,19 @@
+#!/bin/sh
+
+esc='\033'
+c_reset="${esc}[0m"
+c_magenta="${esc}[35m"
+c_cyan="${esc}[36m"
+c_green="${esc}[32m"
+c_yellow="${esc}[33m"
+c_blue="${esc}[34m"
+
+expac -H M '%r\t%n\t%v\t%m\t%d' -Qs "$1" | sort -k 4,4 |
+      gawk -F '\t' '{
+        repo = magenta "[" $1 "]" reset;
+        name = blue $2 reset;
+        version = green $3 reset;
+        size = yellow "(" $4 ")" reset;
+        descr = $5;
+        print repo, name, version, size, descr;
+}' blue="$c_blue" yellow="$c_yellow" cyan="$c_cyan" magenta="$c_magenta" green="$c_green" reset="$c_reset"

@@ -1,16 +1,21 @@
 #!/bin/sh
 
-esc=$'\033'
+esc='\033'
 c_reset="${esc}[0m"
+c_magenta="${esc}[35m"
+c_cyan="${esc}[36m"
 c_green="${esc}[32m"
+c_yellow="${esc}[33m"
 c_blue="${esc}[34m"
 
-yay -Ss $1 |
+yay -Ss "$1" |
       gawk '{
         getline descr;
         sub(/ */,"", descr);
-        repo = blue "[" gensub(/\/.*/, "", 1) "]" reset;
-        name = green gensub(/.*\//, "", 1, $1) reset;
-        info = gensub(/[^ ]* /, "", 1);
-        print repo, name, info, descr;
-}' blue="$c_blue" green="$c_green" reset="$c_reset"
+        repo = magenta "[" gensub(/\/.*/, "", 1) "]" reset;
+        name = blue gensub(/.*\//, "", 1, $1) reset;
+        version = cyan gensub(/.*/, "", 2, $2) reset;
+        info = yellow $3 $4 " " $5 $6 reset;
+        installed = green $7 reset;
+        print repo, name, version, info, installed, descr;
+}' blue="$c_blue" yellow="$c_yellow" cyan="$c_cyan" magenta="$c_magenta" green="$c_green" reset="$c_reset"

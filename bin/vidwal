@@ -1,0 +1,41 @@
+#!/bin/sh
+# Set Wallpaper
+
+# If $1 is not empty
+if [ -n "$1" ] ; then
+    case "$1" in
+      last)
+        # Grab last set wallpaper from file and store in $WALL
+        WALL=`cat ~/usr/dsk/lastwall`
+        ;;
+      *)
+        # Set $WALL from command line and write to file for future use
+        WALL=$1
+        echo $1 > ~/usr/dsk/lastwall
+        ;;
+    esac
+
+    case "$WALL" in
+        *.jpg|*.jpeg|*.png|*.gif|*.bmp)
+            # $WALL is an image file, so use hsetroot to set it as the background
+            echo Setting with hsetroot...
+            hsetroot -full "$WALL"
+            ;;
+        *)
+            # $WALL is likely not an image, so attempt to play with mplayer
+            echo Setting with mplayer...
+            # Blank out background first
+            hsetroot -solid "#000000"
+            # "Play" background using colorkey
+            sudo mplayer -fs -vo xvidix -rootwin -colorkey 000000 -quiet "$WALL" &
+            ;;
+    esac
+
+    # Return good
+    exit 0
+else
+    echo Please specify an image or a video file to set, or use "last"
+
+    # Return bad
+    exit 1
+fi
