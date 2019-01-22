@@ -56,10 +56,10 @@
                 "Discord Experiments": true,
                 "Extended Context Menu": true,
                 "LazyLoad Patcher": true,
-                "LineNumbersRedux": false,
+                "LineNumbersRedux": true,
                 "PinDMs": true,
                 "Theme Customizer": false,
-                "Line Numbers": true,
+                "Line Numbers": false,
                 "Lib Discord Internals": true,
                 "StatusEverywhere": false,
                 "greentext plugin": true,
@@ -71,12 +71,18 @@
                 "CSSCode": true,
                 "FriendNotifications": true,
                 "ShowImageDetails": true,
-                "RepoControls": true,
+                "RepoControls": false,
                 "PersonalPins": true,
                 "Link Tooltips": true,
                 "Clear-Input-on-Escape": true,
                 "KawaiiEmotes": true,
-                "Edit Uploads": true
+                "Edit Uploads": true,
+                "ThemeSettings": true,
+                "AutoStartRichPresence": true,
+                "Direct-Download": true,
+                "NotificationSounds": true,
+                "ReverseImageSearch": true,
+                "Customizable Avatar DPI": true
             },
             "themes": {
                 "DarkerDiscordTheme": false,
@@ -84,12 +90,20 @@
                 "Windows Activity buttons inside Discord addon": false,
                 "Material_Icons": true,
                 "Material_Discord": true,
-                "Anti_Lag": false
+                "Anti_Lag": false,
+                "Minimalistcord": false,
+                "Style Fonts": false,
+                "FullSizePfp": true,
+                "Beautiful Categories": false,
+                "Chat Bubble - Style 2": false,
+                "Chat Bubble - Style 1": false,
+                "ThemeFixer": false,
+                "Nox": false
             }
         },
         "canary": {},
         "ptb": {}
     },
-    "emoteCacheDate": "2019-01-05T21:02:23.348Z",
+    "emoteCacheDate": "2019-01-17T04:36:55.800Z",
     "bdcustomcss": ""
 }

@@ -1,5 +1,10 @@
 {
-    "infos": {},
+    "infos": {
+        "https://betterdiscord.net/ghdl?id=2450": {
+            "name": "RepoUtils.plugin.js",
+            "type": "text/javascript"
+        }
+    },
     "settings": {
         "afterInstall": "enable",
         "previewType": "inApp"

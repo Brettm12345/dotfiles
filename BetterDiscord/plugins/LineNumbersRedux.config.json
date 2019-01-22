@@ -1,6 +1,6 @@
 {
     "settings": {
         "ignoreNoLanguage": false,
-        "noStyle": true
+        "noStyle": false
     }
 }

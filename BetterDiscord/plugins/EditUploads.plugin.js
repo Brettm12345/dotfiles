@@ -22,12 +22,14 @@ class EditUploads {
         return "Edit image files before uploading.  Uses icons from icons8 https://icons8.com/";
     }
     getVersion() {
-        return "0.0.3";
+        return "0.0.4";
     }
     getAuthor() {
         return "Qwerasd";
     }
     load() {
+        this.colorWhiteClass = BdApi.findModuleByProps('colorWhite').colorWhite.split(' ')[0];
+        this.lookLinkClass = BdApi.findModuleByProps('lookLink').lookLink.split(' ')[0];
         this.uploadModalClass = BdApi.findModuleByProps('uploadModal').uploadModal;
         this.descriptionClass = BdApi.findModuleByProps('file', 'filename', 'comment', 'description').description;
         this.iconClass = BdApi.findModuleByProps('file', 'filename', 'comment', 'description').icon;
@@ -343,10 +345,14 @@ class EditUploads {
             #EditUploadsEditButton {
                padding: 0;
                background: none;
+               background-color: transparent;
             }
 
-            #EditUploadsEditButton:hover {
-                background-color: transparent;
+            #EditUploadsEditButton span {
+                font-size: 127%;
+            }
+
+            #EditUploadsEditButton:hover span {
                 text-decoration: underline;
             }
 
@@ -795,6 +801,7 @@ class EditUploads {
         button.style.minWidth = '0px';
         const span = document.createElement('span');
         span.innerText = 'Edit';
+        span.className = `${this.colorWhiteClass} ${this.lookLinkClass}`;
         button.appendChild(span);
         button.addEventListener('click', this.startEdit.bind(this));
         return button;

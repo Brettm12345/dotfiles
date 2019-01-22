@@ -4,6 +4,9 @@
   name = Brett Mandler
   email = brettmandler@gmail.com
   signkey = B511A07485FD1360
+
+[github]
+  user = Brettm12345
 ; }}}
 ; Main Config {{{
 
@@ -148,8 +151,8 @@
   new = green bold
 
 [color "status"]
-  added = yellow
-  changed = green
+  added = green
+  changed = blue
   untracked = cyan
 ; }}}
 

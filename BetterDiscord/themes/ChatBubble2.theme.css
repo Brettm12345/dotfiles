@@ -1,0 +1,7 @@
+//META{"name":"Chat Bubble - Style 2","description":"Chat bubble with glow & hover effects.","author":"Satoru","version":"1.0","website":"http://discord.gg/fjvwb95"}*//{}
+
+@import url('https://satoru8.github.io/Addons/ChatBubbles/chatbubble2.css');
+
+:root {
+	--glow2: hsla(0, 100%, 50%, 0.9)
+}

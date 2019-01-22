@@ -1,6 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR CMD_DURATION:2374
+SETUVAR CMD_DURATION:1222
 SETUVAR FZF_CD_COMMAND:command\x20fd\x20\x2dt\x20d\x20\x2dd\x205\x20\x2dL\x20\x2dp\x20\x24dir
 SETUVAR FZF_CD_WITH_HIDDEN_COMMAND:command\x20fd\x20\x2dH\x20\x2dt\x20d\x20\x2dd\x205\x20\x2dL\x20\x2dp\x20\x24dir
 SETUVAR FZF_COMPLETE:1
@@ -69,7 +69,7 @@ SETUVAR fish_pager_color_description:brblack
 SETUVAR fish_pager_color_prefix:yellow
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_user_abbreviations:s\x20sudo\x1ec\x20clear\x1ev\x20nvim\x1echmox\x20chmod\x20\x2bx\x1exi\x20xbps\x2dinstall\x1exs\x20xbps\x2dquery\x20\x2dRs\x1exr\x20xbps\x2dremove\x1exra\x20xbps\x2dremove\x20\x2dR
-SETUVAR fish_user_paths:/home/brett/bin\x1e/home/brett/\x2ecask/bin\x1e/home/brett/\x2eemacs\x2ed/bin\x1e/home/brett/usr/share/npm\x2dpackages/bin\x1e/home/brett/usr/share/cargo/bin
+SETUVAR fish_user_paths:/home/brett/bin\x1e/home/brett/\x2ecask/bin\x1e/home/brett/\x2eemacs\x2ed/bin\x1e/home/brett/usr/share/yarn/global/bin\x1e/home/brett/usr/share/cargo/bin
 SETUVAR fisher_active_prompt:\x1d
 SETUVAR grc_plugin_execs:cat\x1ecvs\x1edf\x1ediff\x1edig\x1egcc\x1eg\x2b\x2b\x1eip\x1emake\x1emount\x1emtr\x1enetstat\x1eping\x1eps\x1etail\x1etraceroute\x1ewdiff
 SETUVAR prompt_slimfish_gitline_10085:\x1d

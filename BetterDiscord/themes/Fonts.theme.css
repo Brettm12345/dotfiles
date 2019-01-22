@@ -1,0 +1,14 @@
+//META{"name":"Style Fonts","description":"Simple addon to change font, font size, and font color. Please use the support server listed below if you need any help.","author":"Satoru","version":"1.0","website":"http://discord.gg/fjvwb95"}*//{}
+
+/* Make sure your font is installed locally on your computer. Otherwise, import it below. */
+
+@import url(https://satoru8.github.io/Addons/Fonts/Fonts.css);
+@import url('font url');
+
+:root {
+
+--font: sans-serif;
+--fontsize: .9rem;
+--textcolor: #fff;
+
+}

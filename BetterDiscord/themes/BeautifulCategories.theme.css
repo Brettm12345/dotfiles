@@ -1,0 +1,8 @@
+//META{"name":"Beautiful Categories","description":"Adds lines to the left and right of categories for channels and memberlist. Original creator lloti.","author":"Satoru","version":"1.1","website":"http://discord.gg/fjvwb95"}*//{}
+
+@import url(https://satoru8.github.io/Addons/BeautifulCategories.css);
+
+:root {
+    --LineColour: #fff;
+    --NameColour: #fff
+}

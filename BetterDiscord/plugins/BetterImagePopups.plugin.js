@@ -7,7 +7,7 @@ const BetterImagePopups = (function() {
 	const script = {
 		name: "Better Image Popups",
 		file: "BetterImagePopups",
-		version: "1.4.7",
+		version: "1.4.8",
 		author: "Orrie",
 		desc: "Improves the image popups with full resolution images (if activated) and zooming from native size when clicking on them",
 		url: "https://github.com/Orrielel/BetterDiscordAddons/tree/master/Plugins/BetterImagePopups",
@@ -43,8 +43,8 @@ const BetterImagePopups = (function() {
 .bip-container .bip-controls > div:not(.tooltip) {display: inline-block;}
 .bip-container .bip-zoom {border-radius: 5px; border: 2px solid; cursor: pointer; line-height: 20px; margin: 0 10px; padding: 0px 5px; text-align: center; width: 10px;}
 .bip-toggled {display: none !important;}
-.bip-container .orrie-tooltip .tooltip-top {bottom: calc(100% + 10px);}
-.bip-container .orrie-tooltip .tooltip-bottom {top: 100%;}
+.bip-container .orrie-tooltip .top-1pTh1F {bottom: calc(100% + 10px);}
+.bip-container .orrie-tooltip .bottom-19kp6S {top: 100%;}
 .bip-container.bip-scaling .scrollerWrap-2lJEkd .tooltip {display: none;}
 // progress bar
 @-webkit-keyframes progress-bar-stripes {from {background-position: 40px 0;} to {background-position: 0 0;}}
@@ -67,13 +67,13 @@ const BetterImagePopups = (function() {
 .theme-dark .orrie-plugin {color: #B0B6B9;}
 /* tooltips */
 .orrie-tooltip {overflow: initial;}
-.orrie-tooltip:hover > .tooltip {display: initial;}
-.orrie-tooltip .tooltip {display: none; margin: 0; text-align: center; width: max-content;}
-.orrie-tooltip .tooltip-top {bottom: 135%; left: 50%; transform: translateX(-50%);}
-.orrie-tooltip .tooltip-bottom {top: 135%; left: 50%; transform: translateX(-50%);}
-.orrie-tooltip .tooltip-right {left: 135%; top: 50%; transform: translateY(-50%);}
-.orrie-tooltip .tooltip-left {right: 135%; top: 50%; transform: translateY(-50%);}
-.orrie-tooltip .tooltip:hover {display: none;}
+.orrie-tooltip:hover > .tooltip-1OS-Ti {display: initial;}
+.orrie-tooltip .tooltip-1OS-Ti {display: none; margin: 0; text-align: center; width: max-content;}
+.orrie-tooltip .top-1pTh1F {bottom: 135%; left: 50%; transform: translateX(-50%);}
+.orrie-tooltip .bottom-19kp6S {top: 135%; left: 50%; transform: translateX(-50%);}
+.orrie-tooltip .right-KM_vfY {left: 135%; top: 50%; transform: translateY(-50%);}
+.orrie-tooltip .left-1wV7VO {right: 135%; top: 50%; transform: translateY(-50%);}
+.orrie-tooltip .tooltip-1OS-Ti:hover {display: none;}
 			`
 		},
 		zoom: 100
@@ -169,12 +169,12 @@ const BetterImagePopups = (function() {
 						zoomImage(click, "in", img, wrapper);
 					}
 				}),
-				!script.settings.tooltips ? _createElement("div", {className: "tooltip tooltip-brand tooltip-bottom", textContent: "Shift = 50%, Ctrl = 100% and Alt = 200%"}) : ""
+				!script.settings.tooltips ? _createElement("div", {className: "tooltip-1OS-Ti brand-3tBTjG bottom-19kp6S", textContent: "Shift = 50%, Ctrl = 100% and Alt = 200%"}) : ""
 			]));
 			container.classList.add("orrie-tooltip", "orrie-relative");
 			container.insertBefore(_createElement("div", {className: "bip-description description-3_Ncsb userSelectText-1o1dQ7", innerHTML: `<span id='bip-info'></span><span id='bip-size' class='bip-toggled'></span><span id='bip-scale' class='bip-toggled'></span><span id='bip-zoom' class='bip-toggled'>Zoomed to <span class='bip-zoom-width'></span>px × <span class='bip-zoom-height'></span>px</span><span id='bip-error' class='bip-toggled'></span></span>`}), container.lastElementChild);
 			if (!script.settings.tooltips) {
-				container.appendChild(_createElement("div", {className: "tooltip tooltip-brand tooltip-top", textContent: script.settings.fullRes && script.settings.onClick ? "Click the image to load full resolution, then click the image to zoom": "Click the image to zoom"}));
+				container.appendChild(_createElement("div", {className: "tooltip-1OS-Ti brand-3tBTjG top-1pTh1F", textContent: script.settings.fullRes && script.settings.onClick ? "Click the image to load full resolution, then click the image to zoom": "Click the image to zoom"}));
 			}
 			img.classList.add("bip-center");
 			img.style.cssText = "";

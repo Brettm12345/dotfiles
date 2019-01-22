@@ -35,7 +35,7 @@ set -x NPM_CONFIG_CACHE "$XDG_CACHE_HOME/npm"
 set -x NODE_ENV "development"
 set -x NPM_CONFIG_TMP "$XDG_RUNTIME_DIR/npm"
 set -x NODENV_ROOT "$XDG_DATA_HOME/nodenv"
-set -x NPM_DIR "$XDG_DATA_HOME/npm-packages/bin"
+set -x NPM_DIR "$XDG_DATA_HOME/yarn/global/bin"
 
 # Tmux
 set -x TMUX_HOME "$XDG_CONFIG_HOME/tmux"

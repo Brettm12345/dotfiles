@@ -1,0 +1,8 @@
+//META{"name":"FullSizePfp","description":"Full size profile pictures for user popouts. Use together with `Customizable Avatar DPI plugin` - https://betterdiscord.net/ghdl?id=1590 - Please use the support server listed below if you need any help.","author":"Satoru","version":"1.0","website":"http://discord.gg/fjvwb95"}*//{}
+
+@import url(https://satoru8.github.io/FullSizePfp/FullSizePfp.css);
+
+:root {
+	--profileradius: 0px; /* 0 is normal squared edges. Up to 50px for rounded profiles. */
+	--color: #fff /* Name colour */
+}

@@ -1,0 +1,10 @@
+//META{"name":"Chat Bubble - Style 1","description":"More standard chat bubble.","author":"Satoru","version":"1.0","website":"http://discord.gg/fjvwb95"}*//{}
+
+@import url('https://satoru8.github.io/Addons/ChatBubbles/chatbubble1.css');
+
+:root{
+
+--cba1: rgba(0, 0, 0, .5); /* Background colour & transparency */
+--round2: 15px /* Bubble roundness 0-30px */
+
+}
