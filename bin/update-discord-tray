@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# A script to update Discord's tray icon using the Papirus icon theme.
+# Copyright (C) 2018 Julien Machiels
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+declare -a arr=("tray"
+    "tray-connected"
+    "tray-deafened"
+    "tray-muted"
+    "tray-speaking"
+    "tray-unread"
+)
+
+distribution=$(grep "^NAME=" /etc/os-release | cut -d "=" -f 2 | sed -e 's/^"//' -e 's/"$//')
+
+echo "Extracting core.asar..."
+# Potentially this could support multiple distributions at some point.
+cd /opt/discord/resources
+
+unzip -j discord_desktop_core.zip core.asar -d /tmp/
+
+asar e /tmp/core.asar /tmp/core
+
+# Process the icons
+for icon in "${arr[@]}"; do
+    # This location is for Fedora
+    echo "Creating $icon..."
+    rsvg-convert -w 22 -h 22 -f png -a /usr/share/icons/Papirus-Dark/22x22/panel/discord-$icon.svg >/tmp/core/app/images/systemtray/linux/$icon.png
+done
+
+echo "Repacking core.asar..."
+asar p /tmp/core /tmp/core.asar
+
+echo "Updating discord_desktop_core.zip..."
+sudo zip -jur discord_desktop_core.zip /tmp/core.asar
+
+echo "Cleaning up..."
+rm -rf /tmp/core.asar
+rm -rfd /tmp/core/

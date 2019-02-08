@@ -1,0 +1,12 @@
+[Unit]
+Description=MPD Notification
+After=mpd.service network.target network-online.target
+Requires=dbus.socket
+ConditionUser=!@system
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/mpd-notification -m /mnt/music/Music
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,8 @@
+{
+    "settings": {
+        "DevUtils": {
+            "KeyCombinationEnabled": true,
+            "delay": 3000
+        }
+    }
+}

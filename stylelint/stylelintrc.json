@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "/home/brett/usr/share/yarn/global/node_modules/stylelint-config-primer",
+    "/home/brett/usr/share/yarn/global/node_modules/stylelint-config-prettier"
+  ],
+  "plugins": ["/home/brett/usr/share/yarn/global/node_modules/stylelint-order"],
+  "rules": {
+    "string-quotes": "double",
+    "comment-whitespace-inside": null,
+    "color-hex-length": "long",
+    "font-family-name-quotes": null,
+    "selector-max-type": null,
+    "selector-no-qualifying-type": null,
+    "value-list-comma-newline-after": null,
+    "max-nesting-depth": 2
+  }
+}
