@@ -23,10 +23,10 @@
 * terminal: `Termite`
 
 
-## Instalation
+## Installation
 Set `DOTFILES` to whatever you want.
 I personally use `~/etc`.
-Make sure the enviroment variables `$XDG_CONFIG_HOME` and `$XDG_DATA_HOME` are
+Make sure the environment variables `$XDG_CONFIG_HOME` and `$XDG_DATA_HOME` are
 set.
 ### Dependencies
 * git 
@@ -88,7 +88,7 @@ eval "$DOTFILES"/install.sh
 ### Tmux/Neovim
 ![screenshot](https://ptpimg.me/gvv9l9.png)
 ### Discord
-![screenshot](https://ptpimg.me/hzo19i.png)
+![screenshot](https://camo.githubusercontent.com/f74747dfbd9d47d4712b9c28e6f103232913c411/68747470733a2f2f707470696d672e6d652f30313936366c2e706e67)
 ### File manager
 ![screenshot](https://ptpimg.me/5a7yiw.png)
 

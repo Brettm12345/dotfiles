@@ -1,6 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR CMD_DURATION:1222
+SETUVAR CMD_DURATION:0
 SETUVAR FZF_CD_COMMAND:command\x20fd\x20\x2dt\x20d\x20\x2dd\x205\x20\x2dL\x20\x2dp\x20\x24dir
 SETUVAR FZF_CD_WITH_HIDDEN_COMMAND:command\x20fd\x20\x2dH\x20\x2dt\x20d\x20\x2dd\x205\x20\x2dL\x20\x2dp\x20\x24dir
 SETUVAR FZF_COMPLETE:1

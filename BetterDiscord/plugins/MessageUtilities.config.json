@@ -8,7 +8,8 @@
 		"__Note_Message": false,
 		"__Translate_Message": false,
 		"__Quote_Message": false,
-		"__Citate_Message": false
+		"__Citate_Message": false,
+		"__Reveal_Spoilers": false
 	},
 	"bindings": {
 		"Edit_Message": {
@@ -50,6 +51,14 @@
 			"click": 0,
 			"key1": 114,
 			"key2": 0
+		},
+		"__Reveal_Spoilers": {
+			"click": 0,
+			"key1": 115,
+			"key2": 0
 		}
+	},
+	"changelog": {
+		"currentversion": "1.4.6"
 	}
 }

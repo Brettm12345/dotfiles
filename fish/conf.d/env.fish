@@ -28,6 +28,7 @@ set -x BAT_THEME "Material-Theme-Palenight"
 set -x BUILDDIR "/tmp/makepkg"
 set -x LESS "-F -g -i -M -R -S -w -X -z-4"
 set -x MPD_HOST "localhost"
+set -x QT_QPA_PLATFORMTHEME "qt5ct"
 
 # Npm
 set -x NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/config"

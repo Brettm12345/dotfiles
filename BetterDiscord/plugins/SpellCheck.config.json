@@ -4,5 +4,8 @@
 	},
 	"choices": {
 		"dictionaryLanguage": "en"
+	},
+	"amounts": {
+		"maxSimilarAmount": 6
 	}
 }

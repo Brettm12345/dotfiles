@@ -1,5 +1,8 @@
 {
 	"settings": {
 		"showOnHover": false
+	},
+	"changelog": {
+		"currentversion": "1.1.4"
 	}
 }

@@ -1,6 +1,6 @@
 {
     "currentVersionInfo": {
-        "version": "2.3.1",
+        "version": "2.3.2",
         "hasShownChangelog": true
     },
     "settings": {
@@ -9,6 +9,7 @@
             "italic": true,
             "underline": true,
             "strikethrough": true,
+            "spoiler": true,
             "code": true,
             "codeblock": true,
             "superscript": true,
@@ -33,7 +34,7 @@
             "smallcaps": "%%",
             "fullwidth": "##",
             "upsidedown": "&&",
-            "varied": "||",
+            "varied": "==",
             "leet": "++",
             "thicc": "$$"
         },

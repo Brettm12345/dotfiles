@@ -48,7 +48,7 @@
                 "ReplySystem": true,
                 "ForceImagePreviews": true,
                 "AccountDetailsPlus": true,
-                "BetterCustomCSS": true,
+                "BetterCustomCSS": false,
                 "BetterFormattingRedux": true,
                 "ZeresPluginLibrary": true,
                 "Bot Info": true,
@@ -61,7 +61,7 @@
                 "Theme Customizer": false,
                 "Line Numbers": false,
                 "Lib Discord Internals": true,
-                "StatusEverywhere": false,
+                "StatusEverywhere": true,
                 "greentext plugin": true,
                 "AutoCorrect": false,
                 "Full offline list": false,
@@ -78,18 +78,22 @@
                 "KawaiiEmotes": true,
                 "Edit Uploads": true,
                 "ThemeSettings": true,
-                "AutoStartRichPresence": true,
+                "AutoStartRichPresence": false,
                 "Direct-Download": true,
                 "NotificationSounds": true,
                 "ReverseImageSearch": true,
-                "Customizable Avatar DPI": true
+                "Customizable Avatar DPI": true,
+                "CustomJs": true,
+                "Date Viewer": false,
+                "MemberCount": true,
+                "Avatar Hover": false,
+                "BetterRoleColors": false
             },
             "themes": {
                 "DarkerDiscordTheme": false,
-                "Beard_s_Material_theme_for_Discord": false,
                 "Windows Activity buttons inside Discord addon": false,
-                "Material_Icons": true,
-                "Material_Discord": true,
+                "Material_Icons": false,
+                "Material_Discord": false,
                 "Anti_Lag": false,
                 "Minimalistcord": false,
                 "Style Fonts": false,
@@ -98,12 +102,14 @@
                 "Chat Bubble - Style 2": false,
                 "Chat Bubble - Style 1": false,
                 "ThemeFixer": false,
-                "Nox": false
+                "Radial_Status": true,
+                "Palenight": true,
+                "Nox Palenight": false
             }
         },
         "canary": {},
         "ptb": {}
     },
-    "emoteCacheDate": "2019-01-17T04:36:55.800Z",
-    "bdcustomcss": ""
+    "emoteCacheDate": "2019-02-05T04:07:58.105Z",
+    "bdcustomcss": "OnJvb3QgewogICAgLS1ycy1zcGFjaW5nOiAycHg7CiAgICAtLXJzLXdpZHRoOiAycHg7CiAgICAtLXJzLXBvcG91dC1zcGFjaW5nOiAzcHg7CiAgICAtLXJzLXBvcG91dC13aWR0aDogNHB4OwogICAgLS1ycy1wcm9maWxlLXNwYWNpbmc6IDNweDsKICAgIC0tcnMtcHJvZmlsZS13aWR0aDogNHB4OwogICAgLS1ycy1vbmxpbmUtY29sb3I6ICM0NGI5YjE7CiAgICAtLXJzLWlkbGUtY29sb3I6ICNmZmNhMjg7CiAgICAtLXJzLWRuZC1jb2xvcjogI2ZmNTU3MjsKICAgIC0tcnMtb2ZmbGluZS1jb2xvcjogIzY3NkU5NTsKICAgIC0tcnMtaW52aXNpYmxlLWNvbG9yOiAjNzE3Q0I0OwogICAgLS1ycy1zdHJlYW1pbmctY29sb3I6ICNjNzkyZWE7Cn0K"
 }

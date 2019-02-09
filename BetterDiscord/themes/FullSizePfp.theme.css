@@ -1,8 +1,18 @@
-//META{"name":"FullSizePfp","description":"Full size profile pictures for user popouts. Use together with `Customizable Avatar DPI plugin` - https://betterdiscord.net/ghdl?id=1590 - Please use the support server listed below if you need any help.","author":"Satoru","version":"1.0","website":"http://discord.gg/fjvwb95"}*//{}
+//META{"name":"FullSizePfp","description":"Full size profile pictures for user popouts. Use together with `Customizable Avatar DPI plugin` - https://betterdiscord.net/ghdl?id=1590 - Please use the support server listed below if you need any help.","author":"Satoru","version":"1.2","website":"http://discord.gg/fjvwb95"}*//{}
 
 @import url(https://satoru8.github.io/FullSizePfp/FullSizePfp.css);
 
 :root {
-	--profileradius: 0px; /* 0 is normal squared edges. Up to 50px for rounded profiles. */
-	--color: #fff /* Name colour */
+
+	--profileRadius: 0px;    /* 0 is normal squared edges. Up to 50px for rounded profiles. */
+    --rolesRadius: 6px;      /* Roles roundness */
+	--color: #fff;         /* Name colour */
+
+    --online: #43b581;
+    --offline: #747f8d;
+    --idle: #faa61a;
+    --stream: #593695;
+    --dnd: #f04747;
+    --invis: #1a36fa;
+
 }

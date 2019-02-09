@@ -1,6 +1,7 @@
 #!/bin/sh
 
 export KWIN_TRIPLE_BUFFER=1
+export QT_QPA_PLATFORMTHEME="qt5ct"
 export XDG_CACHE_HOME="$HOME/var/cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/usr/share"

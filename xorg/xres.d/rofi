@@ -1,32 +1,40 @@
+! -*- mode: conf-xdefaults -*-
 ! ------------------------------------------------------------------------------
 ! rofi
 ! ------------------------------------------------------------------------------
 
-#include "colors/material"
-
-rofi.color-enabled: true
-
-rofi.color-window: blk , blk , blk , blk , wht
-rofi.color-normal: blk , wht , blk , blk , mag
-rofi.color-active: blk , mag , blk , blk , wht
-rofi.color-urgent: blk , bblk , blk , blk , wht
-
-rofi.fake-transparency: true
-rofi.font: Noto Sans ExtraCondensed Medium 18
 rofi.columns: 1
-rofi.separator-style: none
+rofi.combi-modi: window,drun
+rofi.fake-transparency: false
+rofi.font: Noto Sans ExtraCondensed Medium 18
+rofi.fullscreen: true
 rofi.hide-scrollbar: true
+rofi.icon-theme: Papirus
+rofi.lines: 10
 rofi.location: 0
-rofi.yoffset : 48
-rofi.xoffset: 48
-rofi.padding: 12
-rofi.fullscreen: false
-rofi.width: 500
-rofi.lines: 6
-rofi.terminal: urxvtc
+rofi.modi: combi,run,clipboard:greenclip print,windowcd,window,drun
+rofi.padding: 10
+rofi.display-window:  
+rofi.display-windowcd:  
+rofi.display-run:  
+rofi.display-ssh:  
+rofi.display-drun:  
+rofi.display-combi:  
+rofi.run-command: fish -c '{cmd}'
+rofi.run-list-command: 'fish -c functions'
+rofi.separator-style: none
+rofi.show-icons: true
+rofi.terminal: termite
+rofi.theme: Palenight
+rofi.threads: 8
+rofi.width: 1000
 
 rofi.kb-accept-entry: Return
+rofi.kb-remove-char-back: BackSpace
 rofi.kb-remove-to-eol: Alt+k
+rofi.kb-screenshot: Alt+s
+rofi.kb-mode-previous: Control+h
+rofi.kb-mode-next: Control+l
 rofi.kb-row-up: Control+k
 rofi.kb-row-down: Control+j
 

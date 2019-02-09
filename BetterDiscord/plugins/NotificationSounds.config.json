@@ -246,5 +246,8 @@
 			"src": "/assets/66598bea6e59eb8acdf32cf2d9d75ba9.mp3",
 			"mute": true
 		}
+	},
+	"changelog": {
+		"currentversion": "3.2.6"
 	}
 }
