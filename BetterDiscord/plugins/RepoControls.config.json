@@ -4,7 +4,11 @@
 		"order": "asc"
 	},
 	"settings": {
+		"addEditButton": true,
 		"addDeleteButton": true,
 		"confirmDelete": true
+	},
+	"changelog": {
+		"currentversion": "1.3.1"
 	}
 }

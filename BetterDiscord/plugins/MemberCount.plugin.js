@@ -40,16 +40,20 @@ var MemberCount = (() => {
 					twitter_username: ''
 				}
 			],
-			version: '2.0.3',
+			version: '2.1.4',
 			description: 'Displays a server\'s member-count at the top of the member-list, can be styled with the #MemberCount selector.',
 			github: 'https://github.com/Arashiryuu',
 			github_raw: 'https://raw.githubusercontent.com/Arashiryuu/crap/master/ToastIntegrated/MemberCount/MemberCount.plugin.js'
 		},
 		changelog: [
 			{
-				title: 'What\'s New?',
-				type: 'added',
-				items: ['Moved to local library version.', 'Now renders in the memberlist using React.']
+				title: 'Evolving?',
+				type: 'improved',
+				items: [
+					'ContextMenu minor improvement.',
+					'Added newest member group class to the counter.',
+					'Style fix.'
+				]
 			}
 		]
 	};
@@ -68,69 +72,74 @@ var MemberCount = (() => {
 	const buildPlugin = ([Plugin, Api]) => {
 		const { Toasts, Logger, Patcher, Settings, Utilities, DOMTools, ReactTools, ReactComponents, DiscordModules, DiscordClasses, WebpackModules, DiscordSelectors, PluginUtilities } = Api;
 		const { SettingPanel, SettingGroup, SettingField, Textbox } = Settings;
+		const { React, GuildActions, GuildMemberStore, SelectedGuildStore, ContextMenuActions: MenuActions } = DiscordModules;
 		const { ComponentDispatch: Dispatcher } = WebpackModules.getByProps('ComponentDispatch');
 
-		const Counter = class Counter extends DiscordModules.React.Component {
+		const MenuItem = WebpackModules.getByString('disabled', 'brand');
+
+		const ItemGroup = class ItemGroup extends React.Component {
 			constructor(props) {
 				super(props);
-				this.state = {
-					count: 0
-				};
+			}
+
+			render() {
+				return React.createElement('div', {
+					className: DiscordClasses.ContextMenu.itemGroup.toString(),
+					children: this.props.children || []
+				});
+			}
+		};
+
+		const Counter = class Counter extends React.Component {
+			constructor(props) {
+				super(props);
+				this.state = { count: 0 };
 				this.updateCount = this.updateCount.bind(this);
 			}
 
-			componentWillMount() {
+			componentDidMount() {
 				Dispatcher.subscribe('COUNT_MEMBERS', this.updateCount);
+				this.updateCount();
 			}
 
 			componentWillUnmount() {
 				Dispatcher.unsubscribe('COUNT_MEMBERS', this.updateCount);
 			}
 
-			componentDidMount() {
-				if (!DiscordModules.SelectedGuildStore.getGuildId()) return;
-				this.updateCount();
-			}
-
 			updateCount() {
-				this.setState({ count: DiscordModules.GuildMemberStore.getMemberIds(DiscordModules.SelectedGuildStore.getGuildId()).length });
+				this.setState({ count: GuildMemberStore.getMemberIds(SelectedGuildStore.getGuildId()).length });
 			}
 
 			render() {
-				const id = DiscordModules.SelectedGuildStore.getGuildId();
-				if (this.props.blacklist && this.props.blacklist.includes(id) || !id) return null;
-				return DiscordModules.React.createElement('div', {
-					className: DiscordClasses.MemberList.membersGroup.value,
-					id: 'MemberCount'
-				}, `Members—${this.state.count}`);
+				return React.createElement('div', {
+					className: `${DiscordClasses.MemberList.membersGroup} container-2ax-kl`,
+					id: 'MemberCount',
+					children: ['Members', '—', this.state.count]
+				});
 			}
-		}
+		};
 		
 		return class MemberCount extends Plugin {
 			constructor() {
 				super();
 				this._css;
-				this.default = { blacklist: [], placeholder: 'Server ID' };
+				this.default = { blacklist: [] };
 				this.settings = Utilities.deepclone(this.default);
+				this.promises = {
+					state: { cancelled: false },
+					cancel() { this.state.cancelled = true; },
+					restore() { this.state.cancelled = false; }
+				};
 				this.loadedGuilds = [];
-				this.switchList = [
-					WebpackModules.getByProps('app').app,
-					DiscordSelectors.TitleWrap.chat.value.split('.')[1],
-					WebpackModules.getByProps('messages', 'messagesWrapper').messagesWrapper
-				];
 				this.css = `
 					#MemberCount {
 						position: absolute;
-						font-size: 12px;
-						letter-spacing: 0.08em;
-						font-weight: 500;
-						text-transform: uppercase;
-						display: block;
-						width: 100%;
+						width: 97%;
 						text-align: center;
-						padding: 0.9vh 0;
+						padding: 1.8vh 0 0 3%;
 						z-index: 5;
 						top: 0;
+						margin-top: -10px;
 					}
 		
 					.theme-dark #MemberCount {
@@ -143,8 +152,8 @@ var MemberCount = (() => {
 						background: #f3f3f3;
 					}
 		
-					.${DiscordClasses.MemberList.membersWrap} .${DiscordClasses.MemberList.membersGroup}:nth-of-type(3) {
-						margin-top: 3vh;
+					${DiscordSelectors.MemberList.membersWrap} ${DiscordSelectors.MemberList.membersGroup}:nth-child(3) {
+						margin-top: 2vh;
 					}
 				`;
 			}
@@ -152,37 +161,42 @@ var MemberCount = (() => {
 			/* Methods */
 
 			onStart() {
+				this.promises.restore();
 				this.loadSettings();
-				BdApi.injectCSS(this.name, this.css);
+				PluginUtilities.addStyle(this.short, this.css);
 				this.patchMemberList();
-				Toasts.info(`${this.name} ${this.version} has started!`, { icon: true, timeout: 2e3 });
+				this.patchGuildContextMenu(this.promises.state);
+				Toasts.info(`${this.name} ${this.version} has started!`, { timeout: 2e3 });
 			}
 
 			onStop() {
-				BdApi.clearCSS(this.name);
+				this.promises.cancel();
+				this.loadedGuilds.length = 0;
+				PluginUtilities.removeStyle(this.short);
 				Patcher.unpatchAll();
-				Toasts.info(`${this.name} ${this.version} has stopped!`, { icon: true, timeout: 2e3 });
+				this.updateAll();
+				Toasts.info(`${this.name} ${this.version} has stopped!`, { timeout: 2e3 });
 			}
 
 			patchMemberList() {
-				const MemberList = WebpackModules.find((m) => m.hasOwnProperty('Themes') && m.hasOwnProperty('defaultProps'));
+				const Scroller = WebpackModules.getByDisplayName('VerticalScroller');
 				
-				Patcher.after(MemberList.prototype, 'render', (that, args, value) => {
-					const channels = this.getProps(that, 'props.children.2.0.key');
-					if (typeof channels === 'string' && channels.includes('section-container')) return value;
+				Patcher.after(Scroller.prototype, 'render', (that, args, value) => {
+					const key = this.getProps(value, 'props.children.0._owner.return.key');
+					if (!key || key === 'guild-channels') return value;
 
 					const children = this.getProps(value, 'props.children.0.props.children.1.2');
 					if (!children || !Array.isArray(children)) return value;
 					
-					const guildId = DiscordModules.SelectedGuildStore.getGuildId();
-					if (this.settings.blacklist.includes(guildId)) return value;
+					const guildId = SelectedGuildStore.getGuildId();
+					if (this.settings.blacklist.includes(guildId) || !guildId) return value;
 
-					const counter = DiscordModules.React.createElement(Counter, { blacklist: this.settings.blacklist });
+					const counter = React.createElement(Counter, {});
 
 					children.unshift([counter, null]);
 
 					if (!this.loadedGuilds.includes(guildId)) {
-						DiscordModules.GuildActions.requestMembers([guildId], '', 0);
+						GuildActions.requestMembers([guildId], '', 0);
 						this.loadedGuilds.push(guildId);
 					}
 
@@ -194,9 +208,77 @@ var MemberCount = (() => {
 				this.updateMemberList();
 			}
 
-			updateMemberList() {
+			updateMemberList(scroll) {
 				const memberList = document.querySelector(DiscordSelectors.MemberList.members.value.trim());
-				if (memberList) ReactTools.getOwnerInstance(memberList).forceUpdate();
+				if (!memberList) return;
+				const inst = ReactTools.getOwnerInstance(memberList);
+				if (!inst) return;
+				inst.forceUpdate();
+				if (scroll) inst.handleOnScroll();
+			}
+
+			async patchGuildContextMenu(state) {
+				const Component = await ReactComponents.getComponentByName('GuildContextMenu', DiscordSelectors.ContextMenu.contextMenu.toString());
+				const { component: Menu } = Component;
+				
+				if (state.cancelled) return;
+
+				Patcher.after(Menu.prototype, 'render', (that, args, value) => {
+					const orig = this.getProps(value, 'props');
+					const id = this.getProps(that, 'props.guild.id');
+
+					if (!orig || !id) return;
+
+					const data = this.parseId(id);
+					const item = new MenuItem(data);
+					const group = React.createElement(ItemGroup, { children: [item] });
+
+					if (Array.isArray(orig.children)) orig.children.splice(1, 0, group);
+					else orig.children = [orig.children], orig.children.splice(1, 0, group);
+
+					setImmediate(() => this.updateContextPosition(that));
+					return value;
+				});
+
+				Component.forceUpdateAll();
+			}
+
+			updateContextPosition(that) {
+				if (!that) return;
+				const height = this.getProps(that, 'props.onHeightUpdate') || this.getProps(that, '_reactInternalFiber.return.memoizedProps.onHeightUpdate');
+				height && height();
+			}
+
+			parseId(id) {
+				return { label: this.getLabel(id), hint: 'MCount', action: this.getAction(id) };
+			}
+
+			getAction(id) {
+				return this.settings.blacklist.includes(id) ? () => this.unlistGuild(id) : () => this.blacklistGuild(id);
+			}
+
+			getLabel(id) {
+				return this.settings.blacklist.includes(id) ? 'Include Server' : 'Exclude Server';
+			}
+
+			blacklistGuild(id) {
+				if (!id) return;
+				MenuActions.closeContextMenu();
+				this.settings.blacklist.push(id);
+				this.saveSettings(this.settings.blacklist);
+				this.updateAll(true);
+			}
+
+			unlistGuild(id) {
+				if (!id) return;
+				MenuActions.closeContextMenu();
+				this.settings.blacklist.splice(this.settings.blacklist.indexOf(id), 1);
+				this.saveSettings(this.settings.blacklist);
+				this.updateAll(true);
+			}
+
+			updateAll(t) {
+				this.updateMemberList(t);
 			}
 
 			/* Utility */
@@ -225,40 +307,6 @@ var MemberCount = (() => {
 			 */
 			getProps(obj, path) {
 				return path.split(/\s?\.\s?/).reduce((object, prop) => object && object[prop], obj);
-			}
-
-			/* Settings Panel */
-
-			async handleInput(e) {
-				const input = $(`#plugin-settings-${this.name} input`);
-				const isRemoval = (x) => (/^r$|^r\d{16,18}$/).test(x);
-				const isID = (x) => (/^\d{16,18}$/).test(x);
-		
-				await new Promise((resolve) => setTimeout(resolve, 2e3));
-		
-				if (isRemoval(e)) {
-					if (e.length > 1 && this.settings.blacklist.includes(e.slice(1))) this.settings.blacklist.splice(this.settings.blacklist.indexOf(e.slice(1)), 1);
-					else this.settings.blacklist.pop();
-					input.val('Removed from blacklist!');
-					this.saveSettings(JSON.stringify(this.settings.blacklist));
-					return setTimeout(() => input.val(''), 2e3);
-				}
-		
-				if (!isID(e)) return;
-				if (!this.settings.blacklist.includes(e)) this.settings.blacklist.push(e);
-				if (!input) return;
-		
-				input.val('Added to blacklist!');
-				this.saveSettings(JSON.stringify(this.settings.blacklist));
-				setTimeout(() => input.val(''), 2e3);
-			}
-
-			getSettingsPanel() {
-				return SettingPanel.build(() => this.saveSettings(JSON.stringify(this.settings.blacklist)),
-					new SettingGroup('Plugin Settings').append(
-						new Textbox('Blacklist', 'Do `r` or `r234780924003221506` for removals.', this.settings.placeholder, (i) => this.handleInput(i))
-					)
-				);
 			}
 
 			/* Setters */
@@ -303,7 +351,7 @@ var MemberCount = (() => {
 			get description() {
 				return config.info.description;
 			}
-		}
+		};
 	};
 
 	/* Finalize */
@@ -331,7 +379,31 @@ var MemberCount = (() => {
 			}
 
 			load() {
-				window.BdApi.alert('Missing Library', `The library plugin needed for ${config.info.name} is missing.<br /><br /> <a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);
+				const title = 'Library Missing';
+				const ModalStack = window.BdApi.findModuleByProps('push', 'update', 'pop', 'popWithKey');
+				const TextElement = window.BdApi.findModuleByProps('Sizes', 'Weights');
+				const ConfirmationModal = window.BdApi.findModule((m) => m.defaultProps && m.key && m.key() === 'confirm-modal');
+				if (!ModalStack || !ConfirmationModal || !TextElement) return window.BdApi.getCore().alert(title, `The library plugin needed for ${config.info.name} is missing.<br /><br /> <a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);
+				ModalStack.push(function(props) {
+					return window.BdApi.React.createElement(ConfirmationModal, Object.assign({
+						header: title,
+						children: [
+							TextElement({
+								color: TextElement.Colors.PRIMARY,
+								children: [`The library plugin needed for ${config.info.name} is missing. Please click Download Now to install it.`]
+							})
+						],
+						red: false,
+						confirmText: 'Download Now',
+						cancelText: 'Cancel',
+						onConfirm: () => {
+							require('request').get('https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js', async (error, response, body) => {
+								if (error) return require('electron').shell.openExternal('https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js');
+								await new Promise(r => require('fs').writeFile(require('path').join(window.ContentManager.pluginsFolder, '0PluginLibrary.plugin.js'), body, r));
+							});
+						}
+					}, props));
+				});
 			}
 
 			start() {

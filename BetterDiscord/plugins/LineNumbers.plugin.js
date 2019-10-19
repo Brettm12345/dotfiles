@@ -164,9 +164,9 @@ var lineNumbers = function () {};
 
     function processCodeBlocks(mutation) {
         mutationFind(mutation, ".hljs").not(":has(ol)")
-            .filter((_, e) => !(settings.ignoreNoLanguage && e.className == "scrollbarGhost-K_3Xa9 scrollbar-11WJwo hljs"))
+            .filter((_, e) => !(settings.ignoreNoLanguage && e.className.endsWith("hljs")))
             .each(function () {
-                this.innerHTML = this.innerHTML.split("\n").map(line => "<li>"+line+"</li>").join("");
+                this.innerHTML = this.innerHTML.split("\n").map(line => "<li>"+line+"<br></li>").join("");
             })
             .wrapInner($("<ol>").addClass("kawaii-linenumbers"));
     }
@@ -325,7 +325,7 @@ var lineNumbers = function () {};
     };
 
     lineNumbers.prototype.getVersion = function () {
-        return "1.1.6";
+        return "1.1.8";
     };
 
     lineNumbers.prototype.getAuthor = function () {

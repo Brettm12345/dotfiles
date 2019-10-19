@@ -1,7 +1,7 @@
 {
 	"settings": {
+		"disableForNew": false,
 		"muteOnDND": false,
-		"onlyOnOnline": false,
 		"openOnClick": false
 	},
 	"notificationsounds": {
@@ -10,12 +10,72 @@
 			"song": null,
 			"mute": false
 		},
-		"toastoffline": {
+		"desktoponline": {
 			"url": null,
 			"song": null,
 			"mute": false
 		},
-		"desktoponline": {
+		"toastmobile": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"desktopmobile": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"toastidle": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"desktopidle": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"toastdnd": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"desktopdnd": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"toastplaying": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"desktopplaying": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"toastlistening": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"desktoplistening": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"toaststreaming": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"desktopstreaming": {
+			"url": null,
+			"song": null,
+			"mute": false
+		},
+		"toastoffline": {
 			"url": null,
 			"song": null,
 			"mute": false
@@ -26,7 +86,34 @@
 			"mute": false
 		}
 	},
-	"desktop": {
-		"93623095838908416": true
+	"changelog": {
+		"currentversion": "1.3.3"
+	},
+	"friends": {
+		"93623095838908416": {
+			"desktop": true,
+			"disabled": false,
+			"online": true,
+			"mobile": true,
+			"idle": false,
+			"dnd": false,
+			"streaming": false,
+			"offline": true
+		}
+	},
+	"amounts": {
+		"toastTime": 5,
+		"desktopTime": 5,
+		"checkInterval": 10
+	},
+	"notificationstrings": {
+		"online": "$user changed status to '$status'",
+		"mobile": "$user changed status to '$status'",
+		"idle": "$user changed status to '$status'",
+		"dnd": "$user changed status to '$status'",
+		"playing": "$user started playing '$game'",
+		"listening": "$user started listening to '$song'",
+		"streaming": "$user changed status to '$status'",
+		"offline": "$user changed status to '$status'"
 	}
 }

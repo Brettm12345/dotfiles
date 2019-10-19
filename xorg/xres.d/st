@@ -1,18 +1,18 @@
 st.termname: st
 st.shell: /usr/bin/fish
-st.borderpx: 32
-st.cursorshape: 6
+st.borderpx: 10
+st.cursorshape: 5
 st.cursorthickness: 1
-st.cursorblinkstyle: 0
+st.cursorblinkstyle: 1
 st.cursorblinkontype: 1
-st.bold_font: 1
+st.bold_font: 0
 st.xfps: 120
 st.actionfps: 30
 st.chscale: 1.0
-st.cwscale: 0.9
+st.cwscale: 1.0
 st.blinktimeout: 800
 st.bellvolume: 0
-st.prompt_char: λ
+st.prompt_char: ❯
 
 st.background: bg
 st.foreground: fg

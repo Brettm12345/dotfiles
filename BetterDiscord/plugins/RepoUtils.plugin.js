@@ -12,7 +12,7 @@ class RepoUtils {
         return "Adds options to download/install/preview next to betterdiscord.net ghdl links.";
     }
     getVersion() {
-        return "0.1.6";
+        return "0.1.7";
     }
     getAuthor() {
         return "Qwerasd";
@@ -154,15 +154,14 @@ class RepoUtils {
         $(document.body).on('click.repoUtils', _ => { this.collapseAllButtonGroups(this.collapseButtonGroup); });
         this.trusted = await this.trusted;
         this.trustedLoaded = true;
-        this.processLinks();
+        if (this.trusted.size)
+            BdApi.saveData('RepoUtils', 'trusted', this.trusted);
+        this.processLinks(document.childNodes);
     }
     stop() {
         BdApi.clearCSS('repoUtils');
         Array.from(document.getElementsByClassName('repoUtilsButtonGroup')).forEach(b => {
             b.parentElement.removeChild(b);
-        });
-        Array.from(document.getElementsByClassName('repoUtils')).forEach(e => {
-            e.classList.remove('repoUtils');
         });
         $(document.body).off('click.repoUtils');
         BdApi.saveData('RepoUtils', 'infos', this.infos);
@@ -211,6 +210,7 @@ class RepoUtils {
                         type: response.headers['content-type'].split(';')[0]
                     };
                     this.infos[url] = result;
+                    BdApi.saveData('RepoUtils', 'infos', this.infos);
                     resolve(result);
                 }
                 catch (e) {
@@ -382,7 +382,7 @@ class RepoUtils {
                     break;
             }
         });
-        endPreview.addEventListener('click', cleanupPreview);
+        endPreview.addEventListener('click', () => cleanupPreview());
         endPreview.classList.add('repoUtilsButton');
         endPreview.textContent = 'End Preview';
         endPreview.style.position = 'absolute';
@@ -487,7 +487,6 @@ class RepoUtils {
      * Add button group to <a>
      */
     addButtonGroup(a) {
-        a.classList.add('repoUtils');
         let buttonGroup = document.createElement('span');
         buttonGroup.classList.add('repoUtilsButtonGroup');
         buttonGroup.innerText = '...';
@@ -500,7 +499,7 @@ class RepoUtils {
     /**
      * Add button groups to all the <a>s
      */
-    async processLinks() {
+    async processLinks(nodes) {
         const currentChannel = BdApi.findModuleByProps("getChannelId").getChannelId();
         const trustedChannels = [
             "164998435915825152",
@@ -508,27 +507,27 @@ class RepoUtils {
             "290958282724737026",
             "290959392864731146"
         ];
-        Array.from(document.getElementsByTagName('a'))
-            .filter(a => {
-            if (a.classList.contains('repoUtils'))
-                return false;
-            if (a.hostname === 'betterdiscord.net' && a.pathname === '/ghdl') {
-                return true;
-            }
-            else {
-                a.classList.add('repoUtils');
-            }
-        })
-            .forEach(a => {
-            if (trustedChannels.includes(currentChannel))
-                this.trusted.add(a.href);
-            if (this.trusted.has(a.href))
-                this.addButtonGroup(a);
+        const trustedSize = this.trusted.size;
+        nodes.forEach((e) => {
+            if (e.nodeType !== Node.ELEMENT_NODE)
+                return;
+            Array.from(e.getElementsByTagName('a'))
+                .filter((a) => {
+                return (a.hostname === 'betterdiscord.net' && a.pathname === '/ghdl');
+            })
+                .forEach((a) => {
+                if (trustedChannels.includes(currentChannel))
+                    this.trusted.add(a.href);
+                if (this.trusted.has(a.href))
+                    this.addButtonGroup(a);
+            });
         });
+        if (this.trusted.size > trustedSize)
+            BdApi.saveData('RepoUtils', 'trusted', this.trusted);
     }
-    observer() {
+    observer(changes) {
         if (this.trustedLoaded)
-            this.processLinks();
+            this.processLinks(changes.addedNodes);
     }
     getSettingsPanel() {
         function group(header) {
@@ -604,5 +603,6 @@ class RepoUtils {
             afterInstall: form.afterInstall.value,
             previewType: form.previewType.value
         };
+        BdApi.saveData('RepoUtils', 'settings', this.settings);
     }
 }

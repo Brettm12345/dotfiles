@@ -1,19 +1,64 @@
 //META{"name":"ReplySystem","displayName":"ReplySystem","website":"https://github.com/rauenzi/BetterDiscordAddons/tree/master/Plugins/ReplySystem","source":"https://raw.githubusercontent.com/rauenzi/BetterDiscordAddons/master/Plugins/ReplySystem/ReplySystem.plugin.js"}*//
+/*@cc_on
+@if (@_jscript)
+	
+	// Offer to self-install for clueless users that try to run this directly.
+	var shell = WScript.CreateObject("WScript.Shell");
+	var fs = new ActiveXObject("Scripting.FileSystemObject");
+	var pathPlugins = shell.ExpandEnvironmentStrings("%APPDATA%\BetterDiscord\plugins");
+	var pathSelf = WScript.ScriptFullName;
+	// Put the user at ease by addressing them in the first person
+	shell.Popup("It looks like you've mistakenly tried to run me directly. \n(Don't do that!)", 0, "I'm a plugin for BetterDiscord", 0x30);
+	if (fs.GetParentFolderName(pathSelf) === fs.GetAbsolutePathName(pathPlugins)) {
+		shell.Popup("I'm in the correct folder already.", 0, "I'm already installed", 0x40);
+	} else if (!fs.FolderExists(pathPlugins)) {
+		shell.Popup("I can't find the BetterDiscord plugins folder.\nAre you sure it's even installed?", 0, "Can't install myself", 0x10);
+	} else if (shell.Popup("Should I copy myself to BetterDiscord's plugins folder for you?", 0, "Do you need some help?", 0x34) === 6) {
+		fs.CopyFile(pathSelf, fs.BuildPath(pathPlugins, fs.GetFileName(pathSelf)), true);
+		// Show the user where to put plugins in the future
+		shell.Exec("explorer " + pathPlugins);
+		shell.Popup("I'm installed!", 0, "Successfully installed", 0x40);
+	}
+	WScript.Quit();
+
+@else@*/
 
 var ReplySystem = (() => {
-    const config = {"info":{"name":"ReplySystem","authors":[{"name":"Zerebos","discord_id":"249746236008169473","github_username":"rauenzi","twitter_username":"ZackRauen"}],"version":"0.0.7","description":"Adds a native-esque reply button with preview. Support Server: bit.ly/ZeresServer","github":"https://github.com/rauenzi/BetterDiscordAddons/tree/master/Plugins/ReplySystem","github_raw":"https://raw.githubusercontent.com/rauenzi/BetterDiscordAddons/master/Plugins/ReplySystem/ReplySystem.plugin.js"},"changelog":[{"title":"Internal Changes","type":"improved","items":["Move to more stable local library."]}],"main":"index.js"};
+    const config = {"info":{"name":"ReplySystem","authors":[{"name":"Zerebos","discord_id":"249746236008169473","github_username":"rauenzi","twitter_username":"ZackRauen"}],"version":"0.0.10","description":"Adds a native-esque reply button with preview. Support Server: bit.ly/ZeresServer","github":"https://github.com/rauenzi/BetterDiscordAddons/tree/master/Plugins/ReplySystem","github_raw":"https://raw.githubusercontent.com/rauenzi/BetterDiscordAddons/master/Plugins/ReplySystem/ReplySystem.plugin.js"},"changelog":[{"title":"Bugfixes","type":"fixed","items":["Tooltips are existent again!"]}],"main":"index.js"};
 
     return !global.ZeresPluginLibrary ? class {
+        constructor() {this._config = config;}
         getName() {return config.info.name;}
         getAuthor() {return config.info.authors.map(a => a.name).join(", ");}
         getDescription() {return config.info.description;}
         getVersion() {return config.info.version;}
-        load() {window.BdApi.alert("Library Missing",`The library plugin needed for ${config.info.name} is missing.<br /><br /> <a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);}
+        load() {
+            const title = "Library Missing";
+            const ModalStack = BdApi.findModuleByProps("push", "update", "pop", "popWithKey");
+            const TextElement = BdApi.findModuleByProps("Sizes", "Weights");
+            const ConfirmationModal = BdApi.findModule(m => m.defaultProps && m.key && m.key() == "confirm-modal");
+            if (!ModalStack || !ConfirmationModal || !TextElement) return BdApi.alert(title, `The library plugin needed for ${config.info.name} is missing.<br /><br /> <a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);
+            ModalStack.push(function(props) {
+                return BdApi.React.createElement(ConfirmationModal, Object.assign({
+                    header: title,
+                    children: [TextElement({color: TextElement.Colors.PRIMARY, children: [`The library plugin needed for ${config.info.name} is missing. Please click Download Now to install it.`]})],
+                    red: false,
+                    confirmText: "Download Now",
+                    cancelText: "Cancel",
+                    onConfirm: () => {
+                        require("request").get("https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js", async (error, response, body) => {
+                            if (error) return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js");
+                            await new Promise(r => require("fs").writeFile(require("path").join(ContentManager.pluginsFolder, "0PluginLibrary.plugin.js"), body, r));
+                        });
+                    }
+                }, props));
+            });
+        }
         start() {}
         stop() {}
     } : (([Plugin, Api]) => {
         const plugin = (Plugin, Api) => {
-    const {WebpackModules, DiscordModules, Settings, Patcher, ReactTools, DiscordSelectors, PluginUtilities} = Api;
+    const {WebpackModules, DiscordModules, Settings, Patcher, DiscordSelectors, PluginUtilities, ReactComponents} = Api;
 
     const Dispatcher = WebpackModules.getByProps("ComponentDispatch").ComponentDispatch;
     const CloseButton = (({DiscordModules}) => {
@@ -45,7 +90,7 @@ var ReplySystem = (() => {
 })(Api);
 	const ReplyButton = (({DiscordModules, WebpackModules}) => {
     const Dispatcher = WebpackModules.getByProps("ComponentDispatch").ComponentDispatch;
-    const TooltipWrapper = WebpackModules.getByPrototypes("showDelayed");
+    const TooltipWrapper = WebpackModules.getByPrototypes("showDelayed") || WebpackModules.getByDisplayName("TooltipDeprecated");
     return class ReplyButton extends DiscordModules.React.Component {
         constructor(props) {
             super(props);
@@ -61,24 +106,24 @@ var ReplySystem = (() => {
             return DiscordModules.React.createElement(TooltipWrapper,
                     {color: "black", position: "top", text: "Reply!"},
                     DiscordModules.React.createElement("span", {className: "reply-button"},
-                        !this.props.icon ? DiscordModules.React.createElement(
-                            "span", {
-                                className: "reply-label",
-                                onClick: this.onClick,
-                            },
-                            "REPLY"
-                        ) : DiscordModules.React.createElement(
-                            "svg", {
-                                className: "reply-icon",
-                                onClick: this.onClick,
-                                width: 15,
-                                height: 15,
-                                viewBox: "0 0 24 24"
-                            },
-                            DiscordModules.React.createElement("path", {d: "M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"}),
-                            DiscordModules.React.createElement("path", {d: "M0 0h24v24H0z", fill: "none"})
-                        )
+                    !this.props.icon ? DiscordModules.React.createElement(
+                        "span", {
+                            className: "reply-label",
+                            onClick: this.onClick,
+                        },
+                        "REPLY"
+                    ) : DiscordModules.React.createElement(
+                        "svg", {
+                            className: "reply-icon",
+                            onClick: this.onClick,
+                            width: 15,
+                            height: 15,
+                            viewBox: "0 0 24 24"
+                        },
+                        DiscordModules.React.createElement("path", {d: "M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"}),
+                        DiscordModules.React.createElement("path", {d: "M0 0h24v24H0z", fill: "none"})
                     )
+                ) 
             );
         }
     };
@@ -335,8 +380,6 @@ var ReplySystem = (() => {
         onStop() {
             PluginUtilities.removeStyle(this.getName());
             Patcher.unpatchAll();
-            this.forceUpdateMessages();
-            this.forceUpdateTextarea();
             Dispatcher.unsubscribe("ADD_REPLY", this.addReply);
             Dispatcher.unsubscribe("REMOVE_REPLY", this.removeReply);
             Dispatcher.unsubscribe("CLEAR_REPLY", this.clearReply);
@@ -362,52 +405,18 @@ var ReplySystem = (() => {
         }
     
         async patchTextareaComponent() {
-            let Textarea = await new Promise(resolve => {
-                let form = document.querySelector(".chat-3bRxxu form");
-                if (form) {resolve(ReactTools.getOwnerInstance(form).constructor);}
-                else {
-                    let channel = WebpackModules.find(m => m.prototype && m.prototype.renderEmptyChannel);
-                    let unpatch = Patcher.before(channel.prototype, "componentDidUpdate", (t) => {
-                        let elem = DiscordModules.ReactDOM.findDOMNode(t);
-                        if (!elem) return;
-                        let form = elem.querySelector(".chat-3bRxxu form");
-                        if (!form) return;
-                        unpatch();
-                        resolve(ReactTools.getOwnerInstance(form).constructor);
-                    });
-                }
-            });
-    
-            let list = DiscordModules.React.createElement(ReplyList);
-            Patcher.after(Textarea.prototype, "render", (thisObject, args, returnValue) => {
+            const Textarea = await ReactComponents.getComponentByName("ChannelTextAreaForm", ".chat-3bRxxu form");
+            const list = DiscordModules.React.createElement(ReplyList);
+            Patcher.after(Textarea.component.prototype, "render", (thisObject, args, returnValue) => {
                 returnValue.props.children.push(list);
                 return returnValue;
             });
-            
-            this.forceUpdateTextarea();
+            Textarea.forceUpdateAll();
         }
     
-        forceUpdateTextarea() {
-            let form = document.querySelector(".chat-3bRxxu form");
-            form && ReactTools.getOwnerInstance(form).forceUpdate();
-        }
-    
-        async patchMessageComponent() {
-            let Message = await new Promise(resolve => {
-                let msg = document.querySelector(DiscordSelectors.Messages.message);
-                if (msg) return resolve(ReactTools.getOwnerInstance(msg).constructor);
-        
-                let MessageGroup = WebpackModules.getModule(m => m.defaultProps && m.defaultProps.disableManageMessages);
-                let unpatch = Patcher.after(MessageGroup.prototype, "componentDidMount", (t) => {
-                    let elem = DiscordModules.ReactDOM.findDOMNode(t);
-                    if (!elem) return;
-                    unpatch();
-                    let msg = elem.querySelector(DiscordSelectors.Messages.message);
-                    resolve(ReactTools.getOwnerInstance(msg).constructor);
-                });
-            });
-    
-            Patcher.after(Message.prototype, "render", (thisObject, args, returnValue) => {
+        async patchMessageComponent() {    
+            const Message = await ReactComponents.getComponentByName("Message", DiscordSelectors.Messages.message);
+            Patcher.after(Message.component.prototype, "render", (thisObject, args, returnValue) => {
                 if (!thisObject.props.isHeader || thisObject.props.message.type != 0) return returnValue;
                 let id = thisObject.props.message.author.id;
                 let name = thisObject.props.message.author.username;
@@ -428,13 +437,7 @@ var ReplySystem = (() => {
     
                 return returnValue;
             });
-            
-            this.forceUpdateMessages();
-        }
-    
-        forceUpdateMessages() {
-            let messages = document.querySelectorAll(DiscordSelectors.Messages.message);
-            for (let m = 0; m < messages.length; m++) ReactTools.getOwnerInstance(messages[m]).forceUpdate();
+            Message.forceUpdateAll();
         }
     
         getSettingsPanel() {
@@ -452,3 +455,4 @@ var ReplySystem = (() => {
         return plugin(Plugin, Api);
     })(global.ZeresPluginLibrary.buildPlugin(config));
 })();
+/*@end@*/

@@ -1,19 +1,64 @@
 //META{"name":"BetterFormattingRedux","displayName":"BetterFormattingRedux","website":"https://github.com/rauenzi/BetterDiscordAddons/tree/master/Plugins/BetterFormattingRedux","source":"https://raw.githubusercontent.com/rauenzi/BetterDiscordAddons/master/Plugins/BetterFormattingRedux/BetterFormattingRedux.plugin.js"}*//
+/*@cc_on
+@if (@_jscript)
+	
+	// Offer to self-install for clueless users that try to run this directly.
+	var shell = WScript.CreateObject("WScript.Shell");
+	var fs = new ActiveXObject("Scripting.FileSystemObject");
+	var pathPlugins = shell.ExpandEnvironmentStrings("%APPDATA%\BetterDiscord\plugins");
+	var pathSelf = WScript.ScriptFullName;
+	// Put the user at ease by addressing them in the first person
+	shell.Popup("It looks like you've mistakenly tried to run me directly. \n(Don't do that!)", 0, "I'm a plugin for BetterDiscord", 0x30);
+	if (fs.GetParentFolderName(pathSelf) === fs.GetAbsolutePathName(pathPlugins)) {
+		shell.Popup("I'm in the correct folder already.", 0, "I'm already installed", 0x40);
+	} else if (!fs.FolderExists(pathPlugins)) {
+		shell.Popup("I can't find the BetterDiscord plugins folder.\nAre you sure it's even installed?", 0, "Can't install myself", 0x10);
+	} else if (shell.Popup("Should I copy myself to BetterDiscord's plugins folder for you?", 0, "Do you need some help?", 0x34) === 6) {
+		fs.CopyFile(pathSelf, fs.BuildPath(pathPlugins, fs.GetFileName(pathSelf)), true);
+		// Show the user where to put plugins in the future
+		shell.Exec("explorer " + pathPlugins);
+		shell.Popup("I'm installed!", 0, "Successfully installed", 0x40);
+	}
+	WScript.Quit();
+
+@else@*/
 
 var BetterFormattingRedux = (() => {
-    const config = {"info":{"name":"BetterFormattingRedux","authors":[{"name":"Zerebos","discord_id":"249746236008169473","github_username":"rauenzi","twitter_username":"ZackRauen"}],"version":"2.3.2","description":"Enables different types of formatting in standard Discord chat. Support Server: bit.ly/ZeresServer","github":"https://github.com/rauenzi/BetterDiscordAddons/tree/master/Plugins/BetterFormattingRedux","github_raw":"https://raw.githubusercontent.com/rauenzi/BetterDiscordAddons/master/Plugins/BetterFormattingRedux/BetterFormattingRedux.plugin.js"},"defaultConfig":[{"type":"category","id":"toolbar","name":"Toolbar Buttons","collapsible":true,"shown":false,"settings":[{"type":"switch","id":"bold","name":"Bold","value":true},{"type":"switch","id":"italic","name":"Italic","value":true},{"type":"switch","id":"underline","name":"Underline","value":true},{"type":"switch","id":"strikethrough","name":"Strikethrough","value":true},{"type":"switch","id":"spoiler","name":"Spoiler","value":true},{"type":"switch","id":"code","name":"Code","value":true},{"type":"switch","id":"codeblock","name":"Codeblock","value":true},{"type":"switch","id":"superscript","name":"Superscript","value":true},{"type":"switch","id":"smallcaps","name":"Smallcaps","value":true},{"type":"switch","id":"fullwidth","name":"Full Width","value":true},{"type":"switch","id":"upsidedown","name":"Upsidedown","value":true},{"type":"switch","id":"varied","name":"Varied Caps","value":true},{"type":"switch","id":"leet","name":"Leet (1337)","value":false},{"type":"switch","id":"thicc","name":"Extra Thicc","value":false}]},{"type":"category","id":"formats","name":"Active Formats","collapsible":true,"shown":false,"settings":[{"type":"switch","id":"superscript","name":"Superscript","value":true},{"type":"switch","id":"smallcaps","name":"Smallcaps","value":true},{"type":"switch","id":"fullwidth","name":"Full Width","value":true},{"type":"switch","id":"upsidedown","name":"Upsidedown","value":true},{"type":"switch","id":"varied","name":"Varied Caps","value":true},{"type":"switch","id":"leet","name":"Leet (1337)","value":false},{"type":"switch","id":"thicc","name":"Extra Thicc","value":false}]},{"type":"category","id":"wrappers","name":"Wrapper Options","collapsible":true,"shown":false,"settings":[{"type":"textbox","id":"superscript","name":"Superscript","note":"The wrapper for superscripted text","value":"^^"},{"type":"textbox","id":"smallcaps","name":"Smallcaps","note":"The wrapper to make Smallcaps.","value":"%%"},{"type":"textbox","id":"fullwidth","name":"Full Width","note":"The wrapper for E X P A N D E D  T E X T.","value":"##"},{"type":"textbox","id":"upsidedown","name":"Upsidedown","note":"The wrapper to flip the text upsidedown.","value":"&&"},{"type":"textbox","id":"varied","name":"Varied Caps","note":"The wrapper to VaRy the capitalization.","value":"=="},{"type":"textbox","id":"leet","name":"Leet (1337)","note":"The wrapper to talk in 13375p34k.","value":"++"},{"type":"textbox","id":"thicc","name":"Extra Thicc","note":"The wrapper to get 乇乂下尺卂 下卄工匚匚.","value":"$$"}]},{"type":"category","id":"formatting","name":"Formatting Options","collapsible":true,"shown":false,"settings":[{"type":"dropdown","id":"fullWidthMap","name":"Fullwidth Style","note":"Which style of fullwidth formatting should be used.","value":true,"options":[{"label":"T H I S","value":false},{"label":"ｔｈｉｓ","value":true}]},{"type":"switch","id":"reorderUpsidedown","name":"Reorder Upsidedown Text","note":"Having this enabled reorders the upside down text to make it in-order.","value":true},{"type":"switch","id":"fullwidth","name":"Start VaRiEd Caps With Capital","note":"Enabling this starts a varied text string with a capital.","value":true}]},{"type":"category","id":"plugin","name":"Functional Options","collapsible":true,"shown":false,"settings":[{"type":"dropdown","id":"hoverOpen","name":"Opening Toolbar","note":"Determines when to show the toolbar.","value":true,"options":[{"label":"Click","value":false},{"label":"Hover","value":true}]},{"type":"dropdown","id":"chainFormats","name":"Format Chaining","note":"Swaps priority of wrappers between inner first and outer first. Check the GitHub for more info.","value":true,"options":[{"label":"Inner","value":false},{"label":"Outer","value":true}]},{"type":"switch","id":"closeOnSend","name":"Close On Send","note":"This option will close the toolbar when a message is sent.","value":true}]},{"type":"category","id":"style","name":"Style Options","collapsible":true,"shown":false,"settings":[{"type":"dropdown","id":"icons","name":"Toolbar Style","note":"Switches between icons and text as the toolbar buttons.","value":true,"options":[{"label":"Text","value":false},{"label":"Icons","value":true}]},{"type":"dropdown","id":"rightSide","name":"Toolbar Location","note":"This option enables swapping toolbar location.","value":true,"options":[{"label":"Left","value":false},{"label":"Right","value":true}]},{"type":"slider","id":"toolbarOpacity","name":"Opacity","note":"This allows the toolbar to be partially seethrough.","value":1,"min":0,"max":1},{"type":"slider","id":"fontSize","name":"Font Size","note":"Adjusts the font size between 0 and 100%.","value":85,"min":0,"max":100}]}],"changelog":[{"title":"What's New?","items":["Change default wrapper for varied text to == from || to prevent spoiler conflict."]}],"main":"index.js"};
+    const config = {"info":{"name":"BetterFormattingRedux","authors":[{"name":"Zerebos","discord_id":"249746236008169473","github_username":"rauenzi","twitter_username":"ZackRauen"}],"version":"2.3.7","description":"Enables different types of formatting in standard Discord chat. Support Server: bit.ly/ZeresServer","github":"https://github.com/rauenzi/BetterDiscordAddons/tree/master/Plugins/BetterFormattingRedux","github_raw":"https://raw.githubusercontent.com/rauenzi/BetterDiscordAddons/master/Plugins/BetterFormattingRedux/BetterFormattingRedux.plugin.js"},"changelog":[{"title":"What's Up?","items":["Temporarily removed codeblock languages on right click, will add back when context menus are fixed!"]}],"main":"index.js","defaultConfig":[{"type":"category","id":"toolbar","name":"Toolbar Buttons","collapsible":true,"shown":false,"settings":[{"type":"switch","id":"bold","name":"Bold","value":true},{"type":"switch","id":"italic","name":"Italic","value":true},{"type":"switch","id":"underline","name":"Underline","value":true},{"type":"switch","id":"strikethrough","name":"Strikethrough","value":true},{"type":"switch","id":"spoiler","name":"Spoiler","value":true},{"type":"switch","id":"code","name":"Code","value":true},{"type":"switch","id":"codeblock","name":"Codeblock","value":true},{"type":"switch","id":"superscript","name":"Superscript","value":true},{"type":"switch","id":"smallcaps","name":"Smallcaps","value":true},{"type":"switch","id":"fullwidth","name":"Full Width","value":true},{"type":"switch","id":"upsidedown","name":"Upsidedown","value":true},{"type":"switch","id":"varied","name":"Varied Caps","value":true},{"type":"switch","id":"leet","name":"Leet (1337)","value":false},{"type":"switch","id":"thicc","name":"Extra Thicc","value":false}]},{"type":"category","id":"formats","name":"Active Formats","collapsible":true,"shown":false,"settings":[{"type":"switch","id":"superscript","name":"Superscript","value":true},{"type":"switch","id":"smallcaps","name":"Smallcaps","value":true},{"type":"switch","id":"fullwidth","name":"Full Width","value":true},{"type":"switch","id":"upsidedown","name":"Upsidedown","value":true},{"type":"switch","id":"varied","name":"Varied Caps","value":true},{"type":"switch","id":"leet","name":"Leet (1337)","value":false},{"type":"switch","id":"thicc","name":"Extra Thicc","value":false}]},{"type":"category","id":"wrappers","name":"Wrapper Options","collapsible":true,"shown":false,"settings":[{"type":"textbox","id":"superscript","name":"Superscript","note":"The wrapper for superscripted text","value":"^^"},{"type":"textbox","id":"smallcaps","name":"Smallcaps","note":"The wrapper to make Smallcaps.","value":"%%"},{"type":"textbox","id":"fullwidth","name":"Full Width","note":"The wrapper for E X P A N D E D  T E X T.","value":"##"},{"type":"textbox","id":"upsidedown","name":"Upsidedown","note":"The wrapper to flip the text upsidedown.","value":"&&"},{"type":"textbox","id":"varied","name":"Varied Caps","note":"The wrapper to VaRy the capitalization.","value":"=="},{"type":"textbox","id":"leet","name":"Leet (1337)","note":"The wrapper to talk in 13375p34k.","value":"++"},{"type":"textbox","id":"thicc","name":"Extra Thicc","note":"The wrapper to get 乇乂下尺卂 下卄工匚匚.","value":"$$"}]},{"type":"category","id":"formatting","name":"Formatting Options","collapsible":true,"shown":false,"settings":[{"type":"dropdown","id":"fullWidthMap","name":"Fullwidth Style","note":"Which style of fullwidth formatting should be used.","value":true,"options":[{"label":"T H I S","value":false},{"label":"ｔｈｉｓ","value":true}]},{"type":"switch","id":"reorderUpsidedown","name":"Reorder Upsidedown Text","note":"Having this enabled reorders the upside down text to make it in-order.","value":true},{"type":"switch","id":"fullwidth","name":"Start VaRiEd Caps With Capital","note":"Enabling this starts a varied text string with a capital.","value":true}]},{"type":"category","id":"plugin","name":"Functional Options","collapsible":true,"shown":false,"settings":[{"type":"dropdown","id":"hoverOpen","name":"Opening Toolbar","note":"Determines when to show the toolbar.","value":true,"options":[{"label":"Click","value":false},{"label":"Hover","value":true}]},{"type":"dropdown","id":"chainFormats","name":"Format Chaining","note":"Swaps priority of wrappers between inner first and outer first. Check the GitHub for more info.","value":true,"options":[{"label":"Inner","value":false},{"label":"Outer","value":true}]},{"type":"switch","id":"closeOnSend","name":"Close On Send","note":"This option will close the toolbar when a message is sent.","value":true}]},{"type":"category","id":"style","name":"Style Options","collapsible":true,"shown":false,"settings":[{"type":"dropdown","id":"icons","name":"Toolbar Style","note":"Switches between icons and text as the toolbar buttons.","value":true,"options":[{"label":"Text","value":false},{"label":"Icons","value":true}]},{"type":"dropdown","id":"rightSide","name":"Toolbar Location","note":"This option enables swapping toolbar location.","value":true,"options":[{"label":"Left","value":false},{"label":"Right","value":true}]},{"type":"slider","id":"toolbarOpacity","name":"Opacity","note":"This allows the toolbar to be partially seethrough.","value":1,"min":0,"max":1},{"type":"slider","id":"fontSize","name":"Font Size","note":"Adjusts the font size between 0 and 100%.","value":85,"min":0,"max":100}]}]};
 
     return !global.ZeresPluginLibrary ? class {
+        constructor() {this._config = config;}
         getName() {return config.info.name;}
         getAuthor() {return config.info.authors.map(a => a.name).join(", ");}
         getDescription() {return config.info.description;}
         getVersion() {return config.info.version;}
-        load() {window.BdApi.alert("Library Missing",`The library plugin needed for ${config.info.name} is missing.<br /><br /> <a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);}
+        load() {
+            const title = "Library Missing";
+            const ModalStack = BdApi.findModuleByProps("push", "update", "pop", "popWithKey");
+            const TextElement = BdApi.findModuleByProps("Sizes", "Weights");
+            const ConfirmationModal = BdApi.findModule(m => m.defaultProps && m.key && m.key() == "confirm-modal");
+            if (!ModalStack || !ConfirmationModal || !TextElement) return BdApi.alert(title, `The library plugin needed for ${config.info.name} is missing.<br /><br /> <a href="https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js" target="_blank">Click here to download the library!</a>`);
+            ModalStack.push(function(props) {
+                return BdApi.React.createElement(ConfirmationModal, Object.assign({
+                    header: title,
+                    children: [TextElement({color: TextElement.Colors.PRIMARY, children: [`The library plugin needed for ${config.info.name} is missing. Please click Download Now to install it.`]})],
+                    red: false,
+                    confirmText: "Download Now",
+                    cancelText: "Cancel",
+                    onConfirm: () => {
+                        require("request").get("https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js", async (error, response, body) => {
+                            if (error) return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js");
+                            await new Promise(r => require("fs").writeFile(require("path").join(ContentManager.pluginsFolder, "0PluginLibrary.plugin.js"), body, r));
+                        });
+                    }
+                }, props));
+            });
+        }
         start() {}
         stop() {}
     } : (([Plugin, Api]) => {
         const plugin = (Plugin, Api) => {
-    const {DiscordSelectors, PluginUtilities, ContextMenu, Tooltip} = Api;
+    const {DiscordSelectors, PluginUtilities, ContextMenu, EmulatedTooltip} = Api;
     return class BetterFormattingRedux extends Plugin {
         constructor() {
             super();
@@ -38,31 +83,31 @@ var BetterFormattingRedux = (() => {
     bold: {type: "native-format",
             name: "Bold",
             displayName: "<b>Bold</b>",
-            icon: `<img src='data:image/svg+xml;utf8,<svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M15.6 10.79c.97-.67 1.65-1.77 1.65-2.79 0-2.26-1.75-4-4-4H7v14h7.04c2.09 0 3.71-1.7 3.71-3.79 0-1.52-.86-2.82-2.15-3.42zM10 6.5h3c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-3v-3zm3.5 9H10v-3h3.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'>`},
+            icon: `<img src='data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M15.6 10.79c.97-.67 1.65-1.77 1.65-2.79 0-2.26-1.75-4-4-4H7v14h7.04c2.09 0 3.71-1.7 3.71-3.79 0-1.52-.86-2.82-2.15-3.42zM10 6.5h3c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-3v-3zm3.5 9H10v-3h3.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'>`},
     italic: {type: "native-format",
             name: "Italic",
             displayName: "<i>Italic</i>",
-            icon: `<img src='data:image/svg+xml;utf8,<svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 4v3h2.21l-3.42 8H6v3h8v-3h-2.21l3.42-8H18V4z"/></svg>'>`},
+            icon: `<img src='data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 4v3h2.21l-3.42 8H6v3h8v-3h-2.21l3.42-8H18V4z"/></svg>'>`},
     underline: {type: "native-format",
                 name: "Underline",
                 displayName: "<u>Underline</u>",
-                icon: `<img src='data:image/svg+xml;utf8,<svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 17c3.31 0 6-2.69 6-6V3h-2.5v8c0 1.93-1.57 3.5-3.5 3.5S8.5 12.93 8.5 11V3H6v8c0 3.31 2.69 6 6 6zm-7 2v2h14v-2H5z"/></svg>'>`},
+                icon: `<img src='data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 17c3.31 0 6-2.69 6-6V3h-2.5v8c0 1.93-1.57 3.5-3.5 3.5S8.5 12.93 8.5 11V3H6v8c0 3.31 2.69 6 6 6zm-7 2v2h14v-2H5z"/></svg>'>`},
     strikethrough: {type: "native-format",
                     name: "Strikethrough",
                     displayName: "<s>Strikethrough</s>",
-                    icon: `<img src='data:image/svg+xml;utf8,<svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 19h4v-3h-4v3zM5 4v3h5v3h4V7h5V4H5zM3 14h18v-2H3v2z"/></svg>'>`},
+                    icon: `<img src='data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 19h4v-3h-4v3zM5 4v3h5v3h4V7h5V4H5zM3 14h18v-2H3v2z"/></svg>'>`},
     spoiler: {type: "native-format",
               name: "Spoiler",
               displayName: "Spoiler",
-              icon: `<img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFFFFF" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>'>`},
+              icon: `<img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>'>`},
     code: {type: "native-format",
             name: "Code",
             displayName: "<span style='font-family:monospace;'>Code</span>",
-            icon: `<img src='data:image/svg+xml;utf8,<svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>'>`},
+            icon: `<img src='data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>'>`},
     codeblock: {type: "native-format",
                 name: "Codeblock",
                 displayName: "<span style='font-family:monospace;text-decoration: underline overline;'>|Codeblock|</span>",
-                icon: `<img src='data:image/svg+xml;utf8,<svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M7.77 6.76L6.23 5.48.82 12l5.41 6.52 1.54-1.28L3.42 12l4.35-5.24zM7 13h2v-2H7v2zm10-2h-2v2h2v-2zm-6 2h2v-2h-2v2zm6.77-7.52l-1.54 1.28L20.58 12l-4.35 5.24 1.54 1.28L23.18 12l-5.41-6.52z"/></svg>'>`},
+                icon: `<img src='data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M7.77 6.76L6.23 5.48.82 12l5.41 6.52 1.54-1.28L3.42 12l4.35-5.24zM7 13h2v-2H7v2zm10-2h-2v2h2v-2zm-6 2h2v-2h-2v2zm6.77-7.52l-1.54 1.28L20.58 12l-4.35 5.24 1.54 1.28L23.18 12l-5.41-6.52z"/></svg>'>`},
     superscript: {type: "bfr-format",
                 name: "Superscript",
                 displayName: "ˢᵘᵖᵉʳˢᶜʳᶦᵖᵗ",
@@ -70,7 +115,7 @@ var BetterFormattingRedux = (() => {
     smallcaps: {type: "bfr-format",
                 name: "Smallcaps",
                 displayName: "SᴍᴀʟʟCᴀᴘs",
-                icon: `<img src='data:image/svg+xml;utf8,<svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path d="M24 24H0V0h24v24z" id="a"/></defs><clipPath id="b"><use overflow="visible" xlink:href="#a"/></clipPath><path clip-path="url(#b)" d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/></svg>'>`},
+                icon: `<img src='data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path d="M24 24H0V0h24v24z" id="a"/></defs><clipPath id="b"><use overflow="visible" xlink:href="#a"/></clipPath><path clip-path="url(#b)" d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/></svg>'>`},
     fullwidth: {type: "bfr-format",
                 name: "Fullwidth",
                 displayName: "Ｆｕｌｌｗｉｄｔｈ",
@@ -78,11 +123,11 @@ var BetterFormattingRedux = (() => {
     upsidedown: {type: "bfr-format",
                 name: "Upsidedown",
                 displayName: "uʍopǝpᴉsd∩",
-                icon: `<img src='data:image/svg+xml;utf8,<svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'>`},
+                icon: `<img src='data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'>`},
     varied: {type: "bfr-format",
             name: "Varied",
             displayName: "VaRiEd CaPs",
-            icon: `<img src='data:image/svg+xml;utf8,<svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 4l-4 4h3v7c0 1.1-.9 2-2 2s-2-.9-2-2V8c0-2.21-1.79-4-4-4S5 5.79 5 8v7H2l4 4 4-4H7V8c0-1.1.9-2 2-2s2 .9 2 2v7c0 2.21 1.79 4 4 4s4-1.79 4-4V8h3l-4-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'>`},
+            icon: `<img src='data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 4l-4 4h3v7c0 1.1-.9 2-2 2s-2-.9-2-2V8c0-2.21-1.79-4-4-4S5 5.79 5 8v7H2l4 4 4-4H7V8c0-1.1.9-2 2-2s2 .9 2 2v7c0 2.21 1.79 4 4 4s4-1.79 4-4V8h3l-4-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'>`},
     leet: {type: "bfr-format",
             name: "Leet",
             displayName: "1337",
@@ -134,7 +179,7 @@ var BetterFormattingRedux = (() => {
 	pointer-events: initial;
 }
 
-.bf-toolbar:before {
+.bf-toolbar::before {
 	content:"";
 	display: block;
 	width:100%;
@@ -148,6 +193,10 @@ var BetterFormattingRedux = (() => {
 	border-radius:3px;
 	transform:translate(0,55px);
 	transition:all 200ms ease;
+}
+
+.theme-light .bf-toolbar::before {
+	background: #97A0AA;
 }
 
 .bf-toolbar.bf-visible:before,
@@ -212,10 +261,11 @@ var BetterFormattingRedux = (() => {
 	opacity: 0;
 }
 
+.theme-light .bf-toolbar:hover .bf-arrow,
 .bf-toolbar .bf-arrow {
 	content:"";
 	display:block;
-	background:url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRkZGRkZGIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gICAgPHBhdGggZD0iTTcuNDEgMTUuNDFMMTIgMTAuODNsNC41OSA0LjU4TDE4IDE0bC02LTYtNiA2eiIvPiAgICA8cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PC9zdmc+);
+	background: url('data:image/svg+xml;utf8,<svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
 	height:30px;
 	width:30px;
 	right:5px;
@@ -227,6 +277,9 @@ var BetterFormattingRedux = (() => {
 	transition:all 200ms ease;
 	opacity: .3;
 	cursor:pointer;
+}
+.theme-light .bf-toolbar .bf-arrow {
+	background: url('data:image/svg+xml;utf8,<svg fill="#7F8186" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
 }
 .bf-toolbar.bf-visible .bf-arrow,
 .bf-toolbar.bf-hover:hover .bf-arrow {
@@ -496,17 +549,18 @@ var BetterFormattingRedux = (() => {
             }
             var sorted = Object.keys(this.settings.toolbar).sort((a,b) => {return this.buttonOrder.indexOf(a) - this.buttonOrder.indexOf(b);});
             for (var i = 0; i < sorted.length; i++) {
+				if (!this.toolbarData[sorted[i]]) continue;
                 var button = $("<div>");
                 button.addClass("format");
                 button.addClass(this.toolbarData[sorted[i]].type);
-                new Tooltip(button, this.toolbarData[sorted[i]].name);
+                new EmulatedTooltip(button, this.toolbarData[sorted[i]].name);
                 if (!this.settings.toolbar[sorted[i]]) button.addClass("disabled");
-                if (sorted[i] === "codeblock") {
+                /*if (sorted[i] === "codeblock") {
                     let contextMenu = this.getContextMenu(textarea);
                     button.on("contextmenu", (e) => {
                         contextMenu.show(e.clientX, e.clientY);
                     });
-                }
+                }*/
                 button.attr("data-name", sorted[i]);
                 if (this.settings.style.icons) button.html(this.toolbarData[sorted[i]].icon);
                 else button.html(this.toolbarData[sorted[i]].displayName);
@@ -610,3 +664,4 @@ var BetterFormattingRedux = (() => {
         return plugin(Plugin, Api);
     })(global.ZeresPluginLibrary.buildPlugin(config));
 })();
+/*@end@*/

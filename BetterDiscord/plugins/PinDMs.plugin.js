@@ -3,128 +3,119 @@
 class PinDMs {
 	getName () {return "PinDMs";}
 
-	getVersion () {return "1.3.1";}
+	getVersion () {return "1.4.9";}
 
 	getAuthor () {return "DevilBro";}
 
 	getDescription () {return "Allows you to pin DMs, making them appear at the top of your DMs/Guild-list.";}
 
-	initConstructor () {
+	constructor () {
 		this.changelog = {
-			"added":[["Sorting","You can now sort pinned DMs (both in the guild and channel list) by dragging them around, only works within pinned boundaries"]]
+			"fixed":[["Home/Library/Store","Fixed Pinned DMs not being added while switching to one of the pages"]]
 		};
-		
+
 		this.patchModules = {
 			"Guilds":"componentDidMount",
 			"PrivateChannel":"componentDidMount",
 			"DirectMessage":["componentDidMount","componentDidUpdate","componentWillUnmount"],
-			"LazyScroller":"render"
+			"LazyScroller":"render",
+			"StandardSidebarView":"componentWillUnmount"
 		};
+	}
 
-		this.dmContextEntryMarkup =
-			`<div class="${BDFDB.disCN.contextmenuitemgroup}">
-				<div class="${BDFDB.disCN.contextmenuitem} pindms-item ${BDFDB.disCN.contextmenuitemsubmenu}">
-					<span class="DevilBro-textscrollwrapper" speed=3><div class="DevilBro-textscroll">REPLACE_context_pindm_text</div></span>
-					<div class="${BDFDB.disCN.contextmenuhint}"></div>
-				</div>
-			</div>`;
-
-		this.dmContextSubMenuMarkup = 
-			`<div class="${BDFDB.disCN.contextmenu} pindms-submenu">
-				<div class="${BDFDB.disCN.contextmenuitemgroup}">
-					<div class="${BDFDB.disCN.contextmenuitem} pindm-channel-item">
-						<span class="DevilBro-textscrollwrapper" speed=3><div class="DevilBro-textscroll">REPLACE_context_pinchannel_text</div></span>
-						<div class="${BDFDB.disCN.contextmenuhint}"></div>
+	initConstructor () {
+		this.recentDMMarkup =
+			`<div class="pinned-dm" style="opacity: 1; height: 56px; transform: scale(1);">
+				<div class="${BDFDB.disCN.guildouter}">
+					<div class="${BDFDB.disCNS.guildpillwrapper + BDFDB.disCN.dmpill}">
+						<span class="${BDFDB.disCN.guildpillitem}" style="opacity: 0; height: 8px; transform: translate3d(0px, 0px, 0px);"></span>
 					</div>
-					<div class="${BDFDB.disCN.contextmenuitem} unpindm-channel-item ${BDFDB.disCN.contextmenuitemdanger}">
-						<span class="DevilBro-textscrollwrapper" speed=3><div class="DevilBro-textscroll">REPLACE_context_unpinchannel_text</div></span>
-						<div class="${BDFDB.disCN.contextmenuhint}"></div>
-					</div>
-					<div class="${BDFDB.disCN.contextmenuitem} pindm-guild-item">
-						<span class="DevilBro-textscrollwrapper" speed=3><div class="DevilBro-textscroll">REPLACE_context_pinguild_text</div></span>
-						<div class="${BDFDB.disCN.contextmenuhint}"></div>
-					</div>
-					<div class="${BDFDB.disCN.contextmenuitem} unpindm-guild-item ${BDFDB.disCN.contextmenuitemdanger}">
-						<span class="DevilBro-textscrollwrapper" speed=3><div class="DevilBro-textscroll">REPLACE_context_unpinguild_text</div></span>
-						<div class="${BDFDB.disCN.contextmenuhint}"></div>
-					</div>
-				</div>
-			</div>`;
-
-		this.dmPinContextMarkup = 
-			`<div class="${BDFDB.disCN.contextmenu} pinneddm-contextmenu">
-				<div class="${BDFDB.disCN.contextmenuitemgroup}">
-					<div class="${BDFDB.disCN.contextmenuitem} pindm-guild-item">
-						<span class="DevilBro-textscrollwrapper" speed=3><div class="DevilBro-textscroll">REPLACE_context_pinguild_text</div></span>
-						<div class="${BDFDB.disCN.contextmenuhint}"></div>
-					</div>
-				</div>
-			</div>`;
-
-		this.dmUnpinContextMarkup = 
-			`<div class="${BDFDB.disCN.contextmenu} pinneddm-contextmenu">
-				<div class="${BDFDB.disCN.contextmenuitemgroup}">
-					<div class="${BDFDB.disCN.contextmenuitem} unpindm-guild-item ${BDFDB.disCN.contextmenuitemdanger}">
-						<span class="DevilBro-textscrollwrapper" speed=3><div class="DevilBro-textscroll">REPLACE_context_unpinguild_text</div></span>
-						<div class="${BDFDB.disCN.contextmenuhint}"></div>
+					<div class="${BDFDB.disCN.guildinnerwrapper}">
+						<div class="${BDFDB.disCN.guildinner}">
+							<svg width="48" height="48" viewBox="0 0 48 48" class="${BDFDB.disCN.guildsvg}">
+								<mask id="" fill="black" x="0" y="0" width="48" height="48">
+									<path d="M0 0 l50 0l0 50l-50 0l0 -50Z" fill="white"></path>
+									<rect x="28" y="-4" width="24" height="24" rx="12" ry="12" transform="translate(0 0)" fill="black"></rect>
+									<rect x="28" y="28" width="24" height="24" rx="12" ry="12" transform="translate(-20 20)" fill="black"></rect>
+								</mask>
+								<foreignObject mask="" x="0" y="0" width="48" height="48">
+									<a class="${BDFDB.disCN.guildiconwrapper}" draggable="false" style="border-radius: 50%;">
+										<img class="${BDFDB.disCN.guildicon}" src="" width="48" height="48" draggable="false"></img>
+									</a>
+								</foreignObject>
+							</svg>
+							<div class="${BDFDB.disCN.guildupperbadge} pin-badge" style="opacity: 1; transform: translate(0px, 0px);">
+								<div class="${BDFDB.disCNS.guildbadgeiconbadge + BDFDB.disCN.guildbadgeiconbadge2}" style="width: 16px; padding-right: 1px;">
+									<svg class="${BDFDB.disCN.guildbadgeicon}" name="Nova_Pin" width="24" height="24" viewBox="0 0 520 520">
+										<g fill="white">
+											<path d="M291.31, 402.761L109.241, 220.693C79.073, 190.525, 30.166, 190.526, 0, 220.692l291.31, 291.31C321.474, 481.835, 321.476, 432.927, 291.31, 402.761z"></path>
+											<polygon points="273.104, 111.449 154.758, 211.589 300.412, 357.242 400.55, 238.898"></polygon>
+											<path d="M500.688, 175.174L336.827, 11.313c-15.085-15.085-39.539-15.083-54.621, 0c-15.082, 15.082-15.082, 39.538, 0, 54.62 l163.861, 163.861c15.083, 15.085, 39.539, 15.085, 54.621, 0.001C515.773, 214.712, 515.773, 190.257, 500.688, 175.174z"></path>
+											<polygon points="91.032, 366.346 0, 512 145.655, 420.967"></polygon>
+										</g>
+									</svg>
+								</div>
+							</div>
+							<div class="${BDFDB.disCN.guildlowerbadge}" style="opacity: 1; transform: translate(0px, 0px); display: none;">
+								<div class="${BDFDB.disCN.guildbadgenumberbadge}" style="background-color: rgb(240, 71, 71); width: 16px; padding-right: 1px;">0</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>`;
 
-		this.recentDMMarkup = 
-			`<div class="${BDFDB.disCN.guild} pinned" style="transform: translateX(0px);">
-				<div class="${BDFDB.disCN.guildinner}" draggable="false" style="border-radius: 25px;">
-					<div class="${BDFDB.disCNS.avatarwrapper + BDFDB.disCNS.avatarsmall + BDFDB.disCNS.guildavatar + BDFDB.disCN.avatarsizesmall}">
-						<a draggable="false" class="${BDFDB.disCNS.guildavatarinner + BDFDB.disCNS.avatarinner + BDFDB.disCN.avatarstopanimation}"></a>
+		this.dragPlaceholderMarkup =
+			`<div class="dmplaceholder" style="opacity: 1; height: 56px; transform: scale(1);">
+				<div class="${BDFDB.disCN.guildouter}">
+					<div class="${BDFDB.disCNS.guildpillwrapper + BDFDB.disCN.dmpill}">
+						<span class="${BDFDB.disCN.guildpillitem}"></span>
+					</div>
+					<div class="${BDFDB.disCN.guildinnerwrapper}">
+						<div class="${BDFDB.disCN.guildinner}">
+							<svg width="48" height="48" viewBox="0 0 48 48" class="${BDFDB.disCN.guildsvg}">
+								<mask id="PINDMSDRAG" fill="black" x="0" y="0" width="48" height="48">
+									<path d="M48 24C48 37.2548 37.2548 48 24 48C10.7452 48 0 37.2548 0 24C0 10.7452 10.7452 0 24 0C37.2548 0 48 10.7452 48 24Z" fill="white"></path>
+								</mask>
+								<foreignObject mask="url(#PINDMSDRAG)" x="0" y="0" width="48" height="48">
+									<div class="${BDFDB.disCN.guildplaceholder}"></div>
+								</foreignObject>
+							</svg>
+						</div>
 					</div>
 				</div>
-				<div class="${BDFDB.disCNS.badge + BDFDB.disCN.badgewrapper}" style="display: none !important;">0</div>
 			</div>`;
 
 		this.css = `
-			${BDFDB.dotCN.guild}.pinned:after {
-				background-position: 50%;
-				background-repeat: no-repeat;
-				background-size: 16px;
-				border-radius: 12px;
-				content: " ";
-				height: 24px;
-				overflow: hidden;
-				pointer-events: none;
-				position: absolute;
-				right: -6px;
-				top: -6px;
-				width: 24px;
-				background-image: url('data:image/svg+xml; utf8, <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-90 -80 700 700" xml:space="preserve"><g fill="#FFF"><path d="M291.31,402.761L109.241,220.693C79.073,190.525,30.166,190.526,0,220.692l291.31,291.31C321.474,481.835,321.476,432.927,291.31,402.761z"/><polygon points="273.104,111.449 154.758,211.589 300.412,357.242 400.55,238.898"/><path d="M500.688,175.174L336.827,11.313c-15.085-15.085-39.539-15.083-54.621,0c-15.082,15.082-15.082,39.538,0,54.62 l163.861,163.861c15.083,15.085,39.539,15.085,54.621,0.001C515.773,214.712,515.773,190.257,500.688,175.174z"/><polygon points="91.032,366.346 0,512 145.655,420.967"/></g></svg>');
-			}
-			${BDFDB.dotCNS.themelight + BDFDB.dotCN.guild}.pinned:after {
-				background-color: #202225;
-			}
-			${BDFDB.dotCNS.themedark + BDFDB.dotCN.guild}.pinned:after {
-				background-color: #202225;
-			}
 			${BDFDB.dotCN.dmchannel}.pindms-dragpreview,
-			${BDFDB.dotCN.guild}.pindms-dragpreview {
+			.pinned-dm.pindms-dragpreview {
 				pointer-events: none !important;
 				position: absolute !important;
 				opacity: 0.5 !important;
 				z-index: 10000 !important;
 			}
-			${BDFDB.dotCN.guild}.pindms-dragpreview:before,
-			${BDFDB.dotCN.guild}.pindms-dragpreview:after,
-			${BDFDB.dotCN.guild}.pindms-dragpreview ${BDFDB.dotCN.badge} {
+			.pinned-dm.pindms-dragpreview ${BDFDB.dotCN.guildupperbadge},
+			.pinned-dm.pindms-dragpreview ${BDFDB.dotCN.guildlowerbadge} {
 				display: none !important;
 			}
-			${BDFDB.dotCN.guild}.pindms-dragpreview ${BDFDB.dotCN.avataricon} {
-				background-color: transparent !important;
-				overflow: hidden !important;
+			${BDFDB.dotCN.dmchannel}.dmchannelplaceholder {
+				border: 1px dashed var(--channels-default);
 			}`;
+
+		this.defaults = {
+			settings: {
+				showPinIcon:		{value:true, 	description:"Shows a little 'Pin' icon for pinned DMs in the server list:"}
+			}
+		};
 	}
 
 	getSettingsPanel () {
 		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
-		let settingshtml = `<div class="${this.name}-settings DevilBro-settings"><div class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.size18 + BDFDB.disCNS.height24 + BDFDB.disCNS.weightnormal + BDFDB.disCN.marginbottom8}">${this.name}</div><div class="DevilBro-settings-inner">`;
-		settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 0 0 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Unpin all DMs.</h3><button type="button" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorred + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} reset-button" style="flex: 0 0 auto;"><div class="${BDFDB.disCN.buttoncontents}">Reset</div></button></div>`;
+		var settings = BDFDB.getAllData(this, "settings");
+		var settingshtml = `<div class="${this.name}-settings BDFDB-settings"><div class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.titlesize18 + BDFDB.disCNS.height24 + BDFDB.disCNS.weightnormal + BDFDB.disCN.marginbottom8}">${this.name}</div><div class="BDFDB-settings-inner">`;
+		for (let key in settings) {
+			settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 1 1 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">${this.defaults.settings[key].description}</h3><div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;"><input type="checkbox" value="settings ${key}" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner} settings-switch"${settings[key] ? " checked" : ""}></div></div>`;
+		}
+		settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 0 0 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Unpin all DMs.</h3><button type="button" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorred + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} reset-button" style="flex: 0 0 auto;"><div class="${BDFDB.disCN.buttoncontents}">Reset</div></button></div>`;
 		settingshtml += `</div></div>`;
 
 		let settingspanel = BDFDB.htmlToElement(settingshtml);
@@ -146,14 +137,15 @@ class PinDMs {
 	start () {
 		if (!global.BDFDB) global.BDFDB = {myPlugins:{}};
 		if (global.BDFDB && global.BDFDB.myPlugins && typeof global.BDFDB.myPlugins == "object") global.BDFDB.myPlugins[this.getName()] = this;
-		var libraryScript = document.querySelector('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js"]');
-		if (!libraryScript || performance.now() - libraryScript.getAttribute("date") > 600000) {
+		var libraryScript = document.querySelector('head script#BDFDBLibraryScript');
+		if (!libraryScript || (performance.now() - libraryScript.getAttribute("date")) > 600000) {
 			if (libraryScript) libraryScript.remove();
 			libraryScript = document.createElement("script");
+			libraryScript.setAttribute("id", "BDFDBLibraryScript");
 			libraryScript.setAttribute("type", "text/javascript");
-			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
+			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.min.js");
 			libraryScript.setAttribute("date", performance.now());
-			libraryScript.addEventListener("load", () => {if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();});
+			libraryScript.addEventListener("load", () => {this.initialize();});
 			document.head.appendChild(libraryScript);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
@@ -165,20 +157,12 @@ class PinDMs {
 			if (this.started) return;
 			BDFDB.loadMessage(this);
 
-			this.UserUtils = BDFDB.WebModules.findByProperties("getUsers", "getUser");
-			this.ChannelUtils = BDFDB.WebModules.findByProperties("getChannels", "getChannel");
-			this.PrivateChannelUtils = BDFDB.WebModules.findByProperties("ensurePrivateChannel");
-			this.ChannelSwitchUtils = BDFDB.WebModules.findByProperties("selectPrivateChannel");
-			this.UnreadUtils = BDFDB.WebModules.findByProperties("getUnreadCount");
-			this.DiscordConstants = BDFDB.WebModules.findByProperties("Permissions", "ActivityTypes", "StatusTypes");
-			this.Animations = BDFDB.WebModules.findByProperties("spring");
-
 			this.forceAdding = true;
 			BDFDB.WebModules.forceAllUpdates(this);
 			delete this.forceAdding;
 		}
 		else {
-			console.error(`%c[${this.name}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
+			console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
 		}
 	}
 
@@ -194,7 +178,7 @@ class PinDMs {
 					if (ele && ele.pinned) {
 						delete ele.pinned;
 						if (ele.props.ispin) {
-							if (ele.type == "header") insertpoint = i;
+							if (ele && ele.type == "header" || BDFDB.getReactValue(ele, "type.displayName") == "ListSectionItem") insertpoint = i;
 							amount++;
 						}
 					}
@@ -207,113 +191,99 @@ class PinDMs {
 				this.unhideNativeDM(info.id);
 				if (info.div) info.div.removeEventListener("contextmenu", info.div.PinDMsContextMenuListener);
 			}
-			BDFDB.removeEles(BDFDB.dotCNS.dms + BDFDB.dotCN.guild + ".pinned", ".pindms-dragpreview");
+			BDFDB.removeEles(".pinned-dm", ".dmplaceholder", ".pindms-dragpreview");
 
 			BDFDB.unloadMessage(this);
 		}
 	}
 
+	onSwitch () {
+		for (let pin of document.querySelectorAll(".pinned-dm")) this.updatePinnedRecent(pin.getAttribute("channelid"));
+	}
+
 
 	// begin of own functions
 
-	changeLanguageStrings () {
-		this.dmContextEntryMarkup = 	this.dmContextEntryMarkup.replace("REPLACE_context_pindm_text", this.labels.context_pindm_text);
-
-		this.dmContextSubMenuMarkup = 	this.dmContextSubMenuMarkup.replace("REPLACE_context_pinchannel_text", this.labels.context_pinchannel_text);
-		this.dmContextSubMenuMarkup = 	this.dmContextSubMenuMarkup.replace("REPLACE_context_unpinchannel_text", this.labels.context_unpinchannel_text);
-		this.dmContextSubMenuMarkup = 	this.dmContextSubMenuMarkup.replace("REPLACE_context_pinguild_text", this.labels.context_pinguild_text);
-		this.dmContextSubMenuMarkup = 	this.dmContextSubMenuMarkup.replace("REPLACE_context_unpinguild_text", this.labels.context_unpinguild_text);
-
-		this.dmPinContextMarkup = 		this.dmPinContextMarkup.replace("REPLACE_context_pinguild_text", this.labels.context_pinguild_text);
-
-		this.dmUnpinContextMarkup = 	this.dmUnpinContextMarkup.replace("REPLACE_context_unpinguild_text", this.labels.context_unpinguild_text);
-	}
-
-	onUserContextMenu (instance, menu) {
-		if (instance.props && instance.props.user && !menu.querySelector(".pindms-item")) {
-			let closeentry = BDFDB.React.findDOMNodeSafe(BDFDB.getOwnerInstance({node:menu,props:["handleClose"]}));
-			if (closeentry) {
-				let id = this.ChannelUtils.getDMFromUserId(instance.props.user.id);
-				if (id) this.appendItem(instance, id, closeentry);
-				else this.PrivateChannelUtils.ensurePrivateChannel(BDFDB.myData.id, instance.props.user.id).then(id => {this.appendItem(instance, id, closeentry);});
+	onUserContextMenu (instance, menu, returnvalue) {
+		if (instance.props && instance.props.user && !menu.querySelector(`${this.name}-contextMenuSubItem`)) {
+			let [children, index] = BDFDB.getContextMenuGroupAndIndex(returnvalue, "UserCloseChatItem");
+			if (index > -1) {
+				let id = BDFDB.LibraryModules.ChannelStore.getDMFromUserId(instance.props.user.id);
+				if (id) this.appendItem(menu, id, children, index);
+				else BDFDB.LibraryModules.DirectMessageUtils.ensurePrivateChannel(BDFDB.myData.id, instance.props.user.id).then(id => {this.appendItem(menu, id, children, index);});
 			}
 		}
 	}
 
-	onGroupDMContextMenu (instance, menu) {
-		if (instance.props && instance.props.channelId && !menu.querySelector(".pindms-item")) {
-			let changeentry = BDFDB.React.findDOMNodeSafe(BDFDB.getOwnerInstance({node:menu,props:["handleChangeIcon"]}));
-			if (changeentry) {
-				this.appendItem(instance, instance.props.channelId, changeentry);
-			}
+	onGroupDMContextMenu (instance, menu, returnvalue) {
+		if (instance.props && instance.props.channelId && !menu.querySelector(`${this.name}-contextMenuSubItem`)) {
+			let [children, index] = BDFDB.getContextMenuGroupAndIndex(returnvalue, "ChangeIcon");
+			if (index > -1) this.appendItem(menu, instance.props.channelId, children, index);
 		}
 	}
 
-	appendItem (instance, id, target) {
-		let dmContextEntry = BDFDB.htmlToElement(this.dmContextEntryMarkup);
-		target.parentElement.insertBefore(dmContextEntry, target);
-		let pindmsitem = dmContextEntry.querySelector(".pindms-item");
-		pindmsitem.addEventListener("mouseenter", () => {
-			let dmContextSubMenu = BDFDB.htmlToElement(this.dmContextSubMenuMarkup);
-			let pinchannelitem = dmContextSubMenu.querySelector(".pindm-channel-item");
-			let unpinchannelitem = dmContextSubMenu.querySelector(".unpindm-channel-item");
-			let pinguilditem = dmContextSubMenu.querySelector(".pindm-guild-item");
-			let unpinguilditem = dmContextSubMenu.querySelector(".unpindm-guild-item");
-			let pinnedDMs = BDFDB.loadAllData(this, "pinnedDMs");
-			if (pinnedDMs[id] == undefined) {
-				BDFDB.removeEles(unpinchannelitem);
-				pinchannelitem.addEventListener("click", () => {
-					instance._reactInternalFiber.return.memoizedProps.closeContextMenu();
+	appendItem (menu, id, children, index) {
+		let pinnedInChannel = BDFDB.loadAllData(this, "pinnedDMs")[id] != undefined;
+		let pinnedInGuild = BDFDB.loadAllData(this, "pinnedRecents")[id] != undefined;
+		let items = [];
+		items.push(BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+			label: this.labels[pinnedInChannel ? "context_unpinchannel_text" : "context_pinchannel_text"],
+			className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-${pinnedInChannel ? "unpin" : "pin"}channel-contextMenuItem`,
+			danger: pinnedInChannel,
+			action: e => {
+				BDFDB.closeContextMenu(menu);
+				if (!pinnedInChannel) {
 					let dmsscrollerinstance = BDFDB.getReactInstance(document.querySelector(BDFDB.dotCNS.dmchannels + BDFDB.dotCN.scroller));
 					if (dmsscrollerinstance) {
-						let dms = dmsscrollerinstance.return.return.return.memoizedProps.children;
+						let dms = dmsscrollerinstance.return.return.return.stateNode.props.children;
 						let insertpoint = this.getInsertPoint(dms);
-						this.addPinnedDM(id, dms, insertpoint); 
+						this.addPinnedDM(id, dms, insertpoint);
 						this.forceUpdateScroller(dmsscrollerinstance.stateNode);
 					}
 					this.updatePinnedPositions("pinnedDMs");
-				});
-			}
-			else {
-				BDFDB.removeEles(pinchannelitem);
-				unpinchannelitem.addEventListener("click", () => {
-					instance._reactInternalFiber.return.memoizedProps.closeContextMenu();
+				}
+				else {
 					this.removePinnedDM(id);
-				});
+				}
 			}
-			let pinnedRecents = BDFDB.loadAllData(this, "pinnedRecents");
-			if (pinnedRecents[id] == undefined) {
-				BDFDB.removeEles(unpinguilditem);
-				pinguilditem.addEventListener("click", () => {
-					instance._reactInternalFiber.return.memoizedProps.closeContextMenu();
+		}));
+		items.push(BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+			label: this.labels[pinnedInGuild ? "context_unpinguild_text" : "context_pinguild_text"],
+			className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-${pinnedInGuild ? "unpin" : "pin"}guild-contextMenuItem`,
+			danger: pinnedInGuild,
+			action: e => {
+				BDFDB.closeContextMenu(menu);
+				if (!pinnedInGuild) {
 					this.addPinnedRecent(id);
 					this.updatePinnedPositions("pinnedRecents");
-				});
-			}
-			else {
-				BDFDB.removeEles(pinguilditem);
-				unpinguilditem.addEventListener("click", () => {
-					instance._reactInternalFiber.return.memoizedProps.closeContextMenu();
-					BDFDB.removeEles(document.querySelector(`${BDFDB.dotCNS.dms + BDFDB.dotCN.guild}.pinned[channelid="${id}"]`));
+				}
+				else {
+					BDFDB.removeEles(document.querySelector(`.pinned-dm[channelid="${id}"]`));
 					this.unhideNativeDM(id);
+					BDFDB.removeData(id, this, "pinnedRecents");
 					this.updatePinnedPositions("pinnedRecents");
-				});
+				}
 			}
-			BDFDB.appendSubMenu(pindmsitem, dmContextSubMenu);
+		}));
+		const subitem = BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuSubItem, {
+			label: this.labels.context_pindm_text,
+			className: `BDFDB-contextMenuSubItem ${this.name}-contextMenuSubItem ${this.name}-pindm-contextMenuSubItem`,
+			render: items
 		});
+		children.splice(index, 0, subitem);
 	}
 
-	processGuilds (instance, wrapper) {
-		let dms = wrapper.querySelector(BDFDB.dotCN.dms);
-		if (dms) for (let id of this.sortAndUpdate("pinnedRecents")) this.addPinnedRecent(id);
+	processGuilds (instance, wrapper, returnvalue) {
+		for (let id of this.sortAndUpdate("pinnedRecents")) this.addPinnedRecent(id);
 	}
 
-	processPrivateChannel (instance, wrapper) {
+	processPrivateChannel (instance, wrapper, returnvalue) {
 		if (instance && instance.props && instance.props.ispin) {
 			let id = BDFDB.getReactValue(instance, "props.channel.id");
 			wrapper.setAttribute("channelid", id);
 			BDFDB.addClass(wrapper, "pinned");
-			wrapper.querySelector("a").setAttribute("draggable", false);
+			BDFDB.removeClass(BDFDB.getChannelDiv(id), BDFDB.disCN.namecontainerselected);
+			(wrapper.querySelector("a") || wrapper).setAttribute("draggable", false);
 			wrapper.addEventListener("click", e => {
 				let dmsscroller = document.querySelector(BDFDB.dotCNS.dmchannels + BDFDB.dotCN.scroller);
 				if (dmsscroller) {
@@ -334,7 +304,7 @@ class PinDMs {
 						let dmchannelswrap = document.querySelector(`${BDFDB.dotCNS.dmchannels + BDFDB.dotCN.scroller}`);
 						if (!dmchannelswrap) return;
 						let hovele = null;
-						let placeholder = BDFDB.htmlToElement(`<div class="${BDFDB.disCN.dmchannel} dmchannelplaceholder" style="height: 42px; opacity: 1;"><a style="border: 1px dashed #535559 !important;"></a></div>`);
+						let placeholder = BDFDB.htmlToElement(`<a class="${BDFDB.disCNS.dmchannel + BDFDB.disCNS.namecontainer + BDFDB.disCN.namecontainerclickable} dmchannelplaceholder"><div class="${BDFDB.disCN.namecontainerlayout}"></div></a>`);
 						let dragpreview = this.createDragPreview(wrapper, e);
 						let dragging = e3 => {
 							BDFDB.removeEles(placeholder);
@@ -367,33 +337,43 @@ class PinDMs {
 		}
 	}
 
-	processDirectMessage (instance, wrapper, methodnames) {
+	processDirectMessage (instance, wrapper, returnvalue, methodnames) {
 		if (instance.props && instance.props.channel) {
 			if (methodnames.includes("componentDidMount")) {
 				wrapper.removeEventListener("contextmenu", wrapper.PinDMsContextMenuListener);
 				wrapper.PinDMsContextMenuListener = e => {
-					let freshPinnedRecents = BDFDB.loadAllData(this, "pinnedRecents");
-					if (freshPinnedRecents[instance.props.channel.id] == undefined) {
-						let dmContext = BDFDB.htmlToElement(this.dmPinContextMarkup);
-						dmContext.querySelector(".pindm-guild-item").addEventListener("click", () => {
-							BDFDB.removeEles(dmContext);
-							this.addPinnedRecent(instance.props.channel.id);
-							this.updatePinnedPositions("pinnedRecents");
+					if (BDFDB.loadAllData(this, "pinnedRecents")[instance.props.channel.id] == undefined) {
+						const itemGroup = BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
+							className: `BDFDB-contextMenuItemGroup ${this.name}-contextMenuItemGroup`,
+							children: [
+								BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+									label: this.labels.context_pinguild_text,
+									className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-pinguild-contextMenuItem`,
+									action: e => {
+										BDFDB.closeContextMenu(BDFDB.getParentEle(BDFDB.dotCN.contextmenu, e.target));
+										this.addPinnedRecent(instance.props.channel.id);
+										this.updatePinnedPositions("pinnedRecents");
+									}
+								})
+							]
 						});
-						BDFDB.appendContextMenu(dmContext, e);
+						BDFDB.openContextMenu(this, e, itemGroup);
 					}
 				};
 				wrapper.addEventListener("contextmenu", wrapper.PinDMsContextMenuListener);
 			}
 			let pinnedRecents = BDFDB.loadAllData(this, "pinnedRecents");
 			if (pinnedRecents[instance.props.channel.id] != undefined) {
-				if (methodnames.includes("componentDidMount")) this.hideNativeDM(instance.props.channel.id);
-				this.updateUnreadCount(instance.props.channel.id);
+				if (methodnames.includes("componentDidMount")) {
+					if (!document.querySelector(`.pinned-dm[channelid="${instance.props.channel.id}"]`)) this.addPinnedRecent(instance.props.channel.id);
+					else this.hideNativeDM(instance.props.channel.id);
+				}
+				this.updatePinnedRecent(instance.props.channel.id);
 			}
 		}
 	}
 
-	processLazyScroller (instance, wrapper) {
+	processLazyScroller (instance, wrapper, returnvalue) {
 		let privateChannelIds = BDFDB.getReactValue(instance, "_reactInternalFiber.return.memoizedProps.privateChannelIds");
 		if (privateChannelIds) {
 			if (this.forceAdding || !instance.props.PinDMsPatched) {
@@ -406,9 +386,14 @@ class PinDMs {
 				}
 				this.forceUpdateScroller(instance.getScrollerNode());
 			}
-			if (this.oldScrollerPos != null) {
-				instance.getScrollerNode().scrollTop = this.oldScrollerPos;
-			}
+			if (this.oldScrollerPos != null) instance.getScrollerNode().scrollTop = this.oldScrollerPos;
+		}
+	}
+
+	processStandardSidebarView (instance, wrapper, returnvalue) {
+		if (this.SettingsUpdated) {
+			delete this.SettingsUpdated;
+			for (let id of this.sortAndUpdate("pinnedRecents")) this.updatePinnedRecent(id);
 		}
 	}
 
@@ -416,13 +401,13 @@ class PinDMs {
 		let insertpoint = null;
 		for (let i in dms) {
 			let ele = dms[i];
-			if (ele && ele.type == "header") {
+			if (ele && ele.type == "header" || BDFDB.getReactValue(ele, "type.displayName") == "ListSectionItem") {
 				insertpoint = parseInt(i);
 				if (!ele.pinned && !ele.props.ispin) {
 					ele.pinned = true;
 					let headerpin = Object.assign({},ele);
 					headerpin.key = "pin" + headerpin.key;
-					headerpin.props = {children:this.labels.header_pinneddms_text,ispin:true};
+					headerpin.props = {className:ele.props.className,children:this.labels.header_pinneddms_text,ispin:true};
 					dms.splice(insertpoint, 0, headerpin);
 				}
 				insertpoint++;
@@ -475,62 +460,88 @@ class PinDMs {
 	sortAndUpdate (type) {
 		let pinnedDMs = BDFDB.loadAllData(this, type);
 		delete pinnedDMs[""];
-		let sortedDMs = [], existingDMs = [], sortDM = (id) => {
-			if (typeof sortedDMs[pinnedDMs[id]] == "undefined") sortedDMs[pinnedDMs[id]] = id;
-			else sortDM(sortedDMs, pinnedDMs[id]+1, id);
+		delete pinnedDMs["null"];
+		let sortedDMs = [], existingDMs = [], sortDM = (id, pos) => {
+			if (typeof sortedDMs[pos] == "undefined") sortedDMs[pos] = id;
+			else sortDM(id, pos+1);
 		};
-		for (let id in pinnedDMs) sortDM(id);
+		for (let id in pinnedDMs) sortDM(id, pinnedDMs[id]);
 		sortedDMs = sortedDMs.filter(n => n);
-		for (let pos in sortedDMs) if (this.ChannelUtils.getChannel(sortedDMs[pos])) existingDMs.push(sortedDMs[pos]);
-		this.updatePinnedPositions(type); 
+		for (let pos in sortedDMs) if (BDFDB.LibraryModules.ChannelStore.getChannel(sortedDMs[pos])) existingDMs.push(sortedDMs[pos]);
+		this.updatePinnedPositions(type);
 		return existingDMs;
 	}
 
 	forceUpdateScroller (scroller) {
 		if (this.updatingScroller) return;
-		this.updatingScroller = true;
 		var stateNode = BDFDB.getReactValue(scroller, "return.return.return.stateNode");
-		if (stateNode) stateNode.updater.enqueueForceUpdate(stateNode);
-		setTimeout(() => {delete this.updatingScroller;},1000);
+		if (stateNode) {
+			this.updatingScroller = true;
+			BDFDB.React.forceUpdate(stateNode);
+			setTimeout(() => {BDFDB.React.forceUpdate(stateNode);},500);
+			setTimeout(() => {delete this.updatingScroller;},1000);
+		}
 	}
 
 	addPinnedRecent (id) {
-		let dms = document.querySelector(BDFDB.dotCN.dms);
-		if (dms && !dms.querySelector(`${BDFDB.dotCN.guild}.pinned[channelid="${id}"]`)) {
-			let info = this.ChannelUtils.getChannel(id);
+		let anker = document.querySelector("#bd-pub-li") || BDFDB.getParentEle(BDFDB.dotCN.guildouter, document.querySelector(BDFDB.dotCN.homebuttonicon));
+		if (anker && !document.querySelector(`.pinned-dm[channelid="${id}"]`)) {
+			let info = BDFDB.LibraryModules.ChannelStore.getChannel(id);
 			if (info) {
 				let dmdiv = BDFDB.htmlToElement(this.recentDMMarkup);
-				let user = info.type == 1 ? this.UserUtils.getUser(info.recipients[0]) : null;
+				let dmdivinner = dmdiv.querySelector(BDFDB.dotCN.guildinnerwrapper);
+				let dmiconwrapper = dmdiv.querySelector(BDFDB.dotCN.guildiconwrapper);
+				dmiconwrapper.style.setProperty("border-radius", BDFDB.LibraryModules.LastChannelStore.getChannelId() == id ? "30%" : "50%");
+				dmiconwrapper.style.setProperty("overflow", "hidden");
+				dmdiv.querySelector("mask").setAttribute("id", "PINDMS" + id);
+				dmdiv.querySelector("foreignObject").setAttribute("mask", "url(#PINDMS" + id + ")");
+				let user = info.type == 1 ? BDFDB.LibraryModules.UserStore.getUser(info.recipients[0]) : null;
 				dmdiv.setAttribute("channelid", id);
-				dms.insertBefore(dmdiv, dms.firstElementChild);
-				let avatar = dmdiv.querySelector(BDFDB.dotCN.avatarinner);
+				anker.parentElement.insertBefore(dmdiv, anker.nextSibling);
+				let avatar = dmdiv.querySelector(BDFDB.dotCN.guildicon);
 				let dmname = info.name;
 				if (!dmname && info.recipients.length > 0) {
 					for (let dmuser_id of info.recipients) {
 						dmname = dmname ? dmname + ", " : dmname;
-						dmname = dmname + this.UserUtils.getUser(dmuser_id).username;
+						dmname = dmname + BDFDB.LibraryModules.UserStore.getUser(dmuser_id).username;
 					}
 				}
-				let EditUsersData = user && BDFDB.isPluginEnabled("EditUsers") ? bdplugins.EditUsers.plugin.getUserData(user.id, dmdiv) : {};
-				if (!EditUsersData.removeIcon) avatar.style.setProperty("background-image", `url(${EditUsersData.url || BDFDB.getChannelIcon(id)})`);
+				let EditUsersData = user && BDFDB.isPluginEnabled("EditUsers") ? BDFDB.getPlugin("EditUsers").getUserData(user.id, dmdiv) : {};
+				if (!EditUsersData.removeIcon) avatar.setAttribute("src", `${EditUsersData.url || BDFDB.getChannelIcon(id)}`);
 				avatar.setAttribute("channel", dmname);
 				if (user) avatar.setAttribute("user", user.username);
-				dmdiv.addEventListener("mouseenter", () => {
-					let FreshEditUsersData = user && BDFDB.isPluginEnabled("EditUsers") ? bdplugins.EditUsers.plugin.getUserData(user.id, dmdiv) : {};
-					BDFDB.createTooltip(FreshEditUsersData.name || dmname, dmdiv, {selector:(BDFDB.isObjectEmpty(FreshEditUsersData) ? "" : "EditUsers-tooltip"),type:"right"});
+				dmdivinner.addEventListener("mouseenter", () => {
+					let FreshEditUsersData = user && BDFDB.isPluginEnabled("EditUsers") ? BDFDB.getPlugin("EditUsers").getUserData(user.id, dmdiv) : {};
+					BDFDB.createTooltip(FreshEditUsersData.name || dmname, dmdivinner, {selector:(BDFDB.isObjectEmpty(FreshEditUsersData) ? "" : "EditUsers-tooltip"),type:"right"});
 				});
-				dmdiv.addEventListener("click", () => {
-					this.ChannelSwitchUtils.selectPrivateChannel(id);
+				avatar.parentElement.addEventListener("click", e => {
+					if (user) {
+						let DMid = BDFDB.LibraryModules.ChannelStore.getDMFromUserId(user.id)
+						if (DMid) BDFDB.LibraryModules.SelectChannelUtils.selectPrivateChannel(DMid);
+						else BDFDB.LibraryModules.DirectMessageUtils.openPrivateChannel(BDFDB.myData.id, user.id);
+					}
+					else BDFDB.LibraryModules.SelectChannelUtils.selectPrivateChannel(id);
+					BDFDB.stopEvent(e);
 				});
-				dmdiv.addEventListener("contextmenu", e => {
-					let dmContext = BDFDB.htmlToElement(this.dmUnpinContextMarkup);
-					dmContext.querySelector(".unpindm-guild-item").addEventListener("click", () => {
-						BDFDB.removeEles(dmdiv, dmContext);
-						this.unhideNativeDM(id);
-						BDFDB.removeData(id, this, "pinnedRecents");
-						this.updatePinnedPositions("pinnedRecents");
+				avatar.parentElement.addEventListener("contextmenu", e => {
+					const itemGroup = BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItemGroup, {
+						className: `BDFDB-contextMenuItemGroup ${this.name}-contextMenuItemGroup`,
+						children: [
+							BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+								label: this.labels.context_unpinguild_text,
+								danger: true,
+								className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-unpinguild-contextMenuItem`,
+								action: e => {
+									BDFDB.closeContextMenu(BDFDB.getParentEle(BDFDB.dotCN.contextmenu, e.target));
+									BDFDB.removeEles(dmdiv);
+									this.unhideNativeDM(id);
+									BDFDB.removeData(id, this, "pinnedRecents");
+									this.updatePinnedPositions("pinnedRecents");
+								}
+							})
+						]
 					});
-					BDFDB.appendContextMenu(dmContext, e);
+					BDFDB.openContextMenu(this, e, itemGroup);
 				});
 				dmdiv.addEventListener("mousedown", e => {
 					let x = e.pageX, y = e.pageY;
@@ -538,17 +549,15 @@ class PinDMs {
 						if (Math.sqrt((x - e2.pageX)**2) > 20 || Math.sqrt((y - e2.pageY)**2) > 20) {
 							document.removeEventListener("mousemove", mousemove);
 							document.removeEventListener("mouseup", mouseup);
-							let dmswrap = document.querySelector(`${BDFDB.dotCNS.guildswrapper + BDFDB.dotCN.dms}`);
-							if (!dmswrap) return;
 							let hovele = null;
-							let placeholder = BDFDB.htmlToElement(`<div class="${BDFDB.disCNS.guild + BDFDB.disCN.guildplaceholder} dmplaceholder"></div>`);
+							let placeholder = BDFDB.htmlToElement(this.dragPlaceholderMarkup);
 							let dragpreview = this.createDragPreview(dmdiv, e);
 							let dragging = e3 => {
 								BDFDB.removeEles(placeholder);
 								BDFDB.toggleEles(dmdiv, false);
 								this.updateDragPreview(dragpreview, e3);
-								hovele = BDFDB.getParentEle(BDFDB.dotCNS.dms + BDFDB.dotCN.guild + ".pinned", e3.target);
-								if (hovele) dmswrap.insertBefore(placeholder, hovele.nextSibling);
+								hovele = BDFDB.getParentEle(".pinned-dm", e3.target);
+								if (hovele) hovele.parentElement.insertBefore(placeholder, hovele.nextSibling);
 							};
 							let releasing = e3 => {
 								document.removeEventListener("mousemove", dragging);
@@ -556,7 +565,7 @@ class PinDMs {
 								BDFDB.removeEles(placeholder, dragpreview);
 								BDFDB.toggleEles(dmdiv, true);
 								if (hovele) {
-									dmswrap.insertBefore(dmdiv, hovele.nextSibling);
+									hovele.parentElement.insertBefore(dmdiv, hovele.nextSibling);
 									this.updatePinnedPositions("pinnedRecents");
 								}
 							};
@@ -571,8 +580,8 @@ class PinDMs {
 					document.addEventListener("mousemove", mousemove);
 					document.addEventListener("mouseup", mouseup);
 				});
-				this.addHoverBehaviour(dmdiv);
-				this.updateUnreadCount(id);
+				this.updatePinnedRecent(id);
+				this.addHoverBehaviour(dmdiv, id);
 				this.hideNativeDM(id);
 			}
 		}
@@ -600,21 +609,47 @@ class PinDMs {
 	}
 
 	updatePinnedPositions (type) {
-		let newPinned = {}, oldPinned = BDFDB.loadAllData(this, type);
-		let pins = Array.from(document.querySelectorAll(type == "pinnedRecents" ? `${BDFDB.dotCNS.dms + BDFDB.dotCN.guild}.pinned` : `${BDFDB.dotCNS.dmchannels + BDFDB.dotCN.dmchannel}.pinned`)).map(div => {return div.getAttribute("channelid");}).reverse();
-		for (let i in pins) newPinned[pins[i]] = parseInt(i);
-		for (let id in oldPinned) if (newPinned[id] == undefined) newPinned[id] = Object.keys(newPinned).length;
-		BDFDB.saveAllData(newPinned, this, type);
+		setImmediate(() => {
+			let newPinned = {}, oldPinned = BDFDB.loadAllData(this, type);
+			let pins = Array.from(document.querySelectorAll(type == "pinnedRecents" ? `.pinned-dm` : `${BDFDB.dotCNS.dmchannels + BDFDB.dotCN.dmchannel}.pinned`)).map(div => {return div.getAttribute("channelid");}).reverse();
+			for (let i in pins) if (pins[i]) newPinned[pins[i]] = parseInt(i);
+			for (let id in oldPinned) if (newPinned[id] == undefined) newPinned[id] = Object.keys(newPinned).length;
+			BDFDB.saveAllData(newPinned, this, type);
+		});
 	}
 
-	updateUnreadCount (id) {
-		let dmdiv = document.querySelector(`${BDFDB.dotCNS.dms + BDFDB.dotCN.guild}.pinned[channelid="${id}"]`);
-		if (Node.prototype.isPrototypeOf(dmdiv)) {
-			let count = this.UnreadUtils.getUnreadCount(dmdiv.getAttribute("channelid"));
-			let badge = dmdiv.querySelector(BDFDB.dotCN.badge);
-			BDFDB.toggleEles(badge, count > 0);
-			BDFDB.toggleClass(dmdiv, "has-new-messages", count > 0);
-			badge.innerText = count;
+	updatePinnedRecent (id) {
+		let pinneddmdiv = document.querySelector(`.pinned-dm[channelid="${id}"]`);
+		if (Node.prototype.isPrototypeOf(pinneddmdiv)) {
+			let count = BDFDB.LibraryModules.UnreadChannelUtils.getUnreadCount(id);
+			let showpin = BDFDB.getData("showPinIcon", this, "settings");
+
+			let dmdiv = BDFDB.getDmDiv(id);
+			let pinneddmiconwrapper = pinneddmdiv.querySelector(BDFDB.dotCN.guildiconwrapper);
+			let pinneddmdivpill = pinneddmdiv.querySelector(BDFDB.dotCN.guildpillitem);
+			let iconbadge = pinneddmdiv.querySelector(BDFDB.dotCN.guildupperbadge);
+			let notificationbadge = pinneddmdiv.querySelector(BDFDB.dotCN.guildlowerbadge);
+
+			BDFDB.toggleClass(pinneddmdiv, "has-new-messages", count > 0);
+			let selected = BDFDB.LibraryModules.LastChannelStore.getChannelId() == id;
+			pinneddmiconwrapper.style.setProperty("border-radius", selected ? "30%" : "50%");
+			if (pinneddmdivpill) {
+				pinneddmdivpill.style.setProperty("opacity", selected ? 1 : (count ? 0.7 : 0));
+				pinneddmdivpill.style.setProperty("height", selected ? "40px" : "8px");
+				pinneddmdivpill.style.setProperty("transform", "translate3d(0px, 0px, 0px)");
+			}
+
+			BDFDB.toggleEles(iconbadge, showpin);
+			notificationbadge.firstElementChild.innerText = count;
+			notificationbadge.firstElementChild.style.setProperty("width", `${count > 99 ? 30 : (count > 9 ? 22 : 16)}px`);
+			notificationbadge.firstElementChild.style.setProperty("padding-right", `${count > 99 ? 0 : (count > 9 ? 0 : 1)}px`);
+			BDFDB.toggleEles(notificationbadge, count > 0);
+
+			let masks = pinneddmdiv.querySelectorAll("mask rect");
+			masks[0].setAttribute("transform", showpin ? "translate(0 0)" : "translate(20 -20)");
+			masks[1].setAttribute("transform", count > 0 ? "translate(0 0)" : "translate(20 20)");
+			masks[1].setAttribute("x", `${count > 99 ? 14 : (count > 9 ? 22 : 28)}`);
+			masks[1].setAttribute("width", `${count > 99 ? 38 : (count > 9 ? 30 : 24)}`);
 		}
 	}
 
@@ -634,42 +669,69 @@ class PinDMs {
 		}
 	}
 
-	addHoverBehaviour (div) {
-		/* based on stuff from Zerebos */
-		let divinner = div.querySelector(BDFDB.dotCN.guildinner);
-		let divicon = div.querySelector(BDFDB.dotCN.guildicon);
-		let backgroundColor = new this.Animations.Value(0);
-		backgroundColor
-			.interpolate({
-				inputRange: [0, 1],
-				outputRange: [this.DiscordConstants.Colors.CHANNELS_GREY, this.DiscordConstants.Colors.BRAND_PURPLE]
-			})
-			.addListener((value) => {
-				if (BDFDB.containsClass(divicon, BDFDB.disCN.avatarnoicon)) {
-					let comp = BDFDB.colorCONVERT(value.value, "RGBCOMP");
-					if (comp) divinner.style.setProperty("background-color", `rgb(${comp[0]}, ${comp[1]}, ${comp[2]})`);
-				}
-			});
+	addHoverBehaviour (div, id) {
+		let divinner = div.querySelector(BDFDB.dotCN.guildinnerwrapper);
+		let diviconwrapper = div.querySelector(BDFDB.dotCN.guildiconwrapper);
+		let divpillitem = div.querySelector(BDFDB.dotCN.guildpillitem);
 
-		let borderRadius = new this.Animations.Value(0);
+		let pillvisible = divpillitem && divpillitem.style.getPropertyValue("opacity") != 0;
+
+		let borderRadius = new BDFDB.LibraryModules.AnimationUtils.Value(0);
 		borderRadius
 			.interpolate({
 				inputRange: [0, 1],
-				outputRange: [25, 15]
+				outputRange: [50, 30]
 			})
 			.addListener((value) => {
-				divinner.style.setProperty("border-radius", `${value.value}px`);
+				diviconwrapper.style.setProperty("border-radius", `${BDFDB.LibraryModules.LastChannelStore.getChannelId() == id ? 30 : value.value}%`);
+			});
+
+		let pillHeight = new BDFDB.LibraryModules.AnimationUtils.Value(0);
+		pillHeight
+			.interpolate({
+				inputRange: [0, 1],
+				outputRange: [8, 20]
+			})
+			.addListener((value) => {
+				if (divpillitem) divpillitem.style.setProperty("height", `${BDFDB.LibraryModules.LastChannelStore.getChannelId() == id ? 40 : value.value}px`);
+			});
+
+		let pillOpacity = new BDFDB.LibraryModules.AnimationUtils.Value(0);
+		pillOpacity
+			.interpolate({
+				inputRange: [0, 1],
+				outputRange: [0, 0.7]
+			})
+			.addListener((value) => {
+				if (divpillitem) divpillitem.style.setProperty("opacity", `${BDFDB.LibraryModules.LastChannelStore.getChannelId() == id ? 1 : value.value}`);
 			});
 
 		let animate = (v) => {
-			this.Animations.parallel([
-				this.Animations.timing(backgroundColor, {toValue: v, duration: 200}),
-				this.Animations.spring(borderRadius, {toValue: v, friction: 3})
+			BDFDB.LibraryModules.AnimationUtils.parallel([
+				BDFDB.LibraryModules.AnimationUtils.timing(borderRadius, {toValue: v, duration: 200}),
+				BDFDB.LibraryModules.AnimationUtils.spring(pillHeight, {toValue: v, friction: 5})
 			]).start();
 		};
 
-		div.addEventListener("mouseenter", () => {animate(1);})
-		div.addEventListener("mouseleave", () => {if (!BDFDB.containsClass(div, BDFDB.disCN.guildselected)) animate(0);});
+		let animate2 = (v) => {
+			BDFDB.LibraryModules.AnimationUtils.parallel([
+				BDFDB.LibraryModules.AnimationUtils.timing(pillOpacity, {toValue: v, duration: 200}),
+			]).start();
+		};
+
+		divinner.addEventListener("mouseenter", () => {
+			pillvisible = divpillitem && divpillitem.style.getPropertyValue("opacity") != 0;
+			if (BDFDB.LibraryModules.LastChannelStore.getChannelId() != id) {
+				animate(1);
+				if (!pillvisible) animate2(1);
+			}
+		})
+		divinner.addEventListener("mouseleave", () => {
+			if (BDFDB.LibraryModules.LastChannelStore.getChannelId() != id) {
+				animate(0);
+				if (!pillvisible) animate2(0);
+			}
+		});
 	}
 
 	setLabelsByLanguage () {

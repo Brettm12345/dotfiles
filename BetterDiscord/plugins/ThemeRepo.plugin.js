@@ -3,21 +3,23 @@
 class ThemeRepo {
 	getName () {return "ThemeRepo";}
 
-	getVersion () {return "1.7.2";}
+	getVersion () {return "1.8.9";}
 
 	getAuthor () {return "DevilBro";}
 
 	getDescription () {return "Allows you to preview all themes from the theme repo and download them on the fly. Repo button is in the theme settings.";}
 
-	initConstructor () {
+	constructor () {
 		this.changelog = {
-			"fixed":[["DiscordPreview","Fixed the issue where the titlebar would overlap with the titlebar in the fake preview"]]
+			"improved":[["ThemeFixer","Fixed and improved"]]
 		};
-		
+
 		this.patchModules = {
 			"V2C_List":"componentDidMount"
 		};
+	}
 
+	initConstructor () {
 		this.sortings = {
 			sort: {
 				name:			"Name",
@@ -25,7 +27,8 @@ class ThemeRepo {
 				version:		"Version",
 				description:	"Description",
 				state:			"Update State",
-				fav:			"Favorites"
+				fav:			"Favorites",
+				new:			"New Themes"
 			},
 			order: {
 				asc:			"Ascending",
@@ -35,25 +38,19 @@ class ThemeRepo {
 
 		this.loading = {is:false, timeout:null, amount:0};
 
+		this.cachedThemes = [];
 		this.grabbedThemes = [];
 		this.foundThemes = [];
-		this.loadedThemes = {}; 
+		this.loadedThemes = {};
+		this.generatorThemes = [];
 
 		this.updateInterval;
-
-		this.themeFixerCSS = `${BDFDB.dotCNC.appmount + BDFDB.dotCNC.appcontainer + BDFDB.dotCNC.channelheaderheaderbar + BDFDB.dotCNC.channelheadertitle + BDFDB.dotCNC.guildchannels + BDFDB.dotCNC.channels + BDFDB.dotCNC.callcurrentcontainer + BDFDB.dotCNC.callcurrentvideo + BDFDB.dotCNC.callcurrentdetails + BDFDB.dotCNC.accountinfo + BDFDB.dotCNC.nochannel + BDFDB.dotCNC.friends + BDFDB.dotCNC.friendstable + BDFDB.dotCNC.friendstableheader + BDFDB.dotCNC.guilds + BDFDB.dotCNC.guildswrapper + BDFDB.dotCNC.channelheadertitle + BDFDB.dotCNC.typing + BDFDB.dotCNS.emojipicker + BDFDB.dotCNS.emojipickerscroller + BDFDB.dotCN.emojipickeremojiitem + BDFDB.dotCNC.emojipickerselected + BDFDB.dotCNC.members + BDFDB.dotCNC.chat + BDFDB.dotCNS.chat + "form," + BDFDB.dotCNC.chatcontent + BDFDB.dotCNC.messageswrapper + BDFDB.dotCNC.searchresultswrap + BDFDB.dotCNC.searchresultschannelname + BDFDB.dotCNC.searchresultssearchheader + BDFDB.dotCNC.activityfeed + BDFDB.dotCNC.lfg + BDFDB.dotCNC.applicationstore + BDFDB.dotCNC.giftinventory + BDFDB.dotCNC.gamelibrary + BDFDB.dotCNC.gamelibrarytableheader + BDFDB.dotCNC.standardsidebarview + BDFDB.dotCNC.sidebarregion + BDFDB.dotCNC.contentregion + BDFDB.dotCN.scroller} {background: transparent !important;} ${BDFDB.dotCNC.layer + BDFDB.dotCNC.layers + BDFDB.dotCN.titlebar} {background: rgba(0,0,0,0.18) !important;} ${BDFDB.dotCN.card}:not([style*="background-color"]) {background: rgba(0,0,0,0.4) !important;}`;
 
 		this.themeRepoButtonMarkup = 
 			`<button class="bd-pfbtn bd-themerepobutton">Theme Repo</button>`;
 
-		this.settingsContextEntryMarkup =
-			`<div class="${BDFDB.disCN.contextmenuitem} themerepo-item">
-				<span>Theme Repo</span>
-				<div class="${BDFDB.disCN.contextmenuhint}"></div>
-			</div>`;
-
-		this.themeRepoLoadingIconMarkup = 
-			`<svg class="themerepo-loadingicon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="42" height="31" viewBox="0 0 483 332">
+		this.themeRepoIconMarkup = 
+			`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="36" height="31" viewBox="20 0 400 332">
 				<path d="M0.000 39.479 L 0.000 78.957 43.575 78.957 L 87.151 78.957 87.151 204.097 L 87.151 329.236 129.609 329.236 L 172.067 329.236 172.067 204.097 L 172.067 78.957 215.642 78.957 L 259.218 78.957 259.218 39.479 L 259.218 0.000 129.609 0.000 L 0.000 0.000 0.000 39.479" stroke="none" fill="#7289da" fill-rule="evenodd"></path>
 				<path d="M274.115 38.624 L 274.115 77.248 280.261 77.734 C 309.962 80.083,325.986 106.575,313.378 132.486 C 305.279 149.131,295.114 152.700,255.800 152.700 L 230.168 152.700 230.168 123.277 L 230.168 93.855 208.566 93.855 L 186.965 93.855 186.965 211.546 L 186.965 329.236 208.566 329.236 L 230.168 329.236 230.168 277.068 L 230.168 224.899 237.268 225.113 L 244.368 225.326 282.215 277.095 L 320.062 328.864 360.031 329.057 L 400.000 329.249 400.000 313.283 L 400.000 297.317 367.924 256.908 L 335.848 216.499 340.182 214.869 C 376.035 201.391,395.726 170.616,399.382 122.342 C 405.008 48.071,360.214 0.000,285.379 0.000 L 274.115 0.000 274.115 38.624" stroke="none" fill="#7f8186" fill-rule="evenodd"></path>
 			</svg>`;
@@ -101,15 +98,15 @@ class ThemeRepo {
 			</li>`;
 
 		this.themeRepoModalMarkup =
-			`<span class="${this.name}-modal Repo-modal DevilBro-modal">
+			`<span class="${this.name}-modal Repo-modal BDFDB-modal">
 				<div class="${BDFDB.disCN.backdrop}"></div>
 				<div class="${BDFDB.disCN.modal}">
 					<div class="${BDFDB.disCN.modalinner}">
-						<div class="${BDFDB.disCN.modalsub}">
-							<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.modalheader}" style="flex: 0 0 auto; padding-bottom: 10px;">
+						<div class="${BDFDB.disCNS.modalsub + BDFDB.disCN.modalsizelarge}">
+							<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.modalheader}" style="flex: 0 0 auto; padding-bottom: 10px;">
 								<div class="${BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">
-									<h4 class="${BDFDB.disCNS.h4 + BDFDB.disCNS.headertitle + BDFDB.disCNS.size16 + BDFDB.disCNS.height20 + BDFDB.disCNS.weightsemibold + BDFDB.disCNS.defaultcolor + BDFDB.disCNS.h4defaultmargin + BDFDB.disCN.marginreset} themeAmount">Theme Repository</h4>
-									<div class="${BDFDB.disCNS.modalguildname + BDFDB.disCNS.small + BDFDB.disCNS.size12 + BDFDB.disCNS.height16 + BDFDB.disCN.primary}"></div>
+									<h4 class="${BDFDB.disCNS.h4 + BDFDB.disCNS.defaultcolor + BDFDB.disCN.h4defaultmargin} themeAmount">Theme Repository</h4>
+									<div class="${BDFDB.disCNS.modalguildname + BDFDB.disCNS.small + BDFDB.disCNS.titlesize12 + BDFDB.disCNS.height16 + BDFDB.disCN.primary}"></div>
 								</div>
 								<button type="button" class="${BDFDB.disCNS.modalclose + BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookblank + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCN.buttongrow}">
 									<div class="${BDFDB.disCN.buttoncontents}">
@@ -122,92 +119,98 @@ class ThemeRepo {
 									</div>
 								</button>
 							</div>
-							<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCNS.marginbottom8 + BDFDB.disCN.tabbarcontainer}" style="flex: 0 0 auto; padding-right: 12px;">
+							<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCNS.marginbottom8 + BDFDB.disCN.tabbarcontainer}" style="flex: 0 0 auto; padding-right: 12px;">
 								<div class="${BDFDB.disCNS.tabbar + BDFDB.disCN.tabbartop}">
-									<div tab="themes" class="${BDFDB.disCNS.settingsitemdefault + BDFDB.disCNS.settingsitem + BDFDB.disCNS.settingsnotselected + BDFDB.disCN.tabbaritem}">Themes</div>
-									<div tab="settings" class="${BDFDB.disCNS.settingsitemdefault + BDFDB.disCNS.settingsitem + BDFDB.disCNS.settingsnotselected + BDFDB.disCN.tabbaritem}">Settings</div>
+									<div tab="themes" class="${BDFDB.disCNS.settingsitem + BDFDB.disCN.tabbaritem}">Themes</div>
+									<div tab="generator" class="${BDFDB.disCNS.settingsitem + BDFDB.disCN.tabbaritem}">Generator</div>
+									<div tab="settings" class="${BDFDB.disCNS.settingsitem + BDFDB.disCN.tabbaritem}">Settings</div>
 								</div>
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCNS.nowrap + BDFDB.disCNS.searchbar + BDFDB.disCN.size14}" style="flex: 1 1 auto;">
-									<input class="${BDFDB.disCN.searchbarinput}" value="" placeholder="Search for ..." style="flex: 1 1 auto;">
-									<div class="${BDFDB.disCN.searchbariconwrap}">
-										<i class="${BDFDB.disCNS.searchbaricon + BDFDB.disCNS.searchbareyeglass + BDFDB.disCN.searchbarvisible}"></i>
-										<i class="${BDFDB.disCNS.searchbaricon + BDFDB.disCN.searchbarclear}"></i>
-									</div>
-								</div>
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.quickselect}">
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.quickselect}">
 									<div class="${BDFDB.disCN.quickselectlabel}">Sort by:</div>
-									<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.quickselectclick} sort-filter" style="flex: 0 0 auto;">
+									<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.quickselectclick} sort-filter" style="flex: 0 0 auto;">
 										<div option="${Object.keys(this.sortings.sort)[0]}" class="${BDFDB.disCN.quickselectvalue}">${this.sortings.sort[Object.keys(this.sortings.sort)[0]]}</div>
 										<div class="${BDFDB.disCN.quickselectarrow}"></div>
 									</div>
 								</div>
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.quickselect}">
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.quickselect}">
 									<div class="${BDFDB.disCN.quickselectlabel}">Order:</div>
-									<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.quickselectclick} order-filter" style="flex: 0 0 auto;">
+									<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.quickselectclick} order-filter" style="flex: 0 0 auto;">
 										<div option="${Object.keys(this.sortings.order)[0]}" class="${BDFDB.disCN.quickselectvalue}">${this.sortings.order[Object.keys(this.sortings.order)[0]]}</div>
 										<div class="${BDFDB.disCN.quickselectarrow}"></div>
 									</div>
 								</div>
 							</div>
-							<div tab="themes" class="${BDFDB.disCNS.scrollerwrap + BDFDB.disCNS.modalcontent + BDFDB.disCNS.scrollerthemed + BDFDB.disCN.themeghosthairline} tab-content">
+							<div tab="themes" class="${BDFDB.disCNS.scrollerwrap + BDFDB.disCNS.modalcontent + BDFDB.disCNS.scrollerthemed + BDFDB.disCN.scrollerthemeghosthairline} tab-content">
 								<div class="${BDFDB.disCNS.scroller + BDFDB.disCN.modalsubinner}">
-									<ul class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.vertical + BDFDB.disCNS.directioncolumn + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCNS.nowrap + BDFDB.disCN._repolist} themes" style="flex: 1 1 auto; display: flex !important; display: flex-direction: column !important;"></ul>
+									<ul class="${BDFDB.disCNS.flex + BDFDB.disCNS.vertical + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCNS.nowrap + BDFDB.disCN._repolist} themes" style="flex: 1 1 auto; display: flex !important; display: flex-direction: column !important; margin: unset !important; width: unset !important;"></ul>
 								</div>
 							</div>
-							<div tab="settings" class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.vertical + BDFDB.disCNS.directioncolumn + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCNS.nowrap + BDFDB.disCN.modalsubinner} tab-content" style="flex: 1 1 auto;">
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
-									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">You can toggle this menu with the "Ctrl" key to take a better look at the preview.</h3>
+							<div tab="generator" class="${BDFDB.disCNS.scrollerwrap + BDFDB.disCNS.modalcontent + BDFDB.disCNS.scrollerthemed + BDFDB.disCN.scrollerthemeghosthairline} tab-content">
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
+									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 0 1 auto;">Generator Theme:</h3>
+									<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCN.nowrap} generator-select" style="flex: 1 1 auto;"></div>
+									<button type="button" id="download-generated" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} btn-download" style="flex: 0 0 auto;">
+										<div class="${BDFDB.disCN.buttoncontents}"></div>
+									</button>
 								</div>
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
-									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Preview in light mode</h3>
+								<div class="${BDFDB.disCNS.scroller + BDFDB.disCN.modalsubinner}">
+									<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.vertical + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCN.nowrap} variables" style="flex: 1 1 auto;"></div>
+								</div>
+							</div>
+							<div tab="settings" class="${BDFDB.disCNS.flex + BDFDB.disCNS.vertical + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCNS.nowrap + BDFDB.disCN.modalsubinner} tab-content" style="flex: 1 1 auto;">
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
+									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">You can toggle this menu with the "Ctrl" key to take a better look at the preview.</h3>
+								</div>
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
+									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Preview in light mode</h3>
 									<div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;">
 										<input type="checkbox" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner}" id="input-darklight">
 									</div>
 								</div>
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
-									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Preview with normalized classes</h3>
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
+									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Preview with normalized classes</h3>
 									<div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;">
 										<input type="checkbox" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner}" id="input-normalize">
 									</div>
 								</div>
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
-									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Include Custom CSS in Preview</h3>
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
+									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Include Custom CSS in Preview</h3>
 									<div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;">
 										<input type="checkbox" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner}" id="input-customcss">
 									</div>
 								</div>
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
-									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Include ThemeFixer CSS in Preview</h3>
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
+									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Include ThemeFixer CSS in Preview</h3>
 									<div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;">
 										<input type="checkbox" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner}" id="input-themefixer">
 									</div>
 								</div>
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
-									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Download ThemeFixer</h3>
-									<button type="button" id="download-themefixer" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow}" style="flex: 0 0 auto;">
-										<div class="${BDFDB.disCN.buttoncontents}">Download</div>
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
+									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Download ThemeFixer</h3>
+									<button type="button" id="download-themefixer" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} btn-download" style="flex: 0 0 auto;">
+										<div class="${BDFDB.disCN.buttoncontents}"></div>
 									</button>
 								</div>
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
-									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Hide updated Themes.</h3>
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
+									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Hide updated Themes.</h3>
 									<div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;">
 										<input type="checkbox" value="updated" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner} hide-checkbox" id="input-hideupdated">
 									</div>
 								</div>
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
-									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Hide outdated Themes.</h3>
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
+									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Hide outdated Themes.</h3>
 									<div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;">
 										<input type="checkbox" value="outdated" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner} hide-checkbox" id="input-hideoutdated">
 									</div>
 								</div>
-								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
-									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Hide downloadable Themes.</h3>
+								<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
+									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Hide downloadable Themes.</h3>
 									<div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;">
 										<input type="checkbox" value="downloadable" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner} hide-checkbox" id="input-hidedownloadable">
 									</div>
 								</div>
-								<div id="RNMoption" class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
-									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Apply Theme after Download (Automatic loading enabled)</h3>
+								<div id="RNMoption" class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;">
+									<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Apply Theme after Download (Automatic loading enabled)</h3>
 									<div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;">
 										<input type="checkbox" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner}" id="input-rnmstart">
 									</div>
@@ -221,9 +224,9 @@ class ThemeRepo {
 		this.sortPopoutMarkup =
 			`<div class="${BDFDB.disCNS.popout + BDFDB.disCNS.popoutbottomright + BDFDB.disCN.popoutnoshadow} themerepo-sort-popout" style="position: fixed; z-index: 1100; visibility: visible; transform: translateX(-100%) translateY(0%) translateZ(0px);">
 				<div>
-					<div class="${BDFDB.disCN.contextmenu} quickSelectPopout">
+					<div class="${BDFDB.disCN.contextmenu} BDFDB-quickSelectPopout">
 						<div class="${BDFDB.disCN.contextmenuitemgroup}">
-							${Object.keys(this.sortings.sort).map((key, i) => `<div option="${key}" class="${BDFDB.disCN.contextmenuitem}">${this.sortings.sort[key]}</div>`).join("")}
+							${Object.keys(this.sortings.sort).map((key, i) => `<div option="${key}" class="${BDFDB.disCNS.contextmenuitem + BDFDB.disCN.contextmenuitemclickable}"><div class="${BDFDB.disCN.contextmenulabel} BDFDB-textscrollwrapper" speed=3><div class="BDFDB-textscroll">${this.sortings.sort[key]}</div></div></div>`).join("")}
 						</div>
 					</div>
 				</div>
@@ -232,13 +235,20 @@ class ThemeRepo {
 		this.orderPopoutMarkup =
 			`<div class="${BDFDB.disCNS.popout + BDFDB.disCNS.popoutbottomright + BDFDB.disCN.popoutnoshadow} themerepo-order-popout" style="position: fixed; z-index: 1100; visibility: visible; transform: translateX(-100%) translateY(0%) translateZ(0px);">
 				<div>
-					<div class="${BDFDB.disCN.contextmenu} quickSelectPopout">
+					<div class="${BDFDB.disCN.contextmenu} BDFDB-quickSelectPopout">
 						<div class="${BDFDB.disCN.contextmenuitemgroup}">
-							${Object.keys(this.sortings.order).map((key, i) => `<div option="${key}" class="${BDFDB.disCN.contextmenuitem}">${this.sortings.order[key]}</div>`).join("")}
+							${Object.keys(this.sortings.order).map((key, i) => `<div option="${key}" class="${BDFDB.disCNS.contextmenuitem + BDFDB.disCN.contextmenuitemclickable}"><div class="${BDFDB.disCN.contextmenulabel} BDFDB-textscrollwrapper" speed=3><div class="BDFDB-textscroll">${this.sortings.order[key]}</div></div></div>`).join("")}
 						</div>
 					</div>
 				</div>
 			</div>`;
+
+		this.defaults = {
+			settings: {
+				notifyOutdated:		{value:true, 		description:"Notifies you when one of your Themes is outdated."},
+				notifyNewentries:	{value:true, 		description:"Notifies you when there are new entries in the Repo."}
+			}
+		};
 
 		this.css = `
 			${BDFDB.dotCN.app} > .repo-loadingwrapper {
@@ -253,18 +263,18 @@ class ThemeRepo {
 				50% {opacity: 0.9;}
 				to {opacity: 0.1;}
 			}
-			.discordPreview {
+			iframe.discordPreview {
 				width: 100vw !important;
 				height: 100vh !important;
 				position: absolute !important;
 				z-index: 999 !important;
 			}
-			.discordPreview ~ ${BDFDB.dotCN.appmount} {
+			iframe.discordPreview ~ ${BDFDB.dotCN.appmount} {
 				position: absolute !important;
 				top: 0 !important;
 			}
-			.discordPreview ~ ${BDFDB.dotCNS.appmount + BDFDB.dotCN.titlebar},
-			.discordPreview ~ ${BDFDB.dotCNS.appmount + BDFDB.dotCN.app} {
+			iframe.discordPreview ~ ${BDFDB.dotCNS.appmount + BDFDB.dotCN.titlebar},
+			iframe.discordPreview ~ ${BDFDB.dotCNS.appmount + BDFDB.dotCN.app} > *:not(.toasts):not(.bd-toasts) {
 				opacity: 0 !important;
 				visibility: hidden !important;
 			}
@@ -299,16 +309,20 @@ class ThemeRepo {
 
 	getSettingsPanel () {
 		if (!global.BDFDB || typeof BDFDB != "object" || !BDFDB.loaded || !this.started) return;
-		var settingshtml = `<div class="${this.name}-settings DevilBro-settings"><div class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.size18 + BDFDB.disCNS.height24 + BDFDB.disCNS.weightnormal + BDFDB.disCN.marginbottom8}">${this.name}</div><div class="DevilBro-settings-inner">`;
-		settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 0 0 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 0 0 auto;">Add Theme:</h3><input type="text" placeholder="Insert Raw Github Link of Theme (https://raw.githubusercontent.com/...)" class="${BDFDB.disCNS.inputdefault + BDFDB.disCNS.input + BDFDB.disCN.size16}" id="input-themeurl" style="flex: 1 1 auto;"><button type="button" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} btn-add btn-addtheme" style="flex: 0 0 auto;"><div class="${BDFDB.disCN.buttoncontents}"></div></button></div>`;
-		settingshtml += `<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Your additional Theme List:</h3><div class="DevilBro-settings-inner-list theme-list ${BDFDB.disCN.marginbottom8}">`;
+		var settings = 	BDFDB.getAllData(this, "settings");
+		var settingshtml = `<div class="${this.name}-settings BDFDB-settings"><div class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.titlesize18 + BDFDB.disCNS.height24 + BDFDB.disCNS.weightnormal + BDFDB.disCN.marginbottom8}">${this.name}</div><div class="BDFDB-settings-inner">`;
+		for (let key in settings) {
+			settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 1 1 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">${this.defaults.settings[key].description}</h3><div class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.switchenabled + BDFDB.disCNS.switch + BDFDB.disCNS.switchvalue + BDFDB.disCNS.switchsizedefault + BDFDB.disCNS.switchsize + BDFDB.disCN.switchthemedefault}" style="flex: 0 0 auto;"><input type="checkbox" value="settings ${key}" class="${BDFDB.disCNS.switchinnerenabled + BDFDB.disCN.switchinner} settings-switch"${settings[key] ? " checked" : ""}></div></div>`;
+		}
+		settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 0 0 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 0 0 auto;">Add Theme:</h3><input type="text" placeholder="Insert Raw Github Link of Theme (https://raw.githubusercontent.com/...)" class="${BDFDB.disCNS.inputdefault + BDFDB.disCNS.input + BDFDB.disCN.titlesize16}" id="input-themeurl" style="flex: 1 1 auto;"><button type="button" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} btn-add btn-addtheme" style="flex: 0 0 auto;"><div class="${BDFDB.disCN.buttoncontents}"></div></button></div>`;
+		settingshtml += `<h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Your additional Theme List:</h3><div class="BDFDB-settings-inner-list theme-list ${BDFDB.disCN.marginbottom8}">`;
 		var ownlist = BDFDB.loadData("ownlist", this, "ownlist") || [];
 		if (ownlist) for (let url of ownlist) {
-			settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.vertical + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCNS.nowrap + BDFDB.disCNS.margintop4 + BDFDB.disCNS.marginbottom4 + BDFDB.disCN.hovercard}"><div class="${BDFDB.disCN.hovercardinner}"><div class="${BDFDB.disCNS.description + BDFDB.disCNS.formtext + BDFDB.disCNS.note + BDFDB.disCNS.margintop4 + BDFDB.disCNS.modedefault + BDFDB.disCNS.primary + BDFDB.disCN.ellipsis} entryurl">${url}</div></div><div class="${BDFDB.disCN.hovercardbutton} remove-theme"></div></div>`;
+			settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.vertical + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCNS.nowrap + BDFDB.disCNS.margintop4 + BDFDB.disCNS.marginbottom4 + BDFDB.disCN.hovercard}"><div class="${BDFDB.disCN.hovercardinner}"><div class="${BDFDB.disCNS.description + BDFDB.disCNS.formtext + BDFDB.disCNS.note + BDFDB.disCNS.margintop4 + BDFDB.disCNS.modedefault + BDFDB.disCNS.primary + BDFDB.disCN.ellipsis} entryurl">${url}</div></div><div class="${BDFDB.disCN.hovercardbutton} remove-theme"></div></div>`;
 		}
 		settingshtml += `</div>`;
-		settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 0 0 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Force all Themes to be fetched again.</h3><button type="button" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} refresh-button" style="flex: 0 0 auto;"><div class="${BDFDB.disCN.buttoncontents}">Refresh</div></button></div>`;
-		settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.horizontal + BDFDB.disCNS.horizontal2 + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.title + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.size16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Remove all added Themes from your own list.</h3><button type="button" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorred + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} remove-all" style="flex: 0 0 auto;"><div class="${BDFDB.disCN.buttoncontents}">Reset</div></button></div>`;
+		settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom8}" style="flex: 0 0 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Force all Themes to be fetched again.</h3><button type="button" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} refresh-button" style="flex: 0 0 auto;"><div class="${BDFDB.disCN.buttoncontents}">Refresh</div></button></div>`;
+		settingshtml += `<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20}" style="flex: 0 0 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.marginreset + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCNS.height24 + BDFDB.disCN.flexchild}" style="flex: 1 1 auto;">Remove all added Themes from your own list.</h3><button type="button" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorred + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} remove-all" style="flex: 0 0 auto;"><div class="${BDFDB.disCN.buttoncontents}">Reset</div></button></div>`;
 		settingshtml += `</div></div>`;
 
 		let settingspanel = BDFDB.htmlToElement(settingshtml);
@@ -323,6 +337,8 @@ class ThemeRepo {
 			this.loading = {is:false, timeout:null, amount:0};
 			this.loadThemes();
 		});
+
+		return settingspanel;
 	}
 
 	//legacy
@@ -331,15 +347,30 @@ class ThemeRepo {
 	start () {
 		if (!global.BDFDB) global.BDFDB = {myPlugins:{}};
 		if (global.BDFDB && global.BDFDB.myPlugins && typeof global.BDFDB.myPlugins == "object") global.BDFDB.myPlugins[this.getName()] = this;
-		var libraryScript = document.querySelector('head script[src="https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js"]');
-		if (!libraryScript || performance.now() - libraryScript.getAttribute("date") > 600000) {
+		var libraryScript = document.querySelector('head script#BDFDBLibraryScript');
+		if (!libraryScript || (performance.now() - libraryScript.getAttribute("date")) > 600000) {
 			if (libraryScript) libraryScript.remove();
 			libraryScript = document.createElement("script");
+			libraryScript.setAttribute("id", "BDFDBLibraryScript");
 			libraryScript.setAttribute("type", "text/javascript");
 			libraryScript.setAttribute("src", "https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js");
 			libraryScript.setAttribute("date", performance.now());
-			libraryScript.addEventListener("load", () => {if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();});
+			libraryScript.addEventListener("load", () => {this.initialize();});
 			document.head.appendChild(libraryScript);
+			this.libLoadTimeout = setTimeout(() => {
+				libraryScript.remove();
+				BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/BDFDB.js", (error, response, body) => {
+					if (body) {
+						libraryScript = document.createElement("script");
+						libraryScript.setAttribute("id", "BDFDBLibraryScript");
+						libraryScript.setAttribute("type", "text/javascript");
+						libraryScript.setAttribute("date", performance.now());
+						libraryScript.innerText = body;
+						document.head.appendChild(libraryScript);
+					}
+					this.initialize();
+				});
+			}, 15000);
 		}
 		else if (global.BDFDB && typeof BDFDB === "object" && BDFDB.loaded) this.initialize();
 		this.startTimeout = setTimeout(() => {this.initialize();}, 30000);
@@ -357,7 +388,7 @@ class ThemeRepo {
 			BDFDB.WebModules.forceAllUpdates(this);
 		}
 		else {
-			console.error(`%c[${this.name}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
+			console.error(`%c[${this.getName()}]%c`, 'color: #3a71c1; font-weight: 700;', '', 'Fatal Error: Could not load BD functions!');
 		}
 	}
 
@@ -367,7 +398,7 @@ class ThemeRepo {
 			clearInterval(this.updateInterval);
 			clearTimeout(this.loading.timeout);
 
-			BDFDB.removeEles(".discordPreview",".themerepo-notice",".bd-themerepobutton",".themerepo-loadingicon",BDFDB.dotCN.app + " > .repo-loadingwrapper:empty");
+			BDFDB.removeEles("iframe.discordPreview",".themerepo-notice",".bd-themerepobutton",".themerepo-loadingicon",BDFDB.dotCN.app + " > .repo-loadingwrapper:empty");
 
 			BDFDB.unloadMessage(this);
 		}
@@ -376,30 +407,22 @@ class ThemeRepo {
 
 	// begin of own functions
 
-	onUserSettingsCogContextMenu (instance, menu) {
-		let observer = new MutationObserver(changes => {
-			changes.forEach(change => {
-				if (change.addedNodes) change.addedNodes.forEach(node => {
-					if (node.tagName && BDFDB.containsClass(node, "plugin-context-menu") && !node.querySelector(".themerepo-item")) {
-						observer.disconnect();
-						let item = node.querySelectorAll(BDFDB.dotCN.contextmenuitem);
-						item = item[item.length-1];
-						var settingsContextEntry = BDFDB.htmlToElement(this.settingsContextEntryMarkup);
-						settingsContextEntry.addEventListener("click", () => {
-							if (!this.loading.is) instance._reactInternalFiber.return.memoizedProps.closeContextMenu();
-							this.openThemeRepoModal();
-						});
-						item.parentElement.insertBefore(settingsContextEntry, item.nextElementSibling);
-						var menurects = BDFDB.getRects(menu);
-						node.style.setProperty("top", (menurects.top - BDFDB.getRects(node).height + menurects.height) + "px");
-					}
-				});
+	onUserSettingsCogContextMenu (instance, menu, returnvalue) {
+		setImmediate(() => {for (let child of returnvalue.props.children) if (child && child.props && child.props.label == "BandagedBD" && Array.isArray(child.props.render)) {
+			const repoItem = BDFDB.React.createElement(BDFDB.LibraryComponents.ContextMenuItem, {
+				label: "Theme Repo",
+				className: `BDFDB-contextMenuItem ${this.name}-contextMenuItem ${this.name}-repo-contextMenuItem`,
+				action: e => {
+					if (!this.loading.is) BDFDB.closeContextMenu(menu);
+					this.openThemeRepoModal();
+				}
 			});
-		});
-		observer.observe(menu, {childList: true, subtree:true});
+			child.props.render.push(repoItem);
+			break;
+		}});
 	}
 
-	processV2CList (instance, wrapper) {
+	processV2CList (instance, wrapper, returnvalue) {
 		if (!document.querySelector(".bd-themerepobutton") && window.PluginUpdates && window.PluginUpdates.plugins && instance._reactInternalFiber.key && instance._reactInternalFiber.key.split("-")[0] == "theme") {
 			var folderbutton = document.querySelector(BDFDB.dotCN._repofolderbutton);
 			if (folderbutton) {
@@ -425,7 +448,7 @@ class ThemeRepo {
 			if (!ownlist.includes(url)) {
 				ownlist.push(url);
 				BDFDB.saveData("ownlist", ownlist, this, "ownlist");
-				let entry = BDFDB.htmlToElement(`<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.flex2 + BDFDB.disCNS.vertical + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCNS.nowrap + BDFDB.disCNS.margintop4 + BDFDB.disCNS.marginbottom4 + BDFDB.disCN.hovercard}"><div class="${BDFDB.disCN.hovercardinner}"><div class="${BDFDB.disCNS.description + BDFDB.disCNS.formtext + BDFDB.disCNS.note + BDFDB.disCNS.margintop4 + BDFDB.disCNS.modedefault + BDFDB.disCNS.primary + BDFDB.disCN.ellipsis} entryurl">${url}</div></div><div class="${BDFDB.disCN.hovercardbutton} remove-theme"></div></div>`)
+				let entry = BDFDB.htmlToElement(`<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.vertical + BDFDB.disCNS.directionrow + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCNS.nowrap + BDFDB.disCNS.margintop4 + BDFDB.disCNS.marginbottom4 + BDFDB.disCN.hovercard}"><div class="${BDFDB.disCN.hovercardinner}"><div class="${BDFDB.disCNS.description + BDFDB.disCNS.formtext + BDFDB.disCNS.note + BDFDB.disCNS.margintop4 + BDFDB.disCNS.modedefault + BDFDB.disCNS.primary + BDFDB.disCN.ellipsis} entryurl">${url}</div></div><div class="${BDFDB.disCN.hovercardbutton} remove-theme"></div></div>`)
 				BDFDB.addChildEventListener(entry, "click", ".remove-theme", e => {this.removeThemeFromOwnList(e);});
 				themeList.appendChild(entry);
 			}
@@ -448,19 +471,30 @@ class ThemeRepo {
 		});
 	}
 
-	openThemeRepoModal (showOnlyOutdated = false) {
+	openThemeRepoModal (options = {}) {
 		if (this.loading.is) {
 			BDFDB.showToast(`Themes are still being fetched. Try again in some seconds.`, {type:"danger"});
 			return;
 		}
 
 		var keyPressed = e => {
-			if (e.which == 17 && themeRepoModal.querySelector(BDFDB.dotCN.searchbarinput) != document.activeElement) BDFDB.toggleEles(themeRepoModal);
-			if (e.which == 27) frame.remove();
+			if (e.which == 17) {
+				var toggle = true;
+				for (let ele of themeRepoModal.querySelectorAll(".varinput, " + BDFDB.dotCN.searchbarinput)) if (ele == document.activeElement) {
+					toggle = false;
+					break;
+				}
+				if (toggle) BDFDB.toggleEles(themeRepoModal);
+			}
+			else if (e.which == 27) frame.remove();
 		};
 
 		var messageReceived = e => {
-			if (typeof e.data === "object" && e.data.origin == "DiscordPreview") {
+			if (!document.contains(frame)) {
+				document.removeEventListener("keyup", keyPressed);
+				window.removeEventListener("message", messageReceived);
+			}
+			else if (typeof e.data === "object" && e.data.origin == "DiscordPreview") {
 				switch (e.data.reason) {
 					case "OnLoad":
 						var username = BDFDB.myData.username;
@@ -469,8 +503,10 @@ class ThemeRepo {
 						var avatar = BDFDB.getUserAvatar();
 						var nativecss = document.querySelector("head link[rel='stylesheet'][integrity]");
 						nativecss = nativecss && nativecss.href ? nativecss.href : null;
-						frame.contentWindow.postMessage({origin:"ThemeRepo",reason:"OnLoad",username,id,discriminator,avatar,nativecss},"*");
-						frame.contentWindow.postMessage({origin:"ThemeRepo",reason:"DarkLight",checked:darklightinput.checked,light:BDFDB.disCN.themelight,dark:BDFDB.disCN.themedark},"*");
+						var titlebar = document.querySelector(BDFDB.dotCN.titlebar);
+						titlebar = titlebar ? titlebar.outerHTML : null;
+						frame.contentWindow.postMessage({origin:"ThemeRepo",reason:"OnLoad",classes:JSON.stringify(BDFDB.DiscordClasses),classmodules:JSON.stringify(BDFDB.DiscordClassModules),username,id,discriminator,avatar,nativecss,html:document.documentElement.className,titlebar},"*");
+						frame.contentWindow.postMessage({origin:"ThemeRepo",reason:"DarkLight",checked:darklightinput.checked},"*");
 						frame.contentWindow.postMessage({origin:"ThemeRepo",reason:"Normalize",checked:normalizeinput.checked},"*");
 						break;
 					case "KeyUp":
@@ -480,25 +516,59 @@ class ThemeRepo {
 			}
 		};
 
+		var createSelectChoice = index => {
+			let theme = this.loadedThemes[this.generatorThemes[index-1]] || {name: "-----", author: "-----"};
+			return `<div class="${BDFDB.disCNS.title + BDFDB.disCNS.medium + BDFDB.disCNS.primary + BDFDB.disCNS.weightnormal + BDFDB.disCN.cursorpointer}" style="flex: 1 1 auto;"><strong>${BDFDB.encodeToHTML(theme.name)}</strong> by ${BDFDB.encodeToHTML(theme.author)}</div>`;
+		};
+
+		var saveSelectChoice = (selectWrap, type, index) => {
+			let theme = this.loadedThemes[this.generatorThemes[index-1]] || {name: "-----", author: "-----"};
+			selectWrap.querySelector(BDFDB.dotCN.title).innerHTML = `<strong>${BDFDB.encodeToHTML(theme.name)}</strong> by ${BDFDB.encodeToHTML(theme.author)}`;
+			themeRepoModal.querySelectorAll(".previewCheckbox").forEach(checkbox => {
+				checkbox.checked = false;
+				BDFDB.removeClass(checkbox.parentElement, BDFDB.disCN.switchvaluechecked);
+				BDFDB.addClass(checkbox.parentElement, BDFDB.disCN.switchvalueunchecked);
+			});
+			let container = themeRepoModal.querySelector(".variables");
+			BDFDB.removeEles(themeRepoModal.querySelectorAll(".varcontainer"));
+			if (container && theme.fullcss) {
+				frame.contentWindow.postMessage({origin:"ThemeRepo",reason:"NewTheme",checked:true,css:theme.fullcss},"*");
+				this.createGeneratorVars(frame, container, theme);
+			}
+		};
+
 		document.addEventListener("keyup", keyPressed);
 		window.addEventListener("message", messageReceived);
 
 		var frame = BDFDB.htmlToElement(this.frameMarkup);
 		var themeRepoModal = BDFDB.htmlToElement(this.themeRepoModalMarkup);
+		var tabbar = themeRepoModal.querySelector(BDFDB.dotCN.tabbar);
+		tabbar.parentElement.insertBefore(BDFDB.createSearchBar("small"), tabbar.nextElementSibling);
 		var hiddenSettings = BDFDB.loadAllData(this, "hidden");
 		var darklightinput = themeRepoModal.querySelector("#input-darklight");
 		var normalizeinput = themeRepoModal.querySelector("#input-normalize");
 		var customcssinput = themeRepoModal.querySelector("#input-customcss");
 		var themefixerinput = themeRepoModal.querySelector("#input-themefixer");
 		darklightinput.checked = BDFDB.getDiscordTheme() == BDFDB.disCN.themelight;
-		normalizeinput.checked = settingsCookie["fork-ps-4"] == true;
+		normalizeinput.checked = window.settingsCookie["fork-ps-4"] == true;
 		customcssinput.checked = false;
 		themefixerinput.checked = false;
-		themeRepoModal.querySelector("#input-hideupdated").checked = hiddenSettings.updated || showOnlyOutdated;
-		themeRepoModal.querySelector("#input-hideoutdated").checked = hiddenSettings.outdated && !showOnlyOutdated;
-		themeRepoModal.querySelector("#input-hidedownloadable").checked = hiddenSettings.downloadable || showOnlyOutdated;
+		themeRepoModal.querySelector("#input-hideupdated").checked = hiddenSettings.updated || options.showOnlyOutdated;
+		themeRepoModal.querySelector("#input-hideoutdated").checked = hiddenSettings.outdated && !options.showOnlyOutdated;
+		themeRepoModal.querySelector("#input-hidedownloadable").checked = hiddenSettings.downloadable || options.showOnlyOutdated;
 		if (!BDFDB.isRestartNoMoreEnabled()) themeRepoModal.querySelector("#RNMoption").remove();
-		else themeRepoModal.querySelector("#input-rnmstart").checked = BDFDB.loadData("RNMstart", this, "settings");
+		else themeRepoModal.querySelector("#input-rnmstart").checked = BDFDB.loadData("RNMstart", this, "RNMstart");
+
+		if (options.forcedSort && this.sortings.sort[options.forcedSort]) {
+			var sortinput = themeRepoModal.querySelector(".sort-filter " + BDFDB.dotCN.quickselectvalue);
+			sortinput.innerText = this.sortings.sort[options.forcedSort];
+			sortinput.setAttribute('option', options.forcedSort);
+		}
+		if (options.forcedOrder && this.sortings.order[options.forcedOrder]) {
+			var orderinput = themeRepoModal.querySelector(".order-filter " + BDFDB.dotCN.quickselectvalue);
+			orderinput.innerText = this.sortings.order[options.forcedOrder];
+			orderinput.setAttribute('option', options.forcedOrder);
+		}
 
 		darklightinput.addEventListener("change", e => {
 			frame.contentWindow.postMessage({origin:"ThemeRepo",reason:"DarkLight",checked:darklightinput.checked,light:BDFDB.disCN.themelight,dark:BDFDB.disCN.themedark},"*");
@@ -511,15 +581,51 @@ class ThemeRepo {
 			if (customCSS && customCSS.innerText.length > 0) frame.contentWindow.postMessage({origin:"ThemeRepo",reason:"CustomCSS",checked:customcssinput.checked,css:customCSS.innerText},"*");
 		});
 		themefixerinput.addEventListener("change", e => {
-			frame.contentWindow.postMessage({origin:"ThemeRepo",reason:"ThemeFixer",checked:themefixerinput.checked,css:this.themeFixerCSS},"*");
+			BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/ThemeRepo/res/ThemeFixer.css", (error, response, body) => {
+				frame.contentWindow.postMessage({origin:"ThemeRepo",reason:"ThemeFixer",checked:themefixerinput.checked,css:this.createFixerCSS(body)},"*");
+			});
 		});
 		themeRepoModal.querySelector("#download-themefixer").addEventListener("click", e => {
-			this.createThemeFile("ThemeFixer.theme.css", `//META{"name":"ThemeFixer","description":"ThemeFixerCSS for transparent themes","author":"DevilBro","version":"1.0.1"}*//\n\n` + this.themeFixerCSS);
+			BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/ThemeRepo/res/ThemeFixer.css", (error, response, body) => {
+				this.createThemeFile("ThemeFixer.theme.css", `//META{"name":"ThemeFixer","description":"ThemeFixerCSS for transparent themes","author":"DevilBro","version":"1.0.2"}*//\n\n` + this.createFixerCSS(body));
+			});
+		});
+		themeRepoModal.querySelector("#download-generated").addEventListener("click", e => {
+			let inputs = themeRepoModal.querySelectorAll(".varinput");
+			if (!inputs.length) BDFDB.showToast(`Select a Theme to download a custom generated Theme.`, {type:"error"});
+			else {
+				let data = this.loadedThemes[this.generatorThemes[themeRepoModal.querySelector(".generator-select " + BDFDB.dotCN.select).getAttribute("value")-1]];
+				let css = data.fullcss;
+				for (let input of inputs) {
+					let oldvalue = input.getAttribute("placeholder");
+					let newvalue = input.value;
+					if (newvalue && newvalue.trim() && newvalue != oldvalue) {
+						let varname = input.getAttribute("option");
+						css = css.replace(new RegExp(`--${BDFDB.regEscape(varname)}(\\s*):(\\s*)${BDFDB.regEscape(oldvalue)}`,"g"),`--${varname}$1:$2${newvalue}`);
+					}
+				}
+				this.createThemeFile(data.name + ".theme.css", css);
+			}
 		});
 		BDFDB.addChildEventListener(themeRepoModal, "click", BDFDB.dotCNC.modalclose + BDFDB.dotCN.backdrop, () => {
 			frame.remove();
 			document.removeEventListener("keyup", keyPressed);
 			window.removeEventListener("message", messageReceived);
+		});
+		BDFDB.addChildEventListener(themeRepoModal, "mouseenter", BDFDB.dotCN.backdrop, e => {
+			if (!document.querySelector(BDFDB.dotCN.colorpicker)) {
+				for (let child of themeRepoModal.childNodes) {
+					child.style.setProperty("transition", "opacity .5s ease-in-out", "important");
+					child.style.setProperty("opacity", "0", "important");
+				}
+			}
+		});
+		BDFDB.addChildEventListener(themeRepoModal, "mouseleave", BDFDB.dotCN.backdrop, e => {
+			if (!document.querySelector(BDFDB.dotCN.colorpicker)) {
+				themeRepoModal.childNodes[0].style.setProperty("opacity", "0.85");
+				themeRepoModal.childNodes[1].style.setProperty("opacity", "1");
+				setTimeout(() => {for (let child of themeRepoModal.childNodes) child.style.removeProperty("transition");}, 500);
+			}
 		});
 		BDFDB.addChildEventListener(themeRepoModal, "keyup", BDFDB.dotCN.searchbarinput, () => {
 			clearTimeout(themeRepoModal.searchTimeout);
@@ -534,7 +640,7 @@ class ThemeRepo {
 			BDFDB.saveData(e.currentTarget.value, e.currentTarget.checked, this, "hidden");
 		});
 		BDFDB.addChildEventListener(themeRepoModal, "change", "#input-rnmstart", e => {
-			BDFDB.saveData("RNMstart", e.currentTarget.checked, this, "settings");
+			BDFDB.saveData("RNMstart", e.currentTarget.checked, this, "RNMstart");
 		});
 		BDFDB.addChildEventListener(themeRepoModal, "click", ".sort-filter", e => {
 			BDFDB.createSortPopout(e.currentTarget, this.sortPopoutMarkup, () => {this.sortEntries(themeRepoModal);});
@@ -556,18 +662,19 @@ class ThemeRepo {
 		themeRepoModal.entries = {};
 		for (let url in this.loadedThemes) {
 			let theme = this.loadedThemes[url];
-			let instTheme = window.bdthemes[this.loadedThemes[url].name];
+			let instTheme = BDFDB.getTheme(theme.name);
 			if (instTheme && instTheme.author.toUpperCase() == theme.author.toUpperCase()) theme.state = instTheme.version != theme.version ? 1 : 0;
 			else theme.state = 2;
-			theme.fav = favorites[url] ? 0 : 1;
 			let data = {
 				url: theme.url,
+				requesturl: theme.requesturl,
 				search: (theme.name + " " + theme.version + " " + theme.author + " " + theme.description).toUpperCase(),
 				name: theme.name,
 				version: theme.version,
 				author: theme.author,
 				description: theme.description,
-				fav: theme.fav,
+				fav: favorites[url] ? 0 : 1,
+				new: !this.cachedThemes.includes(url) ? 0 : 1,
 				state: theme.state,
 				css: theme.css
 			};
@@ -575,12 +682,99 @@ class ThemeRepo {
 			this.addEntry(frame, themeRepoModal, container, data);
 		}
 		this.sortEntries(themeRepoModal);
+		
+		var genselect = themeRepoModal.querySelector(".generator-select");
+		genselect.innerHTML = BDFDB.createSelectMenu(createSelectChoice("-----"), "-----");
+		genselect.addEventListener("click", e => {
+			BDFDB.openDropdownMenu(e, saveSelectChoice.bind(this), createSelectChoice.bind(this), ["-----"].concat(this.generatorThemes));
+		});
 
 		BDFDB.appendModal(themeRepoModal);
 
 		document.body.insertBefore(frame, document.body.firstElementChild);
 
 		themeRepoModal.querySelector(BDFDB.dotCN.searchbarinput).focus();
+	}
+	
+	createFixerCSS (body) {
+		var oldcss = body.replace(/\n/g, "\\n").replace(/\t/g, "\\t").replace(/\r/g, "\\r").split("REPLACE_CLASS_");
+		var newcss = oldcss.shift();
+		for (let str of oldcss) {
+			let reg = /([A-z0-9_]+)(.*)/.exec(str);
+			newcss += BDFDB.dotCN[reg[1]] + reg[2];
+		}
+		return newcss.replace(/\\n/g, "\n").replace(/\\t/g, "\t").replace(/\\r/g, "\r");
+	}
+	
+	createGeneratorVars (frame, container, data) {
+		let vars = data.fullcss.split(":root");
+		if (vars.length < 2) return;
+		vars = vars[1].replace(/\t\(/g, " (").replace(/\r|\t| {2,}/g, "").replace(/\/\*\n*((?!\/\*|\*\/).|\n)*\n+((?!\/\*|\*\/).|\n)*\n*\*\//g, "").replace(/\n\/\*.*?\*\//g, "").replace(/\n/g, "");
+		vars = vars.split("{");
+		vars.shift();
+		vars = vars.join("{").replace(/\s*(:|;|--|\*)\s*/g, "$1");
+		vars = vars.split("}")[0];
+		vars = vars.slice(2).split(/;--|\*\/--/);
+		
+		var maxwidth = BDFDB.getRects(container).width - 80;
+		for (let varstr of vars) {
+			varstr = varstr.split(":");
+			let varname = varstr.shift().trim();
+			varstr = varstr.join(":").split(/;[^A-z0-9]|\/\*/);
+			let varvalue = varstr.shift().trim();
+			if (varvalue) {
+				let vardescription = varstr.join("").replace(/\*\/|\/\*/g, "").replace(/:/g, ": ").replace(/: \//g, ":/").replace(/--/g, " --").replace(/\( --/g, "(--").trim();
+				vardescription = vardescription && vardescription.indexOf("*") == 0 ? vardescription.slice(1) : vardescription;
+				let varcontainer = BDFDB.htmlToElement(`<div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.directioncolumn + BDFDB.disCNS.justifystart + BDFDB.disCNS.alignstretch + BDFDB.disCNS.nowrap + BDFDB.disCN.marginbottom20} varcontainer" style="flex: 1 1 auto;"><div class="${BDFDB.disCNS.flex + BDFDB.disCNS.horizontal + BDFDB.disCNS.justifystart + BDFDB.disCNS.aligncenter + BDFDB.disCN.nowrap}" style="flex: 1 1 auto;"><h3 class="${BDFDB.disCNS.titledefault + BDFDB.disCNS.weightmedium + BDFDB.disCNS.titlesize16 + BDFDB.disCN.flexchild} BDFDB-textscrollwrapper" style="flex: 0 0 30%;"><div class="BDFDB-textscroll">${varname[0].toUpperCase() + varname.slice(1)}</div></h3><div class="${BDFDB.disCNS.inputwrapper + BDFDB.disCNS.vertical + BDFDB.disCNS.flex2 + BDFDB.disCN.directioncolumn}" style="flex: 1 1 auto;"><input type="text" option="${varname}" class="${BDFDB.disCNS.inputdefault + BDFDB.disCNS.input + BDFDB.disCN.titlesize16} varinput"></div><button type="button" class="${BDFDB.disCN.colorpickerswatch} single-swatch" style="background-color: black;"></button><button type="button" class="${BDFDB.disCNS.flexchild + BDFDB.disCNS.button + BDFDB.disCNS.buttonlookfilled + BDFDB.disCNS.buttoncolorbrand + BDFDB.disCNS.buttonsizemedium + BDFDB.disCN.buttongrow} file-navigator" style="flex: 0 0 auto;"><div class="${BDFDB.disCN.buttoncontents}"></div><input type="file" accept="image/*" style="display:none!important;"></button></div>${vardescription ? `<div class="${BDFDB.disCNS.description + BDFDB.disCNS.note + BDFDB.disCN.primary} BDFDB-textscrollwrapper" style="flex: 1 1 auto; max-width: ${maxwidth}px !important;"><div class="BDFDB-textscroll">${BDFDB.encodeToHTML(vardescription)}</div></div>` : ""}${vars[vars.length-1] == varstr ? '' : `<div class="${BDFDB.disCNS.divider + BDFDB.disCN.dividerdefault}"></div>`}</div>`);
+				let varinput = varcontainer.querySelector(BDFDB.dotCN.input);
+				varinput.value = varvalue;
+				varinput.setAttribute("placeholder", varvalue);
+				
+				let swatch = varcontainer.querySelector(".single-swatch");
+				let navigator = varcontainer.querySelector(".file-navigator");
+				
+				let iscolor = BDFDB.colorTYPE(varvalue);
+				let iscomp = !iscolor && /[0-9 ]+,[0-9 ]+,[0-9 ]+/g.test(varvalue);
+				let isurlfile = !iscolor && !iscolor && /url\(.+\)/gi.test(varvalue);
+				let isfile = !iscolor && !iscolor && !isurlfile && /(http(s)?):\/\/[(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(varvalue);
+				if (iscolor || iscomp) {
+					let color = iscomp ? BDFDB.colorCONVERT(varvalue.split(","), "RGB") : varvalue;
+					swatch.style.setProperty("background-color", color, "important");
+					swatch.addEventListener("click", e => {
+						BDFDB.openColorPicker(varcontainer, e.currentTarget, color, {gradient:false, comp:iscomp, alpha:iscolor, callback:updatePreview});
+					});
+				}
+				else BDFDB.removeEles(swatch);
+				if (isurlfile || isfile) {
+					navigator.addEventListener("change", e => {
+						let file = navigator.querySelector("input").files[0];
+						if (file && file.type.indexOf("image") == 0) varinput.value = `${isurlfile ? "url('" : ""}data:${file.type};base64,${BDFDB.LibraryRequires.fs.readFileSync(file.path).toString("base64")}${isurlfile ? "')" : ""}`;
+						else varinput.value = varvalue;
+						updatePreview();
+					});
+				}
+				else BDFDB.removeEles(navigator);
+				
+				container.appendChild(varcontainer);
+			}
+		}
+		let inputs = container.querySelectorAll(".varinput"), updateTimeout, updatePreview = () => {
+			clearTimeout(updateTimeout);
+			updateTimeout = setTimeout(() => {
+				let css = data.fullcss;
+				for (let input of inputs) {
+					let oldvalue = input.getAttribute("placeholder");
+					let newvalue = input.value;
+					if (newvalue && newvalue.trim() && newvalue != oldvalue) {
+						let varname = input.getAttribute("option");
+						css = css.replace(new RegExp(`--${BDFDB.regEscape(varname)}(\\s*):(\\s*)${BDFDB.regEscape(oldvalue)}`,"g"),`--${varname}$1:$2${newvalue}`);
+					}
+				}
+				frame.contentWindow.postMessage({origin:"ThemeRepo",reason:"NewTheme",checked:true,css},"*");
+			}, 1000);
+		};
+		BDFDB.addChildEventListener(container, "change input", ".varinput", updatePreview);
+		BDFDB.initElements(container);
 	}
 
 	addEntry (frame, themeRepoModal, container, data) {
@@ -594,6 +788,7 @@ class ThemeRepo {
 		entry.querySelector(BDFDB.dotCN._repoversion).innerHTML = data.version;
 		entry.querySelector(BDFDB.dotCN._repoauthor).innerHTML = data.author;
 		entry.querySelector(BDFDB.dotCN._repodescription).innerHTML = data.description;
+		if (data.new == 0) entry.querySelector(BDFDB.dotCN._repoheadertitle).appendChild(BDFDB.htmlToElement(`<span class="newentries-tag ${BDFDB.disCNS.bottag + BDFDB.disCNS.bottagregular + BDFDB.disCN.bottagnametag}" style="background-color: rgb(250, 166, 26) !important; color: white !important; padding: 1px 3px; font-size: 10px; top: -2px;">NEW</span>`));
 		let favbutton = entry.querySelector(BDFDB.dotCN.giffavoritebutton);
 		BDFDB.toggleClass(favbutton, BDFDB.disCN.giffavoriteselected, data.fav == 0);
 		favbutton.addEventListener("click", e => {
@@ -603,19 +798,16 @@ class ThemeRepo {
 			else BDFDB.removeData(data.url, this, "favorites");
 			themeRepoModal.entries[data.url] = data;
 		});
-		favbutton.addEventListener("mouseenter", e => {
-			BDFDB.createTooltip("Favorize", favbutton, {type:"top",selector:"themerepo-favicon-tooltip"});
-		});
 		let gitbutton = entry.querySelector(".gitIcon");
 		gitbutton.addEventListener("click", e => {
 			var giturl = null;
-			if (data.url.indexOf("https://raw.githubusercontent.com") == 0) {
-				var temp = data.url.replace("//raw.githubusercontent", "//github").split("/");
+			if (data.requesturl.indexOf("https://raw.githubusercontent.com") == 0) {
+				var temp = data.requesturl.replace("//raw.githubusercontent", "//github").split("/");
 				temp.splice(5, 0, "blob");
 				giturl = temp.join("/");
 			}
-			else if (data.url.indexOf("https://gist.githubusercontent.com/") == 0) {
-				giturl = data.url.replace("//gist.githubusercontent", "//gist.github").split("/raw/")[0];
+			else if (data.requesturl.indexOf("https://gist.githubusercontent.com/") == 0) {
+				giturl = data.requesturl.replace("//gist.githubusercontent", "//gist.github").split("/raw/")[0];
 			}
 			if (giturl) window.open(giturl, "_blank");
 		});
@@ -639,6 +831,9 @@ class ThemeRepo {
 			if (themeRepoModal.querySelector("#input-rnmstart").checked) setTimeout(() => {this.applyTheme(data);},3000);
 		});
 		entry.querySelector(".previewCheckbox").addEventListener("click", e => {
+			themeRepoModal.querySelector(".generator-select " + BDFDB.dotCN.select).setAttribute('value', "-----");
+			themeRepoModal.querySelector(".generator-select " + BDFDB.dotCN.title).innerHTML = `<strong>-----</strong> by -----`;
+			BDFDB.removeEles(themeRepoModal.querySelectorAll(".varcontainer"));
 			if (e.currentTarget.checked) themeRepoModal.querySelectorAll(".previewCheckbox").forEach(checkbox => {
 				if (e.currentTarget != checkbox) {
 					checkbox.checked = false;
@@ -658,7 +853,7 @@ class ThemeRepo {
 			BDFDB.toggleClass(entry, "updated", state < 1);
 			let downloadbutton = entry.querySelector(".btn-download");
 			downloadbutton.innerText = state < 1 ? "Updated" : (state > 1 ? "Download" : "Outdated");
-			downloadbutton.style.setProperty("background-color", "rgb(" + (state < 1 ? "67,181,129" : (state > 1 ? "114,137,218" : "241,71,71")) + ")", "important");
+			downloadbutton.style.setProperty("background-color", "rgb(" + (state < 1 ? "67,181,129" : (state > 1 ? "114,137,218" : "241,71,71")) + ")", state > 1 ? "" : "important");
 			themeRepoModal.entries[data.url] = data;
 		};
 	}
@@ -677,7 +872,8 @@ class ThemeRepo {
 		if (themeRepoModal.querySelector("#input-hidedownloadable").checked) 	entries = BDFDB.filterObject(entries, entry => {return entry.state > 1 ? null : entry;});
 		entries = BDFDB.filterObject(entries, entry => {return entry.search.indexOf(searchstring) > -1 ? entry : null;});
 
-		entries = BDFDB.sortObject(entries, themeRepoModal.querySelector(".sort-filter " + BDFDB.dotCN.quickselectvalue).getAttribute("option"));
+		let sortfilter = themeRepoModal.querySelector(".sort-filter " + BDFDB.dotCN.quickselectvalue).getAttribute("option");
+		entries = BDFDB.sortObject(entries, sortfilter == "new" && !themeRepoModal.querySelector(".newentries-tag") ? "name" : sortfilter);
 		if (themeRepoModal.querySelector(".order-filter " + BDFDB.dotCN.quickselectvalue).getAttribute("option") == "desc") entries = BDFDB.reverseObject(entries);
 
 		let entrypositions = Object.keys(entries);
@@ -699,60 +895,86 @@ class ThemeRepo {
 
 	loadThemes () {
 		BDFDB.removeEles(".themerepo-loadingicon");
-		var getThemeInfo, outdated = 0, i = 0;
+		var settings = BDFDB.loadAllData(this, "settings");
+		var getThemeInfo, outdated = 0, newentries = 0, i = 0, NFLDreplace = null;
 		var tags = ["name","description","author","version"];
-		let request = require("request");
-		request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/ThemeRepo/res/ThemeList.txt", (error, response, result) => {
-			if (response) {
+		var newentriesdata = BDFDB.loadAllData(this, "newentriesdata"), ownlist = BDFDB.loadData("ownlist", this, "ownlist") || [];
+		this.cachedThemes = (newentriesdata.urlbase64 ? atob(newentriesdata.urlbase64).split("\n") : []).concat(ownlist);
+		BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/ThemeRepo/res/ThemeList.txt", (error, response, body) => {
+			if (!error && body) {
+				body = body.replace(/[\r\t]/g, "");
+				BDFDB.saveData("urlbase64", btoa(body), this, "newentriesdata");
 				this.loadedThemes = {};
-				this.grabbedThemes = result.split("\n");
-				this.foundThemes = this.grabbedThemes.concat(BDFDB.loadData("ownlist", this, "ownlist") || []);
-				this.loading = {is:true, timeout:setTimeout(() => {
-					clearTimeout(this.loading.timeout);
-					if (this.started) {
-						if (this.loading.is && this.loading.amount < 4) setTimeout(() => {this.loadThemes();},10000);
-						this.loading = {is: false, timeout:null, amount:this.loading.amount};
+				this.grabbedThemes = body.split("\n").filter(n => n);
+				BDFDB.LibraryRequires.request("https://github.com/NFLD99/Better-Discord", (error2, response2, body2) => {
+					if (!error2 && body2) {
+						NFLDreplace = /\/NFLD99\/Better-Discord\/tree\/master\/Themes_[^"]+">([^<]+)/i.exec(body2);
+						NFLDreplace = NFLDreplace && NFLDreplace.length > 1 ? NFLDreplace[1] : null;
 					}
-				},1200000), amount:this.loading.amount+1};
-				var loadingiconwrapper = document.querySelector(BDFDB.dotCN.app + "> .repo-loadingwrapper");
-				if (!loadingiconwrapper) {
-					loadingiconwrapper = BDFDB.htmlToElement(`<div class="repo-loadingwrapper"></div>`);
-					document.querySelector(BDFDB.dotCN.app).appendChild(loadingiconwrapper);
-				}
-				var loadingicon = BDFDB.htmlToElement(this.themeRepoLoadingIconMarkup);
-				loadingicon.addEventListener("mouseenter", () => {BDFDB.createTooltip("Loading ThemeRepo",loadingicon,{type:"left",delay:500});})
-				loadingiconwrapper.appendChild(loadingicon);
+					this.foundThemes = this.grabbedThemes.concat(ownlist);
 
-				getThemeInfo(() => {
-					if (!this.started) {
+					this.loading = {is:true, timeout:setTimeout(() => {
 						clearTimeout(this.loading.timeout);
-						return;
+						if (this.started) {
+							if (this.loading.is && this.loading.amount < 4) setTimeout(() => {this.loadThemes();},10000);
+							this.loading = {is: false, timeout:null, amount:this.loading.amount};
+						}
+					},1200000), amount:this.loading.amount+1};
+					var loadingiconwrapper = document.querySelector(BDFDB.dotCN.app + "> .repo-loadingwrapper");
+					if (!loadingiconwrapper) {
+						loadingiconwrapper = BDFDB.htmlToElement(`<div class="repo-loadingwrapper"></div>`);
+						document.querySelector(BDFDB.dotCN.app).appendChild(loadingiconwrapper);
 					}
-					BDFDB.removeEles(loadingicon, ".themerepo-loadingicon");
-					if (!loadingiconwrapper.firstChild) BDFDB.removeEles(loadingiconwrapper);
-					clearTimeout(this.loading.timeout);
-					this.loading = {is:false, timeout:null, amount:this.loading.amount};
-					console.log(`%c[${this.name}]%c`, "color: #3a71c1; font-weight: 700;", "", "Finished fetching Themes.");
-					if (document.querySelector(".bd-themerepobutton")) BDFDB.showToast(`Finished fetching Themes.`, {type:"success"});
-					if (outdated > 0) {
-						var bar = BDFDB.createNotificationsBar(`${outdated} of your Themes ${outdated == 1 ? "is" : "are"} outdated. Check:`,{type:"danger",btn:"ThemeRepo",selector:"themerepo-notice"});
-						bar.querySelector(BDFDB.dotCN.noticebutton).addEventListener("click", e => {
-							this.openThemeRepoModal(true);
-							bar.querySelector(BDFDB.dotCN.noticedismiss).click();
-						});
-					}
-					if (BDFDB.myData.id == "278543574059057154") {
-						let wrongUrls = [];
-						for (let url of this.foundThemes) if (url && !this.loadedThemes[url] && !wrongUrls.includes(url)) wrongUrls.push(url);
-						if (wrongUrls.length > 0) {
-							var bar = BDFDB.createNotificationsBar(`ThemeRepo: ${wrongUrls.length} Theme${wrongUrls.length > 1 ? "s" : ""} could not be loaded.`, {type:"danger",btn:"List",selector:"themerepo-notice"});
+					var loadingicon = BDFDB.htmlToElement(this.themeRepoIconMarkup);
+					BDFDB.addClass(loadingicon, "themerepo-loadingicon");
+					loadingicon.addEventListener("mouseenter", () => {BDFDB.createTooltip(this.getLoadingTooltipText(),loadingicon,{type:"left",delay:500,style:"max-width:unset;",selector:"themerepo-loading-tooltip"});})
+					loadingiconwrapper.appendChild(loadingicon);
+
+					getThemeInfo(() => {
+						if (!this.started) {
+							clearTimeout(this.loading.timeout);
+							return;
+						}
+						BDFDB.removeEles(loadingicon, ".themerepo-loadingicon");
+						if (!loadingiconwrapper.firstChild) BDFDB.removeEles(loadingiconwrapper);
+						clearTimeout(this.loading.timeout);
+						this.loading = {is:false, timeout:null, amount:this.loading.amount};
+						console.log(`%c[${this.name}]%c`, "color: #3a71c1; font-weight: 700;", "", "Finished fetching Themes.");
+						if (document.querySelector(".bd-themerepobutton")) BDFDB.showToast(`Finished fetching Themes.`, {type:"success"});
+						if ((settings.notifyOutdated || settings.notifyOutdated == undefined) && outdated > 0) {
+							var oldbarbutton = document.querySelector(".themerepo-outdate-notice " + BDFDB.dotCN.noticedismiss);
+							if (oldbarbutton) oldbarbutton.click();
+							var bar = BDFDB.createNotificationsBar(`${outdated} of your Themes ${outdated == 1 ? "is" : "are"} outdated. Check:`,{type:"danger",btn:"ThemeRepo",selector:"themerepo-notice themerepo-outdate-notice", customicon:this.themeRepoIconMarkup.replace(/#7289da/gi,"#FFF").replace(/#7f8186/gi,"#B9BBBE")});
 							bar.querySelector(BDFDB.dotCN.noticebutton).addEventListener("click", e => {
-								var toast = BDFDB.showToast(wrongUrls.join("\n"),{type:"error"});
-								toast.style.overflow = "hidden";
-								console.log(wrongUrls.length == 1 ? wrongUrls[0] : wrongUrls);
+								this.openThemeRepoModal({showOnlyOutdated:true});
+								bar.querySelector(BDFDB.dotCN.noticedismiss).click();
 							});
 						}
-					}
+						if ((settings.notifyNewentries || settings.notifyNewentries == undefined) && newentries > 0) {
+							var oldbarbutton = document.querySelector(".themerepo-newentries-notice " + BDFDB.dotCN.noticedismiss);
+							if (oldbarbutton) oldbarbutton.click();
+							var bar = BDFDB.createNotificationsBar(`There ${newentries == 1 ? "is" : "are"} ${newentries} new Theme${newentries == 1 ? "" : "s"} in the Repo. Check:`, {type:"success", btn:"ThemeRepo", selector:"themerepo-notice themerepo-newentries-notice", customicon:this.themeRepoIconMarkup.replace(/#7289da/gi,"#FFF").replace(/#7f8186/gi,"#B9BBBE")});
+							bar.querySelector(BDFDB.dotCN.noticebutton).addEventListener("click", e => {
+								this.openThemeRepoModal({forcedSort:"new",forcedOrder:"asc"});
+								bar.querySelector(BDFDB.dotCN.noticedismiss).click();
+							});
+						}
+						if (BDFDB.myData.id == "278543574059057154") {
+							let wrongUrls = [];
+							for (let url of this.foundThemes) if (url && !this.loadedThemes[url] && !wrongUrls.includes(url)) wrongUrls.push(url);
+							if (wrongUrls.length > 0) {
+								var bar = BDFDB.createNotificationsBar(`ThemeRepo: ${wrongUrls.length} Theme${wrongUrls.length > 1 ? "s" : ""} could not be loaded.`, {type:"danger", btn:"List", selector:"themerepo-notice", customicon:this.themeRepoIconMarkup.replace(/#7289da/gi,"#FFF").replace(/#7f8186/gi,"#B9BBBE")});
+								bar.querySelector(BDFDB.dotCN.noticebutton).addEventListener("click", e => {
+									var toast = BDFDB.showToast(wrongUrls.join("\n"),{type:"error"});
+									toast.style.overflow = "hidden";
+									console.log(wrongUrls.length == 1 ? wrongUrls[0] : wrongUrls);
+								});
+							}
+						}
+						BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/ThemeRepo/res/GeneratorList.txt", (error3, response3, body3) => {
+							if (!error3 && body3) for (let url of body3.replace(/[\r\t]/g, "").split("\n").filter(n => n)) if (this.loadedThemes[url]) this.generatorThemes.push(url);
+						});
+					});
 				});
 			}
 		});
@@ -762,45 +984,67 @@ class ThemeRepo {
 				callback();
 				return;
 			}
-			let url = this.foundThemes[i].replace(new RegExp("[\\r|\\n|\\t]", "g"), "");
-			this.foundThemes[i] = url;
-			request(url, (error, response, body) => {
+			let url = this.foundThemes[i];
+			let requesturl = NFLDreplace && url.includes("NFLD99/Better-Discord/master/Themes") ? url.replace("master/Themes", "master/" + NFLDreplace) : url;
+			BDFDB.LibraryRequires.request(requesturl, (error, response, body) => {
 				if (!response) {
 					if (url && BDFDB.getAllIndexes(this.foundThemes, url).length < 2) this.foundThemes.push(url);
 				}
 				else if (body && body.indexOf("404: Not Found") != 0 && response.statusCode == 200) {
 					let theme = {};
 					let text = body;
-					if (text.split("*//").length > 1 && text.split("\n").length > 1) {
-						for (let tag of tags) {
-							let result = text.replace(new RegExp("\\s*\:\\s*", "g"), ":").replace(new RegExp("\\s*\}\\s*", "g"), "}").split('"' + tag + '":"');
-							result = result.length > 1 ? result[1].split('",')[0].split('"}')[0] : null;
-							result = result && tag != "version" ? result.charAt(0).toUpperCase() + result.slice(1) : result;
-							theme[tag] = result;
+					if ((text.split("*//").length > 1 || text.indexOf("/**") == 0) && text.split("\n").length > 1) {
+						var hasMETAline = text.replace(/\s/g, "").indexOf("//META{");
+						if (hasMETAline < 20 && hasMETAline > -1) {
+							var searchtext = text.replace(/\s*:\s*/g, ":").replace(/\s*}\s*/g, "}");
+							for (let tag of tags) {
+								let result = searchtext.split('"' + tag + '":"');
+								result = result.length > 1 ? result[1].split('",')[0].split('"}')[0] : null;
+								result = result && tag != "version" ? result.charAt(0).toUpperCase() + result.slice(1) : result;
+								theme[tag] = result ? result.trim() : result;
+							}
+						}
+						else {
+							var searchtext = text.replace(/[\r\t| ]*\*\s*/g, "*");
+							for (let tag of tags) {
+								let result = searchtext.split('@' + tag + ' ');
+								result = result.length > 1 ? result[1].split('\n')[0] : null;
+								result = result && tag != "version" ? result.charAt(0).toUpperCase() + result.slice(1) : result;
+								theme[tag] = result ? result.trim() : result;
+							}
 						}
 						let valid = true;
-						for (let tag of tags) {
-							if (theme[tag] === null) valid = false;
-						}
+						for (let tag of tags) if (theme[tag] === null) valid = false;
 						if (valid) {
-							theme.css = text.split("\n").slice(1).join("\n").replace(new RegExp("[\\r|\\n|\\t]", "g"), "");
+							theme.fullcss = text;
+							theme.css = hasMETAline < 20 && hasMETAline > -1 ? text.split("\n").slice(1).join("\n").replace(/[\r|\n|\t]/g, "") : text.replace(/[\r|\n|\t]/g, "");
 							theme.url = url;
+							theme.requesturl = requesturl;
 							this.loadedThemes[url] = theme;
-							var instTheme = window.bdthemes[theme.name];
+							var instTheme = BDFDB.getTheme(theme.name);
 							if (instTheme && instTheme.author.toUpperCase() == theme.author.toUpperCase() && instTheme.version != theme.version) outdated++;
+							if (!this.cachedThemes.includes(url)) newentries++;
 						}
 					}
 				}
 				i++;
+				var loadingtooltip = document.querySelector(".themerepo-loading-tooltip");
+				if (loadingtooltip) {
+					BDFDB.setInnerText(loadingtooltip, this.getLoadingTooltipText());
+					BDFDB.updateTooltipPosition(loadingtooltip);
+				}
 				getThemeInfo(callback);
 			});
 		}
 	}
 
+	getLoadingTooltipText () {
+		return `Loading ThemeRepo - [${Object.keys(this.loadedThemes).length}/${Object.keys(this.grabbedThemes).length}]`;
+	}
+
 	checkForNewThemes () {
-		let request = require("request");
-		request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/ThemeRepo/res/ThemeList.txt", (error, response, result) => {
-			if (response && !BDFDB.equals(result.split("\n"), this.grabbedThemes)) {
+		BDFDB.LibraryRequires.request("https://mwittrien.github.io/BetterDiscordAddons/Plugins/ThemeRepo/res/ThemeList.txt", (error, response, result) => {
+			if (response && !BDFDB.equals(result.replace(/\t|\r/g, "").split("\n").filter(n => n), this.grabbedThemes)) {
 				this.loading = {is:false, timeout:null, amount:0};
 				this.loadThemes();
 			}
@@ -808,63 +1052,41 @@ class ThemeRepo {
 	}
 
 	downloadTheme (data) {
-		let request = require("request");
-		request(data.url, (error, response, body) => {
-			if (error) {
-				BDFDB.showToast(`Unable to download Theme "${data.name}".`, {type:"danger"});
-			}
-			else {
-				let filename = data.url.split("/");
-				this.createThemeFile(filename[filename.length - 1], body);
-			}
+		BDFDB.LibraryRequires.request(data.requesturl, (error, response, body) => {
+			if (error) BDFDB.showToast(`Unable to download Theme "${data.name}".`, {type:"danger"});
+			else this.createThemeFile(data.requesturl.split("/").pop(), body);
 		});
 	}
 
 	createThemeFile (filename, content) {
-		let fileSystem = require("fs");
-		let path = require("path");
-		var file = path.join(BDFDB.getThemesFolder(), filename);
-		fileSystem.writeFile(file, content, (error) => {
-			if (error) {
-				BDFDB.showToast(`Unable to save Theme "${filename}".`, {type:"danger"});
-			}
-			else {
-				BDFDB.showToast(`Successfully saved Theme "${filename}".`, {type:"success"});
-			}
+		BDFDB.LibraryRequires.fs.writeFile(BDFDB.LibraryRequires.path.join(BDFDB.getThemesFolder(), filename), content, (error) => {
+			if (error) BDFDB.showToast(`Unable to save Theme "${filename}".`, {type:"danger"});
+			else BDFDB.showToast(`Successfully saved Theme "${filename}".`, {type:"success"});
 		});
 	}
 
 	applyTheme (data) {
-		var name = data.name;
-		if (BDFDB.isThemeEnabled(name) == false) {
-			BDFDB.removeEles(`style#${name}`);
-			document.head.appendChild(BDFDB.htmlToElement(`<style id=${name}>${data.css}</style>`));
-			themeCookie[name] = true;
-			themeModule.saveThemeData();
-			console.log(`%c[${this.name}]%c`, "color: #3a71c1; font-weight: 700;", "", "Applied Theme " + name + ".");
+		if (BDFDB.isThemeEnabled(data.name) == false) {
+			BDFDB.removeEles(`style#${data.name}`);
+			document.head.appendChild(BDFDB.htmlToElement(`<style id=${data.name}>${data.css}</style>`));
+			window.themeModule.enableTheme(data.name);
+			console.log(`%c[${this.name}]%c`, "color: #3a71c1; font-weight: 700;", "", "Applied Theme " + data.name + ".");
 		}
 	}
 
 	deleteThemeFile (data) {
-		let fileSystem = require("fs");
-		let path = require("path");
-		let filename = data.url.split("/");
-		filename = filename[filename.length - 1];
-		var file = path.join(BDFDB.getThemesFolder(), filename);
-		fileSystem.unlink(file, (error) => {
+		let filename = data.requesturl.split("/").pop();
+		BDFDB.LibraryRequires.fs.unlink(BDFDB.LibraryRequires.path.join(BDFDB.getThemesFolder(), filename), (error) => {
 			if (error) BDFDB.showToast(`Unable to delete Theme "${filename}".`, {type:"danger"});
-			else BDFDB.showToast(`Successfully deleted Theme "${filename}".`, {type:"success"});
+			else BDFDB.showToast(`Successfully deleted Theme "${filename}".`);
 		});
 	}
 
 	removeTheme (data) {
-		var name = data.name;
-		if (BDFDB.isThemeEnabled(name) == true) {
-			BDFDB.removeEles(`style#${name}`);
-			themeCookie[name] = false;
-			delete bdthemes[name];
-			themeModule.saveThemeData();
-			console.log(`%c[${this.name}]%c`, "color: #3a71c1; font-weight: 700;", "", "Removed Theme " + name + ".");
+		if (BDFDB.isThemeEnabled(data.name) == true) {
+			BDFDB.removeEles(`style#${data.name}`);
+			window.themeModule.disableTheme(data.name);
+			console.log(`%c[${this.name}]%c`, "color: #3a71c1; font-weight: 700;", "", "Removed Theme " + data.name + ".");
 		}
 	}
 }

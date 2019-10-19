@@ -1,15 +1,16 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR CMD_DURATION:0
-SETUVAR FZF_CD_COMMAND:command\x20fd\x20\x2dt\x20d\x20\x2dd\x205\x20\x2dL\x20\x2dp\x20\x24dir
+SETUVAR CMD_DURATION:150
+SETUVAR FZF_CD_COMMAND:command\x20fd\x20\x2dp\x20\x2dt\x20d\x20\x2dd\x205\x20\x24dir
 SETUVAR FZF_CD_WITH_HIDDEN_COMMAND:command\x20fd\x20\x2dH\x20\x2dt\x20d\x20\x2dd\x205\x20\x2dL\x20\x2dp\x20\x24dir
-SETUVAR FZF_COMPLETE:1
-SETUVAR FZF_DEFAULT_OPTS:\x2d\x2dreverse\x20\x2d\x2dcolor\x3d16\x2cfg\x2b\x3a2\x2cbg\x2b\x3a0\x2chl\x3a4\x2chl\x2b\x3a4\x2cprompt\x3a4\x2cpointer\x3a8
-SETUVAR FZF_FIND_FILE_COMMAND:command\x20fd\x20\x2dH\x20\x2dt\x20f\x20\x2dL\x20\x2dp\x20\x2d\x2dignore\x2dfile\x20/home/brett/\x2econfig/git/ignore\x20\x24dir
+SETUVAR --export FZF_DEFAULT_OPTS:\x2d\x2dansi\x20\x2d\x2dpreview\x3d\x27fzf\x2dpreview\x20\x7b\x7d\x27\x20\x2d\x2dheight\x3d40\x25\x20\x2d\x2dcycle\x20\x2d\x2dcolor\x3d\x2716\x2cfg\x2b\x3a2\x2cbg\x2b\x3a0\x2chl\x3a4\x2chl\x2b\x3a4\x2cprompt\x3a4\x2cpointer\x3a8\x27\x20\x2d\x2dreverse
+SETUVAR FZF_ENABLE_OPEN_PREVIEW:1
+SETUVAR FZF_FIND_FILE_COMMAND:command\x20fd\x20\x2dH\x20\x2dt\x20f\x20\x2dp\x20\x24dir
 SETUVAR FZF_LEGACY_KEYBINDINGS:0
-SETUVAR FZF_OPEN_COMMAND:command\x20fd\x20\x2dH\x20\x2dt\x20f\x20\x2dL\x20\x2dp\x20\x2d\x2dignore\x2dfile\x20/home/brett/\x2econfig/git/ignore\x20\x24dir
-SETUVAR FZF_PREVIEW_DIR_CMD:ls
-SETUVAR FZF_PREVIEW_FILE_CMD:head\x20\x2dn\x2010
+SETUVAR FZF_OPEN_COMMAND:command\x20fd\x20\x2dH\x20\x2dt\x20f\x20\x2dp\x20\x24dir
+SETUVAR FZF_PREVIEW:/home/brett/\x2econfig/fish/functions/__fzf_complete_preview
+SETUVAR FZF_PREVIEW_DIR_CMD:exa\x20\x2dT\x20\x2dF\x20\x2d\x2dcolor\x3dalways\x20\x2da\x20\x2d\x2dgit\x2dignore
+SETUVAR FZF_PREVIEW_FILE_CMD:bat\x20\x2d\x2dline\x2drange\x20\x3a10\x20\x2dp\x20\x2d\x2dcolor\x20always
 SETUVAR FZF_TMUX_HEIGHT:40\x25
 SETUVAR NEET_BRIGHT:yellow
 SETUVAR NEET_DARK:brblack
@@ -20,11 +21,7 @@ SETUVAR NEET_LIST_FILE:/home/brett/usr/share/neet/list
 SETUVAR NEET_MEDIA_DIR:/mnt/media/Videos
 SETUVAR NEET_ON_PLAY:__neet_on_play
 SETUVAR NEET_PLAYER_COMMAND:mpv\x20\x2d\x2dfullscreen\x20\x2d\x2dno\x2dpause
-SETUVAR ZO_CMD:zo
-SETUVAR Z_CMD:z
-SETUVAR Z_DATA:/home/brett/usr/share/z/data
 SETUVAR Z_DATA_DIR:/home/brett/usr/share/z
-SETUVAR Z_EXCLUDE:/home/brett
 SETUVAR __done_notification_command:notify\x2dsend\x2esh\x20\x2d\x2dapp\x2dname\x3dfish\x20\x22\x24title\x22\x20\x22\x24message\x22
 SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d
@@ -41,23 +38,23 @@ SETUVAR _fish_abbr_xra:xbps\x2dremove\x20\x2dR
 SETUVAR _fish_abbr_xs:xbps\x2dquery\x20\x2dRs
 SETUVAR cmd_duration:0
 SETUVAR execs:cat\x1ecvs\x1edf\x1ediff\x1edig\x1egcc\x1eg\x2b\x2b\x1eifconfig\x1emake\x1emount\x1emtr\x1enetstat\x1eping\x1eps\x1etail\x1etraceroute\x1ewdiff
-SETUVAR fish_color_autosuggestion:brblack
+SETUVAR fish_color_autosuggestion:\x235b6395
 SETUVAR fish_color_cancel:\x2dr
-SETUVAR fish_color_command:green
-SETUVAR fish_color_comment:brblack\x1e\x2d\x2ditalics
+SETUVAR fish_color_command:\x2377e0c6\x1e\x2d\x2dbold
+SETUVAR fish_color_comment:\x237e8eda\x1e\x2d\x2ditalics
 SETUVAR fish_color_cwd:cyan
 SETUVAR fish_color_cwd_root:red
-SETUVAR fish_color_end:green
-SETUVAR fish_color_error:red
-SETUVAR fish_color_escape:magenta
+SETUVAR fish_color_end:magenta
+SETUVAR fish_color_error:red\x1e\x2d\x2dbold
+SETUVAR fish_color_escape:\x2389DDFF
 SETUVAR fish_color_history_current:\x2d\x2dbold
 SETUVAR fish_color_host:normal
-SETUVAR fish_color_match:\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_match:\x2338456A\x1e\x2d\x2dbold
 SETUVAR fish_color_normal:normal
-SETUVAR fish_color_operator:yellow\x1e\x2d\x2dunderline\x1e\x2d\x2dbold
+SETUVAR fish_color_operator:\x2389DDFF\x1e\x2d\x2dunderline\x1e\x2d\x2dbold
 SETUVAR fish_color_param:blue
-SETUVAR fish_color_quote:yellow
-SETUVAR fish_color_redirection:brcyan
+SETUVAR fish_color_quote:blue
+SETUVAR fish_color_redirection:\x238fd6ff
 SETUVAR fish_color_search_match:\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_user:brred
@@ -69,7 +66,7 @@ SETUVAR fish_pager_color_description:brblack
 SETUVAR fish_pager_color_prefix:yellow
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_user_abbreviations:s\x20sudo\x1ec\x20clear\x1ev\x20nvim\x1echmox\x20chmod\x20\x2bx\x1exi\x20xbps\x2dinstall\x1exs\x20xbps\x2dquery\x20\x2dRs\x1exr\x20xbps\x2dremove\x1exra\x20xbps\x2dremove\x20\x2dR
-SETUVAR fish_user_paths:/home/brett/bin\x1e/home/brett/\x2ecask/bin\x1e/home/brett/\x2eemacs\x2ed/bin\x1e/home/brett/usr/share/yarn/global/bin\x1e/home/brett/usr/share/cargo/bin
+SETUVAR fish_user_paths:/home/brett/bin\x1e/home/brett/\x2ecask/bin\x1e/home/brett/\x2eemacs\x2ed/bin\x1e/home/brett/\x2eyarn/bin\x1e/home/brett/usr/share/yarn/global/bin\x1e/home/brett/usr/share/cargo/bin\x1e/home/brett/usr/share/krew/bin
 SETUVAR fisher_active_prompt:\x1d
 SETUVAR grc_plugin_execs:cat\x1ecvs\x1edf\x1ediff\x1edig\x1egcc\x1eg\x2b\x2b\x1eip\x1emake\x1emount\x1emtr\x1enetstat\x1eping\x1eps\x1etail\x1etraceroute\x1ewdiff
 SETUVAR prompt_slimfish_gitline_10085:\x1d
@@ -159,4 +156,5 @@ SETUVAR prompt_slimfish_gitline_7973:\ue0a0\x20\U0001d62e\x20\x1b\x5b32m\u2190\x
 SETUVAR prompt_slimfish_gitline_8151:\x1d
 SETUVAR prompt_slimfish_gitline_9580:\x1b\x5b0m\ue0a0\x20\x1b\x5b32m\u2192\x1b\x5b0m2848\x20\x5b\x1b\x5b34mdevelop\x1b\x5b0m\x5d
 SETUVAR prompt_slimfish_gitline_9854:\x1b\x5b0m\u16b4\x20\U0001d62e\x20\x1b\x5b32m\u2190\x1b\x5b0m2820\x20develop\x2028\x1b\x5b32m\u2191\x1b\x5b0m
-SETUVAR pure_version:1\x2e13\x2e0
+SETUVAR pure_version:2\x2e1\x2e8
+SETUVAR vi_mode_user_key_bindings:fish_hybrid_key_bindings

@@ -1,16 +1,18 @@
 [options]
-allow_bold = true
+allow_bold = false
 audible_bell = false
+bold_is_bright = false
 browser = xdg-open
+cell_height_scale = 1.1
 clickable_url = true
-cursor_blink = system
+cursor_blink = true
 cursor_shape = ibeam
 dynamic_title = true
 filter_unmatched_urls = true
-font = monospace Medium 16
-hyperlinks = false
+font = Operator Mono Lig 12
+hyperlinks = true
 icon_name = terminal
-modify_other_keys = false
+modify_other_keys = true
 mouse_autohide = true
 scroll_on_keystroke = true
 scroll_on_output = false
@@ -21,26 +23,29 @@ size_hints = true
 urgent_on_bell = true
 
 [colors]
-background = #292D3E
-foreground = #A6Accd
+cursor = #82aaff
 
-highlight = #3c435e
+background = #212337
+foreground = #afbeee
+foreground_bold = #ecf1ff
 
-color0  = #343b51
-color8  = #676E95
-color1  = #FF5370
-color9  = #FF758C
-color2  = #C3E88D
-color10 = #DDFFA7
-color3  = #FFCB6B
-color11 = #FFE585
-color4  = #82AAFF
-color12 = #9CC4FF
-color5  = #C792EA
-color13 = #E1ACFF
-color6  = #89DDFF
-color14 = #A3F7FF
-color7  = #BFC7D5
-color15 = #EEFFFF
+highlight = #3c4361
+
+color0  = #2a2e48
+color8  = #4e5579
+color1  = #ff5370
+color9  = #ff758d
+color2  = #c7f59b
+color10 = #d2f7af
+color3  = #ffdb8e
+color11 = #ffe2a5
+color4  = #70b0ff
+color12 = #8dc0ff
+color5  = #baacff
+color13 = #c8bdff
+color6  = #7fdaff
+color14 = #99e1ff
+color7  = #e4f3fa
+color15 = #e9f5fb
 
 # vim: ft=dosini cms=#%s

@@ -6,7 +6,7 @@
 rofi.columns: 1
 rofi.combi-modi: window,drun
 rofi.fake-transparency: false
-rofi.font: Noto Sans ExtraCondensed Medium 18
+rofi.font: Proxima Nova Cond Medium 18
 rofi.fullscreen: true
 rofi.hide-scrollbar: true
 rofi.icon-theme: Papirus
@@ -24,8 +24,8 @@ rofi.run-command: fish -c '{cmd}'
 rofi.run-list-command: 'fish -c functions'
 rofi.separator-style: none
 rofi.show-icons: true
-rofi.terminal: termite
-rofi.theme: Palenight
+rofi.terminal: qterminal
+rofi.theme: Moonlight
 rofi.threads: 8
 rofi.width: 1000
 

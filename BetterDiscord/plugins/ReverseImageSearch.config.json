@@ -11,5 +11,8 @@
 		"TinEye": true,
 		"WhatAnime": true,
 		"Yandex": true
+	},
+	"changelog": {
+		"currentversion": "3.4.6"
 	}
 }

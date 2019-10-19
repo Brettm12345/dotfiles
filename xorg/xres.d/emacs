@@ -1,4 +1,4 @@
 Emacs.FontBackend: xft
-Emacs.font: Iosevka Term Medium-15
+Emacs.font: Operator Mono Medium-16
 
 ! vim:ft=xdefaults

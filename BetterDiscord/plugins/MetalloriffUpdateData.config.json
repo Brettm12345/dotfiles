@@ -8,5 +8,19 @@
                 "0.2.5"
             ]
         }
+    },
+    "ImageBrowser": {
+        "ImageBrowser": {
+            "readChanges": [
+                "0.1.1"
+            ]
+        }
+    },
+    "CustomizableAvatarDPI": {
+        "CustomizableAvatarDPI": {
+            "readChanges": [
+                "1.0.6"
+            ]
+        }
     }
 }

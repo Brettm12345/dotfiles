@@ -2,17 +2,16 @@ function _pure_prompt_symbol \
     --description 'Print prompt symbol' \
     --argument-names exit_code
 
-    set --local pure_symbol $pure_symbol_prompt
+    set --local prompt_symbol (_pure_get_prompt_symbol)
     set --local command_succeed 0
+    set --local color_symbol $pure_color_prompt_on_success # default pure symbol color
+    if test $exit_code -ne $command_succeed
+        set color_symbol $pure_color_prompt_on_error  # different pure symbol color when previous command failed
 
-    set --local color_symbol $pure_color_symbol_success # default pure symbol color
-    if test $exit_code -ne 0
-        set color_symbol $pure_color_symbol_error  # different pure symbol color when previous command failed
-
-        if test $pure_separate_prompt_on_error = true
-            set color_symbol "$pure_color_symbol_error$pure_symbol_prompt$pure_color_symbol_success"
+        if test "$pure_separate_prompt_on_error" = true
+            set color_symbol "$pure_color_prompt_on_error$prompt_symbol$pure_color_prompt_on_success"
         end
     end
 
-    echo "$color_symbol$pure_symbol"
+    echo "$color_symbol$prompt_symbol"
 end

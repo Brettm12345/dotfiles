@@ -12,11 +12,13 @@ set -x XDG_VIDEOS_DIR "$HOME/usr/vid"
 # Directories
 set -x GHQ_ROOT "$HOME/src"
 set -x GOPATH "$HOME"
+set -x KREW_ROOT "$XDG_DATA_HOME/krew"
 set -x CARGO_HOME "$XDG_DATA_HOME/cargo"
 set -x GNUPGHOME "$XDG_CONFIG_HOME/gpg"
+set -x VIRTUALFISH_HOME "$XDG_DATA_HOME/virtualenvs"
 
 # Default programs
-set -x BROWSER "chromium"
+set -x BROWSER "chromium-snapshot"
 set -x EDITOR "nvim"
 set -x IMGVIEW "sxiv -b"
 set -x MANPAGER "nvim -c 'set ft=man' -"
@@ -28,7 +30,6 @@ set -x BAT_THEME "Material-Theme-Palenight"
 set -x BUILDDIR "/tmp/makepkg"
 set -x LESS "-F -g -i -M -R -S -w -X -z-4"
 set -x MPD_HOST "localhost"
-set -x QT_QPA_PLATFORMTHEME "qt5ct"
 
 # Npm
 set -x NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/config"
@@ -44,7 +45,7 @@ set -x TMUX_PLUGIN_MANAGER_PATH "$TMUX_HOME/plugins"
 
 # FZF
 set -x FZF_DEFAULT_COMMAND "sh -c 'git ls-tree -r --name-only HEAD 2> /dev/null || fd -H --type f --ignore-file $XDG_CONFIG_HOME/git/ignore . $HOME'"
-set -x FZF_DEFAULT_OPTIONS "--cycle --color=16,fg+:2,bg+:0,hl:4,hl+:4,prompt:4,pointer:8 --border"
+set -x FZF_DEFAULT_OPTS "--ansi --preview='fzf-preview {}' --height=40% --cycle --color='16,fg+:2,bg+:0,hl:4,hl+:4,prompt:4,pointer:8' --reverse"
 
 # Skim
 set -x SKIM_DEFAULT_COMMAND "sh -c 'git ls-tree -r --name-only HEAD 2> /dev/null || fd -H --type f --ignore-file $XDG_CONFIG_HOME/git/ignore . $HOME'"
@@ -54,5 +55,11 @@ set -x SKIM_DEFAULT_OPTIONS "--cycle --color=16,fg+:2,bg+:0,hl:4,hl+:4,prompt:4,
 set -x CFLAGS "-march=znver1"
 set -x CXXFLAGS "$CFLAGS"
 
+# Gh
+set -x GH_GITHUB_TOKEN (gopass show "api-keys/github/gh")
+
+# AWS
+set -x AWS_ACCESS_KEY_ID (gopass show "api-keys/aws/access-key")
+set -x AWS_SECRET_ACCESS_KEY (gopass show "api-keys/aws/secret")
 # Path
-set -U fish_user_paths "$HOME/bin" "$HOME/.cask/bin" "$HOME/.emacs.d/bin" "$NPM_DIR" "$CARGO_HOME/bin"
+set -U fish_user_paths "$HOME/bin" "$HOME/.cask/bin" "$HOME/.emacs.d/bin" "$HOME/.yarn/bin" "$NPM_DIR" "$CARGO_HOME/bin" "$KREW_ROOT/bin"

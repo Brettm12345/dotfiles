@@ -1,4 +1,28 @@
 //META{"name":"ZeresPluginLibrary","displayName":"ZeresPluginLibrary","website":"https://github.com/rauenzi/BDPluginLibrary","source":"https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js"}*//
+
+/*@cc_on
+@if (@_jscript)
+	
+	// Offer to self-install for clueless users that try to run this directly.
+	var shell = WScript.CreateObject("WScript.Shell");
+	var fs = new ActiveXObject("Scripting.FileSystemObject");
+	var pathPlugins = shell.ExpandEnvironmentStrings("%APPDATA%\BetterDiscord\plugins");
+	var pathSelf = WScript.ScriptFullName;
+	// Put the user at ease by addressing them in the first person
+	shell.Popup("It looks like you've mistakenly tried to run me directly. \n(Don't do that!)", 0, "I'm a plugin for BetterDiscord", 0x30);
+	if (fs.GetParentFolderName(pathSelf) === fs.GetAbsolutePathName(pathPlugins)) {
+		shell.Popup("I'm in the correct folder already.", 0, "I'm already installed", 0x40);
+	} else if (!fs.FolderExists(pathPlugins)) {
+		shell.Popup("I can't find the BetterDiscord plugins folder.\nAre you sure it's even installed?", 0, "Can't install myself", 0x10);
+	} else if (shell.Popup("Should I copy myself to BetterDiscord's plugins folder for you?", 0, "Do you need some help?", 0x34) === 6) {
+		fs.CopyFile(pathSelf, fs.BuildPath(pathPlugins, fs.GetFileName(pathSelf)), true);
+		// Show the user where to put plugins in the future
+		shell.Exec("explorer " + pathPlugins);
+		shell.Popup("I'm installed!", 0, "Successfully installed", 0x40);
+	}
+	WScript.Quit();
+
+@else@*/
 var ZeresPluginLibrary =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -38,17 +62,32 @@ var ZeresPluginLibrary =
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
 /******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
 /******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -73,118 +112,14 @@ var ZeresPluginLibrary =
 /************************************************************************/
 /******/ ({
 
-/***/ "./plugins/0PluginLibrary sync recursive ^\\.\\/.*$":
-/*!**********************************************!*\
-  !*** ./plugins/0PluginLibrary sync ^\.\/.*$ ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./": "./plugins/0PluginLibrary/index.js",
-	"./config.json": "./plugins/0PluginLibrary/config.json",
-	"./index": "./plugins/0PluginLibrary/index.js",
-	"./index.js": "./plugins/0PluginLibrary/index.js"
-};
-
-
-function webpackContext(req) {
-	var id = webpackContextResolve(req);
-	var module = __webpack_require__(id);
-	return module;
-}
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) { // check for number or string
-		var e = new Error('Cannot find module "' + req + '".');
-		e.code = 'MODULE_NOT_FOUND';
-		throw e;
-	}
-	return id;
-}
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = "./plugins/0PluginLibrary sync recursive ^\\.\\/.*$";
-
-/***/ }),
-
-/***/ "./plugins/0PluginLibrary/config.json":
-/*!********************************************!*\
-  !*** ./plugins/0PluginLibrary/config.json ***!
-  \********************************************/
+/***/ "./src/config.json":
+/*!*************************!*\
+  !*** ./src/config.json ***!
+  \*************************/
 /*! exports provided: info, changelog, main, default */
 /***/ (function(module) {
 
-module.exports = {"info":{"name":"ZeresPluginLibrary","authors":[{"name":"Zerebos","discord_id":"249746236008169473","github_username":"rauenzi","twitter_username":"ZackRauen"}],"version":"1.2.2","description":"Gives other plugins utility functions and the ability to emulate v2.","github":"https://github.com/rauenzi/BDPluginLibrary","github_raw":"https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js"},"changelog":[{"title":"Bugs Squashed","type":"fixed","items":["Fixed fatal error for showing update notice."]}],"main":"index.js"};
-
-/***/ }),
-
-/***/ "./plugins/0PluginLibrary/index.js":
-/*!*****************************************!*\
-  !*** ./plugins/0PluginLibrary/index.js ***!
-  \*****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ((BasePlugin, Library) => {
-    const {PluginUpdater, Patcher, Logger, Settings, Toasts, PluginUtilities, ReactComponents} = Library;
-    const PluginLibrary = class PluginLibrary extends BasePlugin {
-        get Library() {return Library;}
-        
-        load() {
-            this.start();
-            const exists = document.getElementById("ZLibraryCSS");
-            PluginUtilities.removeStyle("ZLibraryCSS");
-            PluginUtilities.addStyle("ZLibraryCSS", Settings.CSS + Toasts.CSS + PluginUpdater.CSS);
-            if (!exists) return; // This is first load, no need to reload dependent plugins
-            const prev = window.settingsCookie["fork-ps-2"];
-            window.settingsCookie["fork-ps-2"] = false;
-            const list = Object.keys(window.bdplugins).filter(k => window.bdplugins[k].plugin._config && k != "ZeresPluginLibrary");
-            for (let p = 0; p < list.length; p++) window.pluginModule.reloadPlugin(list[p]);
-            window.settingsCookie["fork-ps-2"] = prev;
-            ReactComponents.AutoPatcher.processAll();
-            ReactComponents.AutoPatcher.autoPatch();
-        }
-
-        static buildPlugin(config) {
-            const name = config.info.name;
-            const BoundAPI = {
-                Logger: {
-                    stacktrace: (message, error) => Logger.stacktrace(name, message, error),
-                    log: (...message) => Logger.log(name, ...message),
-                    error: (...message) => Logger.err(name, ...message),
-                    err: (...message) => Logger.err(name, ...message),
-                    warn: (...message) => Logger.warn(name, ...message),
-                    info: (...message) => Logger.info(name, ...message),
-                    debug: (...message) => Logger.debug(name, ...message)
-                },
-                Patcher: {
-                    getPatchesByCaller: () => {return Patcher.getPatchesByCaller(name);},
-                    unpatchAll: () => {return Patcher.unpatchAll(name);},
-                    before: (moduleToPatch, functionName, callback, options = {}) => {return Patcher.before(name, moduleToPatch, functionName, callback, options);},
-                    instead: (moduleToPatch, functionName, callback, options = {}) => {return Patcher.instead(name, moduleToPatch, functionName, callback, options);},
-                    after: (moduleToPatch, functionName, callback, options = {}) => {return Patcher.after(name, moduleToPatch, functionName, callback, options);}
-                }
-            };
-            const BoundLib = Object.assign({}, Library);
-            BoundLib.Logger = BoundAPI.Logger;
-            BoundLib.Patcher = BoundAPI.Patcher;
-            return [Library.Structs.Plugin(config), BoundLib];		
-        }
-    };
-
-    Object.assign(PluginLibrary, Library);
-    Library.buildPlugin = PluginLibrary.buildPlugin;
-    window.ZLibrary = Library;
-    window.ZLibraryPromise = new Promise(r => setImmediate(r));
-	window.ZeresPluginLibrary = PluginLibrary;
-    return PluginLibrary;
-});
+module.exports = {"info":{"name":"ZeresPluginLibrary","authors":[{"name":"Zerebos","discord_id":"249746236008169473","github_username":"rauenzi","twitter_username":"ZackRauen"}],"version":"1.2.7","description":"Gives other plugins utility functions and the ability to emulate v2.","github":"https://github.com/rauenzi/BDPluginLibrary","github_raw":"https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js"},"changelog":[{"title":"Bugs Squashed","type":"fixed","items":["Toasts toast once more.","Channel list classes grabbed from new internals.","Updated classes for dividers and account details.","Settings don't break everything now."]}],"main":"plugin.js"};
 
 /***/ }),
 
@@ -205,14 +140,16 @@ __webpack_require__.r(__webpack_exports__);
 const Library = {};
 Library.ContextMenu = ui__WEBPACK_IMPORTED_MODULE_1__["ContextMenu"];
 Library.Tooltip = ui__WEBPACK_IMPORTED_MODULE_1__["Tooltip"];
+Library.EmulatedTooltip = ui__WEBPACK_IMPORTED_MODULE_1__["EmulatedTooltip"];
 Library.Toasts = ui__WEBPACK_IMPORTED_MODULE_1__["Toasts"];
 Library.Settings = ui__WEBPACK_IMPORTED_MODULE_1__["Settings"];
 Library.Popouts = ui__WEBPACK_IMPORTED_MODULE_1__["Popouts"];
 Library.Modals = ui__WEBPACK_IMPORTED_MODULE_1__["Modals"];
 for (const mod in modules__WEBPACK_IMPORTED_MODULE_0__) Library[mod] = modules__WEBPACK_IMPORTED_MODULE_0__[mod];
 
-const config = __webpack_require__(/*! ../plugins/0PluginLibrary/config.json */ "./plugins/0PluginLibrary/config.json");
-const pluginModule = __webpack_require__("./plugins/0PluginLibrary sync recursive ^\\.\\/.*$")("./" + config.main).default;
+const config = __webpack_require__(/*! ./src/config.json */ "./src/config.json");
+const pluginModule = __webpack_require__(/*! ./src/plugin.js */ "./src/plugin.js");
+const pluginFunction = pluginModule.default ? pluginModule.default : pluginModule;
 
 const getBoundLibrary = () => {
 	const name = config.info.name;
@@ -241,9 +178,7 @@ const getBoundLibrary = () => {
 	return BoundLib;
 };
 
-if (!window.jQuery) window.jQuery = window.$ = document.querySelector;
-
-/* harmony default export */ __webpack_exports__["default"] = (pluginModule(Library.Structs.Plugin(config),  false ? undefined : Library));
+/* harmony default export */ __webpack_exports__["default"] = (pluginFunction(Library.Structs.Plugin(config),  false ? undefined : Library));
 
 /***/ }),
 
@@ -290,7 +225,7 @@ class ColorConverter {
 	 * @returns {array} - array containing the red, green, and blue values
 	 */
 	static getRGB(color) {
-		var result = /rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/.exec(color);
+		let result = /rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/.exec(color);
 		if (result) return [parseInt(result[1]), parseInt(result[2]), parseInt(result[3])];
 
 		result = /rgb\(\s*([0-9]+(?:\.[0-9]+)?)%\s*,\s*([0-9]+(?:\.[0-9]+)?)%\s*,\s*([0-9]+(?:\.[0-9]+)?)%\s*\)/.exec(color);
@@ -310,8 +245,8 @@ class ColorConverter {
 	 * @returns {string} - new color in rgb format
 	 */
 	static darkenColor(color, percent) {
-		var rgb = this.getRGB(color);
-		for (var i = 0; i < rgb.length; i++) rgb[i] = Math.round(Math.max(0, rgb[i] - rgb[i] * (percent / 100)));
+		const rgb = this.getRGB(color);
+		for (let i = 0; i < rgb.length; i++) rgb[i] = Math.round(Math.max(0, rgb[i] - rgb[i] * (percent / 100)));
 		return "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 	}
 
@@ -322,8 +257,8 @@ class ColorConverter {
 	 * @returns {string} - new color in rgb format
 	 */
 	static lightenColor(color, percent) {
-		var rgb = this.getRGB(color);
-		for (var i = 0; i < rgb.length; i++) rgb[i] = Math.round(Math.min(255, rgb[i] + rgb[i] * (percent / 100)));
+		const rgb = this.getRGB(color);
+		for (let i = 0; i < rgb.length; i++) rgb[i] = Math.round(Math.min(255, rgb[i] + rgb[i] * (percent / 100)));
 		return "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 	}
 
@@ -334,7 +269,7 @@ class ColorConverter {
 	 * @returns {string} - new color in rgb format
 	 */
 	static rgbToAlpha(color, alpha) {
-		var rgb = this.getRGB(color);		
+		const rgb = this.getRGB(color);		
 		return "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + alpha + ")";
 	}
 
@@ -433,7 +368,7 @@ class DiscordAPI {
      */
     static get currentGuild() {
         const guild = _discordmodules__WEBPACK_IMPORTED_MODULE_1__["default"].GuildStore.getGuild(_discordmodules__WEBPACK_IMPORTED_MODULE_1__["default"].SelectedGuildStore.getGuildId());
-        if (guild) return structs__WEBPACK_IMPORTED_MODULE_0__["Guild"].from(guild);
+        return guild ? structs__WEBPACK_IMPORTED_MODULE_0__["Guild"].from(guild) : null;
     }
 
     /**
@@ -441,7 +376,7 @@ class DiscordAPI {
      */
     static get currentChannel() {
         const channel = _discordmodules__WEBPACK_IMPORTED_MODULE_1__["default"].ChannelStore.getChannel(_discordmodules__WEBPACK_IMPORTED_MODULE_1__["default"].SelectedChannelStore.getChannelId());
-        if (channel) return structs__WEBPACK_IMPORTED_MODULE_0__["Channel"].from(channel);
+        return channel ? structs__WEBPACK_IMPORTED_MODULE_0__["Channel"].from(channel) : null;
     }
 
     /**
@@ -449,7 +384,7 @@ class DiscordAPI {
      */
     static get currentUser() {
         const user = _discordmodules__WEBPACK_IMPORTED_MODULE_1__["default"].UserStore.getCurrentUser();
-        if (user) return structs__WEBPACK_IMPORTED_MODULE_0__["User"].from(user);
+        return user ? structs__WEBPACK_IMPORTED_MODULE_0__["User"].from(user) : null;
     }
 
     /**
@@ -547,7 +482,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (_utilities__WEBPACK_IMPORTED_MODULE_0__["default"].memoizeObject({
 	get ContextMenu() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("itemToggle");},
 	get Scrollers() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("scrollerWrap", "scrollerThemed", "scrollerTrack");},
-	get AccountDetails() {return Object.assign({}, _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("nameTag"), _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("accountDetails"));},
+	get AccountDetails() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("container", "avatar", "hasBuildOverride");},
 	get Typing() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("typing", "text");},
 	get UserPopout() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("userPopout");},
 	get PopoutRoles() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("roleCircle");},
@@ -559,21 +494,23 @@ __webpack_require__.r(__webpack_exports__);
 	get Backdrop() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("backdrop");},
 	get Modals() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getModule(m => m.modal && m.inner && !m.header);},
 	get AuditLog() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("userHook");},
-	get ChannelList() {return Object.assign({}, _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("containerDefault"), _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("nameDefaultText"), _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("channels", "container"));},
+	get ChannelList() {return Object.assign({}, _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("containerDefault"), _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("name", "unread"), _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("sidebar", "hasNotice"));},
 	get MemberList() {return Object.assign({}, _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("member", "memberInner"), _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("members", "membersWrap"));},
 	get TitleWrap() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("titleWrapper");},
 	get Titlebar() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("titleBar");},
 	get Embeds() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("embed", "embedAuthor");},
 	get Layers() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("layers", "layer");},
+	get TooltipLayers() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("layerContainer", "layer");},
 	get Margins() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getModule(m => !m.title && m.marginBottom40 && m.marginTop40);},
-	get Dividers() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getModule(m => m.dividerDefault);},
+	get Dividers() {return Object.assign({}, _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("dividerDefault"), _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getModule(m => Object.keys(m).length == 1 && m.divider));},
 	get Changelog() {return Object.assign({}, _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("container", "added"), _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("content", "modal", "size"));},
-	get BasicInputs() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("inputDefault", "size16");},
+	get BasicInputs() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("inputDefault");},
 	get Messages() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("message", "containerCozy");},
 	get Guilds() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("guildsWrapper");},
 	get EmojiPicker() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("emojiPicker", "emojiItem");},
 	get Reactions() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("reaction", "reactionInner");},
-	get Checkbox() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("checkbox", "checkboxInner");}
+	get Checkbox() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("checkbox", "checkboxInner");},
+	get Tooltips() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("tooltip", "tooltipBlack");}
 }));
 
 
@@ -771,7 +708,7 @@ __webpack_require__.r(__webpack_exports__);
             if (m.displayName != "FluxContainer(t)") return false;
             try {
                 const temp = new m();
-                return temp && temp.state && temp.state.hasOwnProperty("isFocused");
+                return temp.state && temp.state.hasOwnProperty("isFocused");
             }
             catch (err) {return false;}
         });
@@ -782,10 +719,7 @@ __webpack_require__.r(__webpack_exports__);
     get PopoutOpener() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("openPopout");},
     get EmojiPicker() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByDisplayName("FluxContainer(EmojiPicker)");},
     get UserPopout() {
-        return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].find(m => {
-            try {return m.displayName == "FluxContainer(Component)" && !(new m());}
-            catch (e) {return e.toString().includes("user");}
-        });
+        return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByDisplayName("FluxContainer(ForwardRef(SubscribeGuildMembersContainer(UserPopout)))");
     },
 
     /* Context Menus */
@@ -800,8 +734,8 @@ __webpack_require__.r(__webpack_exports__);
     get Titles() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByProps("Tags", "default");},
 
     /* Settings */
-    get SettingsWrapper() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getModule(m => m.prototype && m.prototype.render && m.prototype.render.toString().includes("required:"));},
-    get SettingsNote() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getModule(m => m.Types && m.defaultProps);},
+    get SettingsWrapper() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByDisplayName("FormItem");},
+    get SettingsNote() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByDisplayName("FormText");},
     get SettingsDivider() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getModule(m => !m.defaultProps && m.prototype && m.prototype.render && m.prototype.render.toString().includes("default.divider"));},
 
     get ColorPicker() {return _webpackmodules__WEBPACK_IMPORTED_MODULE_1__["default"].getByPrototypes("renderCustomColorPopout");},
@@ -913,638 +847,660 @@ __webpack_require__.r(__webpack_exports__);
  
 class DOMTools {
 
-	static get Selector() {return structs__WEBPACK_IMPORTED_MODULE_1__["Selector"];}
-	static get ClassName() {return structs__WEBPACK_IMPORTED_MODULE_1__["ClassName"];}
-	static get DOMObserver() {return structs__WEBPACK_IMPORTED_MODULE_1__["DOMObserver"];}
+    static get Selector() {return structs__WEBPACK_IMPORTED_MODULE_1__["Selector"];}
+    static get ClassName() {return structs__WEBPACK_IMPORTED_MODULE_1__["ClassName"];}
+    static get DOMObserver() {return structs__WEBPACK_IMPORTED_MODULE_1__["DOMObserver"];}
 
-	/**	Default DOMObserver */
-	static get observer() {
+    /**	
+     * Default DOMObserver for global usage.
+     * 
+     * @see DOMObserver
+     */
+    static get observer() {
         return this._observer || (this._observer = new structs__WEBPACK_IMPORTED_MODULE_1__["DOMObserver"]());
     }
 
-	/**
-	 * This is my shit version of not having to use `$` from jQuery. Meaning
-	 * that you can pass a selector and it will automatically run {@link module:DOMTools.query}.
-	 * It also means that you can pass a string of html and it will perform and return `parseHTML`.
-	 * @see module:DOMTools.parseHTML
-	 * @see module:DOMTools.query
-	 * @param {string} selector - Selector to query or HTML to parse
-	 * @returns {(DocumentFragment|NodeList|HTMLElement)} - Either the result of `parseHTML` or `query`
-	 */
-	static Q(selector) {
-		const element = this.parseHTML(selector);
-		const isHTML = element instanceof NodeList ? Array.from(element).some(n => n.nodeType === 1) : element.nodeType === 1;
-		if (isHTML) return element;
-		return this.query(selector);
-	}
+    /**
+     * This is my shit version of not having to use `$` from jQuery. Meaning
+     * that you can pass a selector and it will automatically run {@link module:DOMTools.query}.
+     * It also means that you can pass a string of html and it will perform and return `parseHTML`.
+     * @see module:DOMTools.parseHTML
+     * @see module:DOMTools.query
+     * @param {string} selector - Selector to query or HTML to parse
+     * @returns {(DocumentFragment|NodeList|HTMLElement)} - Either the result of `parseHTML` or `query`
+     */
+    static Q(selector) {
+        const element = this.parseHTML(selector);
+        const isHTML = element instanceof NodeList ? Array.from(element).some(n => n.nodeType === 1) : element.nodeType === 1;
+        if (isHTML) return element;
+        return this.query(selector);
+    }
 
-	/**
-	 * Essentially a shorthand for `document.querySelector`. If the `baseElement` is not provided
-	 * `document` is used by default.
-	 * @param {string} selector - Selector to query
-	 * @param {Element} [baseElement] - Element to base the query from
-	 * @returns {(Element|null)} - The found element or null if not found
-	 */
-	static query(selector, baseElement) {
-		if (!baseElement) baseElement = document;
-		return baseElement.querySelector(selector);
-	}
+    /**
+     * Essentially a shorthand for `document.querySelector`. If the `baseElement` is not provided
+     * `document` is used by default.
+     * @param {string} selector - Selector to query
+     * @param {Element} [baseElement] - Element to base the query from
+     * @returns {(Element|null)} - The found element or null if not found
+     */
+    static query(selector, baseElement) {
+        if (!baseElement) baseElement = document;
+        return baseElement.querySelector(selector);
+    }
 
-	/**
-	 * Essentially a shorthand for `document.querySelectorAll`. If the `baseElement` is not provided
-	 * `document` is used by default.
-	 * @param {string} selector - Selector to query
-	 * @param {Element} [baseElement] - Element to base the query from
-	 * @returns {Array<Element>} - Array of all found elements
-	 */
-	static queryAll(selector, baseElement) {
-		if (!baseElement) baseElement = document;
-		return baseElement.querySelectorAll(selector);
-	}
+    /**
+     * Essentially a shorthand for `document.querySelectorAll`. If the `baseElement` is not provided
+     * `document` is used by default.
+     * @param {string} selector - Selector to query
+     * @param {Element} [baseElement] - Element to base the query from
+     * @returns {Array<Element>} - Array of all found elements
+     */
+    static queryAll(selector, baseElement) {
+        if (!baseElement) baseElement = document;
+        return baseElement.querySelectorAll(selector);
+    }
 
-	/**
-	 * Parses a string of HTML and returns the results. If the second parameter is true,
-	 * the parsed HTML will be returned as a document fragment {@see https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment}.
-	 * This is extremely useful if you have a list of elements at the top level, they can then be appended all at once to another node.
-	 * 
-	 * If the second parameter is false, then the return value will be the list of parsed
-	 * nodes and there were multiple top level nodes, otherwise the single node is returned.
-	 * @param {string} html - HTML to be parsed
-	 * @param {boolean} [fragment=false] - Whether or not the return should be the raw `DocumentFragment`
-	 * @returns {(DocumentFragment|NodeList|HTMLElement)} - The result of HTML parsing
-	 */
-	static parseHTML(html, fragment = false) {
-		const template = document.createElement("template");
-		template.innerHTML = html;
-		const node = template.content.cloneNode(true);
-		if (fragment) return node;
-		return node.childNodes.length > 1 ? node.childNodes : node.childNodes[0];
-	}
+    /**
+     * Parses a string of HTML and returns the results. If the second parameter is true,
+     * the parsed HTML will be returned as a document fragment {@see https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment}.
+     * This is extremely useful if you have a list of elements at the top level, they can then be appended all at once to another node.
+     * 
+     * If the second parameter is false, then the return value will be the list of parsed
+     * nodes and there were multiple top level nodes, otherwise the single node is returned.
+     * @param {string} html - HTML to be parsed
+     * @param {boolean} [fragment=false] - Whether or not the return should be the raw `DocumentFragment`
+     * @returns {(DocumentFragment|NodeList|HTMLElement)} - The result of HTML parsing
+     */
+    static parseHTML(html, fragment = false) {
+        const template = document.createElement("template");
+        template.innerHTML = html;
+        const node = template.content.cloneNode(true);
+        if (fragment) return node;
+        return node.childNodes.length > 1 ? node.childNodes : node.childNodes[0];
+    }
 
-	/** Alternate name for {@link module:DOMTools.parseHTML} */
-	static createElement(html, fragment = false) {return this.parseHTML(html, fragment);}
+    /** Alternate name for {@link module:DOMTools.parseHTML} */
+    static createElement(html, fragment = false) {return this.parseHTML(html, fragment);}
+    
+    /**
+     * Takes a string of html and escapes it using the brower's own escaping mechanism.
+     * @param {String} html - html to be escaped
+     */
+    static escapeHTML(html) {
+        const textNode = document.createTextNode("");
+        const spanElement = document.createElement("span");
+        spanElement.append(textNode);
+        textNode.nodeValue = html;
+        return spanElement.innerHTML;
+    }
 
-	/**
-	 * Adds a list of classes from the target element.
-	 * @param {Element} element - Element to edit classes of
-	 * @param {...string} classes - Names of classes to add
-	 * @returns {Element} - `element` to allow for chaining
-	 */
-	static addClass(element, ...classes) {
-		for (let c = 0; c < classes.length; c++) classes[c] = classes[c].toString().split(" ");
-		classes = classes.flatten().filter(c => c);
-		element.classList.add(...classes);
-		return element;
-	}
+    /**
+     * Adds a list of classes from the target element.
+     * @param {Element} element - Element to edit classes of
+     * @param {...string} classes - Names of classes to add
+     * @returns {Element} - `element` to allow for chaining
+     */
+    static addClass(element, ...classes) {
+        classes = classes.flat().filter(c => c);
+        for (let c = 0; c < classes.length; c++) classes[c] = classes[c].toString().split(" ");
+        classes = classes.flat().filter(c => c);
+        element.classList.add(...classes);
+        return element;
+    }
 
-	/**
-	 * Removes a list of classes from the target element.
-	 * @param {Element} element - Element to edit classes of
-	 * @param {...string} classes - Names of classes to remove
-	 * @returns {Element} - `element` to allow for chaining
-	 */
-	static removeClass(element, ...classes) {
-		for (let c = 0; c < classes.length; c++) classes[c] = classes[c].toString().split(" ");
-		classes = classes.flatten().filter(c => c);
-		element.classList.remove(...classes);
-		return element;
-	}
+    /**
+     * Removes a list of classes from the target element.
+     * @param {Element} element - Element to edit classes of
+     * @param {...string} classes - Names of classes to remove
+     * @returns {Element} - `element` to allow for chaining
+     */
+    static removeClass(element, ...classes) {
+        for (let c = 0; c < classes.length; c++) classes[c] = classes[c].toString().split(" ");
+        classes = classes.flat().filter(c => c);
+        element.classList.remove(...classes);
+        return element;
+    }
 
-	/**
-	 * When only one argument is present: Toggle class value;
-	 * i.e., if class exists then remove it and return false, if not, then add it and return true.
-	 * When a second argument is present:
-	 * If the second argument evaluates to true, add specified class value, and if it evaluates to false, remove it.
-	 * @param {Element} element - Element to edit classes of
-	 * @param {string} classname - Name of class to toggle
-	 * @param {boolean} [indicator] - Optional indicator for if the class should be toggled
-	 * @returns {Element} - `element` to allow for chaining
-	 */
-	static toggleClass(element, classname, indicator) {
-		classname = classname.toString().split(" ").filter(c => c);
-		if (typeof(indicator) !== "undefined") classname.forEach(c => element.classList.toggle(c, indicator));
-		else classname.forEach(c => element.classList.toggle(c));
-		return element;
-	}
+    /**
+     * When only one argument is present: Toggle class value;
+     * i.e., if class exists then remove it and return false, if not, then add it and return true.
+     * When a second argument is present:
+     * If the second argument evaluates to true, add specified class value, and if it evaluates to false, remove it.
+     * @param {Element} element - Element to edit classes of
+     * @param {string} classname - Name of class to toggle
+     * @param {boolean} [indicator] - Optional indicator for if the class should be toggled
+     * @returns {Element} - `element` to allow for chaining
+     */
+    static toggleClass(element, classname, indicator) {
+        classname = classname.toString().split(" ").filter(c => c);
+        if (typeof(indicator) !== "undefined") classname.forEach(c => element.classList.toggle(c, indicator));
+        else classname.forEach(c => element.classList.toggle(c));
+        return element;
+    }
 
-	/**
-	 * Checks if an element has a specific class
-	 * @param {Element} element - Element to edit classes of
-	 * @param {string} classname - Name of class to check
-	 * @returns {boolean} - `true` if the element has the class, `false` otherwise.
-	 */
-	static hasClass(element, classname) {
-		return classname.toString().split(" ").filter(c => c).every(c => element.classList.contains(c));
-	}
+    /**
+     * Checks if an element has a specific class
+     * @param {Element} element - Element to edit classes of
+     * @param {string} classname - Name of class to check
+     * @returns {boolean} - `true` if the element has the class, `false` otherwise.
+     */
+    static hasClass(element, classname) {
+        return classname.toString().split(" ").filter(c => c).every(c => element.classList.contains(c));
+    }
 
-	/**
-	 * Replaces one class with another
-	 * @param {Element} element - Element to edit classes of
-	 * @param {string} oldName - Name of class to replace
-	 * @param {string} newName - New name for the class
-	 * @returns {Element} - `element` to allow for chaining
-	 */
-	static replaceClass(element, oldName, newName) {
-		element.classList.replace(oldName, newName);
-		return element;
-	}
+    /**
+     * Replaces one class with another
+     * @param {Element} element - Element to edit classes of
+     * @param {string} oldName - Name of class to replace
+     * @param {string} newName - New name for the class
+     * @returns {Element} - `element` to allow for chaining
+     */
+    static replaceClass(element, oldName, newName) {
+        element.classList.replace(oldName, newName);
+        return element;
+    }
 
-	/**
-	 * Appends `thisNode` to `thatNode`
-	 * @param {Node} thisNode - Node to be appended to another node
-	 * @param {Node} thatNode - Node for `thisNode` to be appended to
-	 * @returns {Node} - `thisNode` to allow for chaining
-	 */
-	static appendTo(thisNode, thatNode) {
-		if (typeof(thatNode) == "string") thatNode = this.query(thatNode);
-		thatNode.append(thisNode);
-		return thisNode;
-	}
+    /**
+     * Appends `thisNode` to `thatNode`
+     * @param {Node} thisNode - Node to be appended to another node
+     * @param {Node} thatNode - Node for `thisNode` to be appended to
+     * @returns {Node} - `thisNode` to allow for chaining
+     */
+    static appendTo(thisNode, thatNode) {
+        if (typeof(thatNode) == "string") thatNode = this.query(thatNode);
+        if (!thatNode) return null;
+        thatNode.append(thisNode);
+        return thisNode;
+    }
 
-	/**
-	 * Insert after a specific element, similar to jQuery's `thisElement.insertAfter(otherElement)`.
-	 * @param {Node} thisNode - The node to insert
-	 * @param {Node} targetNode - Node to insert after in the tree
-	 * @returns {Node} - `thisNode` to allow for chaining
-	 */
-	static insertAfter(thisNode, targetNode) {
-		targetNode.parentNode.insertBefore(thisNode, targetNode.nextSibling);
-		return thisNode;
-	}
+    /**
+     * Prepends `thisNode` to `thatNode`
+     * @param {Node} thisNode - Node to be prepended to another node
+     * @param {Node} thatNode - Node for `thisNode` to be prepended to
+     * @returns {Node} - `thisNode` to allow for chaining
+     */
+    static prependTo(thisNode, thatNode) {
+        if (typeof(thatNode) == "string") thatNode = this.query(thatNode);
+        if (!thatNode) return null;
+        thatNode.prepend(thisNode);
+        return thisNode;
+    }
 
-	/**
-	 * Insert after a specific element, similar to jQuery's `thisElement.after(newElement)`.
-	 * @param {Node} thisNode - The node to insert
-	 * @param {Node} newNode - Node to insert after in the tree
-	 * @returns {Node} - `thisNode` to allow for chaining
-	 */
-	static after(thisNode, newNode) {
-		thisNode.parentNode.insertBefore(newNode, thisNode.nextSibling);
-		return thisNode;
-	}
+    /**
+     * Insert after a specific element, similar to jQuery's `thisElement.insertAfter(otherElement)`.
+     * @param {Node} thisNode - The node to insert
+     * @param {Node} targetNode - Node to insert after in the tree
+     * @returns {Node} - `thisNode` to allow for chaining
+     */
+    static insertAfter(thisNode, targetNode) {
+        targetNode.parentNode.insertBefore(thisNode, targetNode.nextSibling);
+        return thisNode;
+    }
 
-	/**
-	 * Gets the next sibling element that matches the selector.
-	 * @param {Element} element - Element to get the next sibling of
-	 * @param {string} [selector=""] - Optional selector
-	 * @returns {Element} - The sibling element
-	 */
-	static next(element, selector = "") {
-		return selector ? element.querySelector("+ " + selector) : element.nextElementSibling;
-	}
+    /**
+     * Insert after a specific element, similar to jQuery's `thisElement.after(newElement)`.
+     * @param {Node} thisNode - The node to insert
+     * @param {Node} newNode - Node to insert after in the tree
+     * @returns {Node} - `thisNode` to allow for chaining
+     */
+    static after(thisNode, newNode) {
+        thisNode.parentNode.insertBefore(newNode, thisNode.nextSibling);
+        return thisNode;
+    }
 
-	/**
-	 * Gets all subsequent siblings.
-	 * @param {Element} element - Element to get next siblings of
-	 * @returns {NodeList} - The list of siblings
-	 */
-	static nextAll(element) {
-		return element.querySelectorAll("~ *");
-	}
+    /**
+     * Gets the next sibling element that matches the selector.
+     * @param {Element} element - Element to get the next sibling of
+     * @param {string} [selector=""] - Optional selector
+     * @returns {Element} - The sibling element
+     */
+    static next(element, selector = "") {
+        return selector ? element.querySelector("+ " + selector) : element.nextElementSibling;
+    }
 
-	/**
-	 * Gets the subsequent siblings until an element matches the selector.
-	 * @param {Element} element - Element to get the following siblings of
-	 * @param {string} selector - Selector to stop at
-	 * @returns {Array<Element>} - The list of siblings
-	 */
-	static nextUntil(element, selector) {
-		const next = []; 
-		while (element.nextElementSibling && !element.nextElementSibling.matches(selector)) next.push(element = element.nextElementSibling);
-		return next;
-	}
+    /**
+     * Gets all subsequent siblings.
+     * @param {Element} element - Element to get next siblings of
+     * @returns {NodeList} - The list of siblings
+     */
+    static nextAll(element) {
+        return element.querySelectorAll("~ *");
+    }
 
-	/**
-	 * Gets the previous sibling element that matches the selector.
-	 * @param {Element} element - Element to get the previous sibling of
-	 * @param {string} [selector=""] - Optional selector
-	 * @returns {Element} - The sibling element
-	 */
-	static previous(element, selector = "") {
-		const previous = element.previousElementSibling;
-		if (selector) return previous && previous.matches(selector) ? previous : null;
-		return previous;
-	}
+    /**
+     * Gets the subsequent siblings until an element matches the selector.
+     * @param {Element} element - Element to get the following siblings of
+     * @param {string} selector - Selector to stop at
+     * @returns {Array<Element>} - The list of siblings
+     */
+    static nextUntil(element, selector) {
+        const next = []; 
+        while (element.nextElementSibling && !element.nextElementSibling.matches(selector)) next.push(element = element.nextElementSibling);
+        return next;
+    }
 
-	/**
-	 * Gets all preceeding siblings.
-	 * @param {Element} element - Element to get preceeding siblings of
-	 * @returns {NodeList} - The list of siblings
-	 */
-	static previousAll(element) {
-		const previous = [];
-		while (element.previousElementSibling) previous.push(element = element.previousElementSibling);
-		return previous;
-	}
+    /**
+     * Gets the previous sibling element that matches the selector.
+     * @param {Element} element - Element to get the previous sibling of
+     * @param {string} [selector=""] - Optional selector
+     * @returns {Element} - The sibling element
+     */
+    static previous(element, selector = "") {
+        const previous = element.previousElementSibling;
+        if (selector) return previous && previous.matches(selector) ? previous : null;
+        return previous;
+    }
 
-	/**
-	 * Gets the preceeding siblings until an element matches the selector.
-	 * @param {Element} element - Element to get the preceeding siblings of
-	 * @param {string} selector - Selector to stop at
-	 * @returns {Array<Element>} - The list of siblings
-	 */
-	static previousUntil(element, selector) {
-		var previous = []; 
-		while (element.previousElementSibling && !element.previousElementSibling.matches(selector)) previous.push(element = element.previousElementSibling);
-		return previous;
-	}
+    /**
+     * Gets all preceeding siblings.
+     * @param {Element} element - Element to get preceeding siblings of
+     * @returns {NodeList} - The list of siblings
+     */
+    static previousAll(element) {
+        const previous = [];
+        while (element.previousElementSibling) previous.push(element = element.previousElementSibling);
+        return previous;
+    }
 
-	/**
-	 * Find which index in children a certain node is. Similar to jQuery's `$.index()`
-	 * @param {HTMLElement} node - The node to find its index in parent
-	 * @returns {number} Index of the node
-	 */
-	static indexInParent(node) {
-		var children = node.parentNode.childNodes;
-		var num = 0;
-		for (var i = 0; i < children.length; i++) {
-			if (children[i] == node) return num;
-			if (children[i].nodeType == 1) num++;
-		}
-		return -1;
-	}
+    /**
+     * Gets the preceeding siblings until an element matches the selector.
+     * @param {Element} element - Element to get the preceeding siblings of
+     * @param {string} selector - Selector to stop at
+     * @returns {Array<Element>} - The list of siblings
+     */
+    static previousUntil(element, selector) {
+        const previous = []; 
+        while (element.previousElementSibling && !element.previousElementSibling.matches(selector)) previous.push(element = element.previousElementSibling);
+        return previous;
+    }
 
-	/** Shorthand for {@link module:DOMTools.indexInParent} */
-	static index(node) {return this.indexInParent(node);}
+    /**
+     * Find which index in children a certain node is. Similar to jQuery's `$.index()`
+     * @param {HTMLElement} node - The node to find its index in parent
+     * @returns {number} Index of the node
+     */
+    static indexInParent(node) {
+        const children = node.parentNode.childNodes;
+        let num = 0;
+        for (let i = 0; i < children.length; i++) {
+            if (children[i] == node) return num;
+            if (children[i].nodeType == 1) num++;
+        }
+        return -1;
+    }
 
-	/**
-	 * Gets the parent of the element if it matches the selector,
-	 * otherwise returns null.
-	 * @param {Element} element - Element to get parent of
-	 * @param {string} [selector=""] - Selector to match parent
-	 * @returns {(Element|null)} - The sibling element or null
-	 */
-	static parent(element, selector = "") {
-		return !selector || element.parentElement.matches(selector) ? element.parentElement : null;
-	}
+    /** Shorthand for {@link module:DOMTools.indexInParent} */
+    static index(node) {return this.indexInParent(node);}
 
-	/**
-	 * Gets all children of Element that match the selector if provided.
-	 * @param {Element} element - Element to get all children of
-	 * @param {string} selector - Selector to match the children to
-	 * @returns {Array<Element>} - The list of children
-	 */
-	static findChild(element, selector) {
-		return element.querySelector(":scope > " + selector);
-	}
+    /**
+     * Gets the parent of the element if it matches the selector,
+     * otherwise returns null.
+     * @param {Element} element - Element to get parent of
+     * @param {string} [selector=""] - Selector to match parent
+     * @returns {(Element|null)} - The sibling element or null
+     */
+    static parent(element, selector = "") {
+        return !selector || element.parentElement.matches(selector) ? element.parentElement : null;
+    }
 
-	/**
-	 * Gets all children of Element that match the selector if provided.
-	 * @param {Element} element - Element to get all children of
-	 * @param {string} selector - Selector to match the children to
-	 * @returns {Array<Element>} - The list of children
-	 */
-	static findChildren(element, selector) {
-		return element.querySelectorAll(":scope > " + selector);
-	}
+    /**
+     * Gets all children of Element that match the selector if provided.
+     * @param {Element} element - Element to get all children of
+     * @param {string} selector - Selector to match the children to
+     * @returns {Array<Element>} - The list of children
+     */
+    static findChild(element, selector) {
+        return element.querySelector(":scope > " + selector);
+    }
 
-	/**
-	 * Gets all ancestors of Element that match the selector if provided.
-	 * @param {Element} element - Element to get all parents of
-	 * @param {string} [selector=""] - Selector to match the parents to
-	 * @returns {Array<Element>} - The list of parents
-	 */
-	static parents(element, selector = "") {
-		const parents = [];
-		if (selector) while (element.parentElement && element.parentElement.closest(selector)) parents.push(element = element.parentElement.closest(selector));
-		else while (element.parentElement) parents.push(element = element.parentElement);
-		return parents;
-	}
+    /**
+     * Gets all children of Element that match the selector if provided.
+     * @param {Element} element - Element to get all children of
+     * @param {string} selector - Selector to match the children to
+     * @returns {Array<Element>} - The list of children
+     */
+    static findChildren(element, selector) {
+        return element.querySelectorAll(":scope > " + selector);
+    }
 
-	/**
-	 * Gets the ancestors until an element matches the selector.
-	 * @param {Element} element - Element to get the ancestors of
-	 * @param {string} selector - Selector to stop at
-	 * @returns {Array<Element>} - The list of parents
-	 */
-	static parentsUntil(element, selector) {
-		const parents = [];
-		while (element.parentElement && !element.parentElement.matches(selector)) parents.push(element = element.parentElement);
-		return parents;
-	}
+    /**
+     * Gets all ancestors of Element that match the selector if provided.
+     * @param {Element} element - Element to get all parents of
+     * @param {string} [selector=""] - Selector to match the parents to
+     * @returns {Array<Element>} - The list of parents
+     */
+    static parents(element, selector = "") {
+        const parents = [];
+        if (selector) while (element.parentElement && element.parentElement.closest(selector)) parents.push(element = element.parentElement.closest(selector));
+        else while (element.parentElement) parents.push(element = element.parentElement);
+        return parents;
+    }
 
-	/**
-	 * Gets all siblings of the element that match the selector.
-	 * @param {Element} element - Element to get all siblings of
-	 * @param {string} [selector="*"] - Selector to match the siblings to
-	 * @returns {Array<Element>} - The list of siblings
-	 */
-	static siblings(element, selector = "*") {
-		return Array.from(element.parentElement.children).filter(e => e != element && e.matches(selector));
-	}
+    /**
+     * Gets the ancestors until an element matches the selector.
+     * @param {Element} element - Element to get the ancestors of
+     * @param {string} selector - Selector to stop at
+     * @returns {Array<Element>} - The list of parents
+     */
+    static parentsUntil(element, selector) {
+        const parents = [];
+        while (element.parentElement && !element.parentElement.matches(selector)) parents.push(element = element.parentElement);
+        return parents;
+    }
 
-	/**
-	 * Sets or gets css styles for a specific element. If `value` is provided
-	 * then it sets the style and returns the element to allow for chaining,
-	 * otherwise returns the style.  
-	 * @param {Element} element - Element to set the CSS of
-	 * @param {string} attribute - Attribute to get or set
-	 * @param {string} [value] - Value to set for attribute
-	 * @returns {Element|string} - When setting a value, element is returned for chaining, otherwise the value is returned.
-	 */
-	static css(element, attribute, value) {
-		if (typeof(value) == "undefined") return global.getComputedStyle(element)[attribute];
-		element.style[attribute] = value;
-		return element;
-	}
+    /**
+     * Gets all siblings of the element that match the selector.
+     * @param {Element} element - Element to get all siblings of
+     * @param {string} [selector="*"] - Selector to match the siblings to
+     * @returns {Array<Element>} - The list of siblings
+     */
+    static siblings(element, selector = "*") {
+        return Array.from(element.parentElement.children).filter(e => e != element && e.matches(selector));
+    }
 
-	/**
-	 * Sets or gets the width for a specific element. If `value` is provided
-	 * then it sets the width and returns the element to allow for chaining,
-	 * otherwise returns the width.  
-	 * @param {Element} element - Element to set the CSS of
-	 * @param {string} [value] - Width to set
-	 * @returns {Element|string} - When setting a value, element is returned for chaining, otherwise the value is returned.
-	 */
-	static width(element, value) {
-		if (typeof(value) == "undefined") return parseInt(getComputedStyle(element).width);
-		element.style.width = value;
-		return element;
-	}
+    /**
+     * Sets or gets css styles for a specific element. If `value` is provided
+     * then it sets the style and returns the element to allow for chaining,
+     * otherwise returns the style.  
+     * @param {Element} element - Element to set the CSS of
+     * @param {string} attribute - Attribute to get or set
+     * @param {string} [value] - Value to set for attribute
+     * @returns {Element|string} - When setting a value, element is returned for chaining, otherwise the value is returned.
+     */
+    static css(element, attribute, value) {
+        if (typeof(value) == "undefined") return global.getComputedStyle(element)[attribute];
+        element.style[attribute] = value;
+        return element;
+    }
 
-	/**
-	 * Sets or gets the height for a specific element. If `value` is provided
-	 * then it sets the height and returns the element to allow for chaining,
-	 * otherwise returns the height.  
-	 * @param {Element} element - Element to set the CSS of
-	 * @param {string} [value] - Height to set
-	 * @returns {Element|string} - When setting a value, element is returned for chaining, otherwise the value is returned.
-	 */
-	static height(element, value) {
-		if (typeof(value) == "undefined") return parseInt(getComputedStyle(element).height);
-		element.style.height = value;
-		return element;
-	}
+    /**
+     * Sets or gets the width for a specific element. If `value` is provided
+     * then it sets the width and returns the element to allow for chaining,
+     * otherwise returns the width.  
+     * @param {Element} element - Element to set the CSS of
+     * @param {string} [value] - Width to set
+     * @returns {Element|string} - When setting a value, element is returned for chaining, otherwise the value is returned.
+     */
+    static width(element, value) {
+        if (typeof(value) == "undefined") return parseInt(getComputedStyle(element).width);
+        element.style.width = value;
+        return element;
+    }
 
-	/**
-	 * Returns the innerWidth of the element.
-	 * @param {Element} element - Element to retrieve inner width of
-	 * @return {number} - The inner width of the element.
-	 */
-	static innerWidth(element) {
-		return element.clientWidth;
-	}
+    /**
+     * Sets or gets the height for a specific element. If `value` is provided
+     * then it sets the height and returns the element to allow for chaining,
+     * otherwise returns the height.  
+     * @param {Element} element - Element to set the CSS of
+     * @param {string} [value] - Height to set
+     * @returns {Element|string} - When setting a value, element is returned for chaining, otherwise the value is returned.
+     */
+    static height(element, value) {
+        if (typeof(value) == "undefined") return parseInt(getComputedStyle(element).height);
+        element.style.height = value;
+        return element;
+    }
 
-	/**
-	 * Returns the innerHeight of the element.
-	 * @param {Element} element - Element to retrieve inner height of
-	 * @return {number} - The inner height of the element.
-	 */
-	static innerHeight(element) {
-		return element.clientHeight;
-	}
+    /**
+     * Sets the inner text of an element if given a value, otherwise returns it.
+     * @param {Element} element - Element to set the text of
+     * @param {string} [text] - Content to set
+     * @returns {string} - Either the string set by this call or the current text content of the node.
+     */
+    static text(element, text) {
+        if (typeof(text) == "undefined") return element.textContent;
+        return element.textContent = text;
+    }
 
-	/**
-	 * Returns the outerWidth of the element.
-	 * @param {Element} element - Element to retrieve outer width of
-	 * @return {number} - The outer width of the element.
-	 */
-	static outerWidth(element) {
-		return element.offsetWidth;
-	}
+    /**
+     * Returns the innerWidth of the element.
+     * @param {Element} element - Element to retrieve inner width of
+     * @return {number} - The inner width of the element.
+     */
+    static innerWidth(element) {
+        return element.clientWidth;
+    }
 
-	/**
-	 * Returns the outerHeight of the element.
-	 * @param {Element} element - Element to retrieve outer height of
-	 * @return {number} - The outer height of the element.
-	 */
-	static outerHeight(element) {
-		return element.offsetHeight;
-	}
+    /**
+     * Returns the innerHeight of the element.
+     * @param {Element} element - Element to retrieve inner height of
+     * @return {number} - The inner height of the element.
+     */
+    static innerHeight(element) {
+        return element.clientHeight;
+    }
 
-	/**
-	 * Gets the offset of the element in the page.
-	 * @param {Element} element - Element to get offset of
-	 * @return {Offset} - The offset of the element
-	 */
-	static offset(element) {
-		return element.getBoundingClientRect();
-	}
+    /**
+     * Returns the outerWidth of the element.
+     * @param {Element} element - Element to retrieve outer width of
+     * @return {number} - The outer width of the element.
+     */
+    static outerWidth(element) {
+        return element.offsetWidth;
+    }
 
-	/**
-	 * Sets the inner text of an element.
-	 * @param {Element} element - Element to set the text of
-	 * @param {string} text - Content to set
-	 */
-	static text(element, text) {
-		return element.textContent = text;
-	}
+    /**
+     * Returns the outerHeight of the element.
+     * @param {Element} element - Element to retrieve outer height of
+     * @return {number} - The outer height of the element.
+     */
+    static outerHeight(element) {
+        return element.offsetHeight;
+    }
 
-	static get listeners() { return this._listeners || (this._listeners = {}); }
+    /**
+     * Gets the offset of the element in the page.
+     * @param {Element} element - Element to get offset of
+     * @return {Offset} - The offset of the element
+     */
+    static offset(element) {
+        return element.getBoundingClientRect();
+    }
 
-	/**
-	 * This is similar to jQuery's `on` function and can *hopefully* be used in the same way.
-	 * 
-	 * Rather than attempt to explain, I'll show some example usages.
-	 * 
-	 * The following will add a click listener (in the `myPlugin` namespace) to `element`.
-	 * `DOMTools.on(element, "click.myPlugin", () => {console.log("clicked!");});`
-	 * 
-	 * The following will add a click listener (in the `myPlugin` namespace) to `element` that only fires when the target is a `.block` element.
-	 * `DOMTools.on(element, "click.myPlugin", ".block", () => {console.log("clicked!");});`
-	 * 
-	 * The following will add a click listener (without namespace) to `element`.
-	 * `DOMTools.on(element, "click", () => {console.log("clicked!");});`
-	 * 
-	 * The following will add a click listener (without namespace) to `element` that only fires once.
-	 * `const cancel = DOMTools.on(element, "click", () => {console.log("fired!"); cancel();});`
-	 * 
-	 * @param {Element} element - Element to add listener to
-	 * @param {string} event - Event to listen to with option namespace (e.g. "event.namespace")
-	 * @param {(string|callable)} delegate - Selector to run on element to listen to
-	 * @param {callable} [callback] - Function to fire on event
-	 * @returns {module:DOMTools~CancelListener} - A function that will undo the listener
-	 */
-	static on(element, event, delegate, callback) {
-		const [type, namespace] = event.split(".");
-		const hasDelegate = delegate && callback;
-		if (!callback) callback = delegate;
-		const eventFunc = !hasDelegate ? callback : function(event) {
-			if (event.target.matches(delegate)) {
-				callback(event);
-			}
-		};
+    static get listeners() { return this._listeners || (this._listeners = {}); }
 
-		element.addEventListener(type, eventFunc);
-		const cancel = () => {
-			element.removeEventListener(type, eventFunc);
-		};
-		if (namespace) {
-			if (!this.listeners[namespace]) this.listeners[namespace] = [];
-			const newCancel = () => {
-				cancel();
-				this.listeners[namespace].splice(this.listeners[namespace].findIndex(l => l.event == type && l.element == element), 1);
-			};
-			this.listeners[namespace].push({
-				event: type,
-				element: element,
-				cancel: newCancel
-			});
-			return newCancel;
-		}
-		return cancel;
-	}
+    /**
+     * This is similar to jQuery's `on` function and can *hopefully* be used in the same way.
+     * 
+     * Rather than attempt to explain, I'll show some example usages.
+     * 
+     * The following will add a click listener (in the `myPlugin` namespace) to `element`.
+     * `DOMTools.on(element, "click.myPlugin", () => {console.log("clicked!");});`
+     * 
+     * The following will add a click listener (in the `myPlugin` namespace) to `element` that only fires when the target is a `.block` element.
+     * `DOMTools.on(element, "click.myPlugin", ".block", () => {console.log("clicked!");});`
+     * 
+     * The following will add a click listener (without namespace) to `element`.
+     * `DOMTools.on(element, "click", () => {console.log("clicked!");});`
+     * 
+     * The following will add a click listener (without namespace) to `element` that only fires once.
+     * `const cancel = DOMTools.on(element, "click", () => {console.log("fired!"); cancel();});`
+     * 
+     * @param {Element} element - Element to add listener to
+     * @param {string} event - Event to listen to with option namespace (e.g. "event.namespace")
+     * @param {(string|callable)} delegate - Selector to run on element to listen to
+     * @param {callable} [callback] - Function to fire on event
+     * @returns {module:DOMTools~CancelListener} - A function that will undo the listener
+     */
+    static on(element, event, delegate, callback) {
+        const [type, namespace] = event.split(".");
+        const hasDelegate = delegate && callback;
+        if (!callback) callback = delegate;
+        const eventFunc = !hasDelegate ? callback : function(event) {
+            if (event.target.matches(delegate)) {
+                callback(event);
+            }
+        };
 
-	/**
-	 * Functionality for this method matches {@link module:DOMTools.on} but automatically cancels itself
-	 * and removes the listener upon the first firing of the desired event.
-	 * 
-	 * @param {Element} element - Element to add listener to
-	 * @param {string} event - Event to listen to with option namespace (e.g. "event.namespace")
-	 * @param {(string|callable)} delegate - Selector to run on element to listen to
-	 * @param {callable} [callback] - Function to fire on event
-	 * @returns {module:DOMTools~CancelListener} - A function that will undo the listener
-	 */
-	static once(element, event, delegate, callback) {
-		const [type, namespace] = event.split(".");
-		const hasDelegate = delegate && callback;
-		if (!callback) callback = delegate;
-		const eventFunc = !hasDelegate ? function(event) {
-			callback(event);
-			element.removeEventListener(type, eventFunc);
-		} : function(event) {
-			if (!event.target.matches(delegate)) return;
-			callback(event);
-			element.removeEventListener(type, eventFunc);
-		};
+        element.addEventListener(type, eventFunc);
+        const cancel = () => {
+            element.removeEventListener(type, eventFunc);
+        };
+        if (namespace) {
+            if (!this.listeners[namespace]) this.listeners[namespace] = [];
+            const newCancel = () => {
+                cancel();
+                this.listeners[namespace].splice(this.listeners[namespace].findIndex(l => l.event == type && l.element == element), 1);
+            };
+            this.listeners[namespace].push({
+                event: type,
+                element: element,
+                cancel: newCancel
+            });
+            return newCancel;
+        }
+        return cancel;
+    }
 
-		element.addEventListener(type, eventFunc);
-		const cancel = () => {
-			element.removeEventListener(type, eventFunc);
-		};
-		if (namespace) {
-			if (!this.listeners[namespace]) this.listeners[namespace] = [];
-			const newCancel = () => {
-				cancel();
-				this.listeners[namespace].splice(this.listeners[namespace].findIndex(l => l.event == type && l.element == element), 1);
-			};
-			this.listeners[namespace].push({
-				event: type,
-				element: element,
-				cancel: newCancel
-			});
-			return newCancel;
-		}
-		return cancel;
-	}
+    /**
+     * Functionality for this method matches {@link module:DOMTools.on} but automatically cancels itself
+     * and removes the listener upon the first firing of the desired event.
+     * 
+     * @param {Element} element - Element to add listener to
+     * @param {string} event - Event to listen to with option namespace (e.g. "event.namespace")
+     * @param {(string|callable)} delegate - Selector to run on element to listen to
+     * @param {callable} [callback] - Function to fire on event
+     * @returns {module:DOMTools~CancelListener} - A function that will undo the listener
+     */
+    static once(element, event, delegate, callback) {
+        const [type, namespace] = event.split(".");
+        const hasDelegate = delegate && callback;
+        if (!callback) callback = delegate;
+        const eventFunc = !hasDelegate ? function(event) {
+            callback(event);
+            element.removeEventListener(type, eventFunc);
+        } : function(event) {
+            if (!event.target.matches(delegate)) return;
+            callback(event);
+            element.removeEventListener(type, eventFunc);
+        };
 
-	static __offAll(event, element) {
-		const [type, namespace] = event.split(".");
-		let matchFilter = listener => listener.event == type, defaultFilter = _ => _;
-		if (element) matchFilter = l => l.event == type && l.element == element, defaultFilter = l => l.element == element;
-		const listeners = this.listeners[namespace] || [];
-		const list = type ? listeners.filter(matchFilter) : listeners.filter(defaultFilter);
-		for (let c = 0; c < list.length; c++) list[c].cancel();
-	}
-	
-	/**
-	 * This is similar to jQuery's `off` function and can *hopefully* be used in the same way.
-	 * 
-	 * Rather than attempt to explain, I'll show some example usages.
-	 * 
-	 * The following will remove a click listener called `onClick` (in the `myPlugin` namespace) from `element`.
-	 * `DOMTools.off(element, "click.myPlugin", onClick);`
-	 * 
-	 * The following will remove a click listener called `onClick` (in the `myPlugin` namespace) from `element` that only fired when the target is a `.block` element.
-	 * `DOMTools.off(element, "click.myPlugin", ".block", onClick);`
-	 * 
-	 * The following will remove a click listener (without namespace) from `element`.
-	 * `DOMTools.off(element, "click", onClick);`
-	 * 
-	 * The following will remove all listeners in namespace `myPlugin` from `element`.
-	 * `DOMTools.off(element, ".myPlugin");`
-	 * 
-	 * The following will remove all click listeners in namespace `myPlugin` from *all elements*.
-	 * `DOMTools.off("click.myPlugin");`
-	 * 
-	 * The following will remove all listeners in namespace `myPlugin` from *all elements*.
-	 * `DOMTools.off(".myPlugin");`
-	 * 
-	 * @param {(Element|string)} element - Element to remove listener from
-	 * @param {string} [event] - Event to listen to with option namespace (e.g. "event.namespace")
-	 * @param {(string|callable)} [delegate] - Selector to run on element to listen to
-	 * @param {callable} [callback] - Function to fire on event
-	 * @returns {Element} - The original element to allow for chaining
-	 */
-	static off(element, event, delegate, callback) {
-		if (typeof(element) == "string") return this.__offAll(element);
-		const [type, namespace] = event.split(".");
-		if (namespace) return this.__offAll(event, element);
+        element.addEventListener(type, eventFunc);
+        const cancel = () => {
+            element.removeEventListener(type, eventFunc);
+        };
+        if (namespace) {
+            if (!this.listeners[namespace]) this.listeners[namespace] = [];
+            const newCancel = () => {
+                cancel();
+                this.listeners[namespace].splice(this.listeners[namespace].findIndex(l => l.event == type && l.element == element), 1);
+            };
+            this.listeners[namespace].push({
+                event: type,
+                element: element,
+                cancel: newCancel
+            });
+            return newCancel;
+        }
+        return cancel;
+    }
 
-		const hasDelegate = delegate && callback;
-		if (!callback) callback = delegate;
-		const eventFunc = !hasDelegate ? callback : function(event) {
-			if (event.target.matches(delegate)) {
-				callback(event);
-			}
-		};
+    static __offAll(event, element) {
+        const [type, namespace] = event.split(".");
+        let matchFilter = listener => listener.event == type, defaultFilter = _ => _;
+        if (element) matchFilter = l => l.event == type && l.element == element, defaultFilter = l => l.element == element;
+        const listeners = this.listeners[namespace] || [];
+        const list = type ? listeners.filter(matchFilter) : listeners.filter(defaultFilter);
+        for (let c = 0; c < list.length; c++) list[c].cancel();
+    }
+    
+    /**
+     * This is similar to jQuery's `off` function and can *hopefully* be used in the same way.
+     * 
+     * Rather than attempt to explain, I'll show some example usages.
+     * 
+     * The following will remove a click listener called `onClick` (in the `myPlugin` namespace) from `element`.
+     * `DOMTools.off(element, "click.myPlugin", onClick);`
+     * 
+     * The following will remove a click listener called `onClick` (in the `myPlugin` namespace) from `element` that only fired when the target is a `.block` element.
+     * `DOMTools.off(element, "click.myPlugin", ".block", onClick);`
+     * 
+     * The following will remove a click listener (without namespace) from `element`.
+     * `DOMTools.off(element, "click", onClick);`
+     * 
+     * The following will remove all listeners in namespace `myPlugin` from `element`.
+     * `DOMTools.off(element, ".myPlugin");`
+     * 
+     * The following will remove all click listeners in namespace `myPlugin` from *all elements*.
+     * `DOMTools.off("click.myPlugin");`
+     * 
+     * The following will remove all listeners in namespace `myPlugin` from *all elements*.
+     * `DOMTools.off(".myPlugin");`
+     * 
+     * @param {(Element|string)} element - Element to remove listener from
+     * @param {string} [event] - Event to listen to with option namespace (e.g. "event.namespace")
+     * @param {(string|callable)} [delegate] - Selector to run on element to listen to
+     * @param {callable} [callback] - Function to fire on event
+     * @returns {Element} - The original element to allow for chaining
+     */
+    static off(element, event, delegate, callback) {
+        if (typeof(element) == "string") return this.__offAll(element);
+        const [type, namespace] = event.split(".");
+        if (namespace) return this.__offAll(event, element);
 
-		element.removeEventListener(type, eventFunc);
-		return element;
-	}
+        const hasDelegate = delegate && callback;
+        if (!callback) callback = delegate;
+        const eventFunc = !hasDelegate ? callback : function(event) {
+            if (event.target.matches(delegate)) {
+                callback(event);
+            }
+        };
 
-	/**
-	 * Adds a listener for when the node is added to the document body.
-	 * @param {HTMLElement} node - node to wait for
-	 * @param {callable} callback - function to be performed on event
-	 */
-	static onAdded(node, callback) {
-		const observer = new MutationObserver((mutations) => {
-			for (let m = 0; m < mutations.length; m++) {
-				const mutation = mutations[m];
-				const nodes = Array.from(mutation.addedNodes);
-				const directMatch = nodes.indexOf(node) > -1;
-				const parentMatch = nodes.some(parent => parent.contains(node));
-				if (directMatch || parentMatch) {
-					observer.disconnect();
-					callback();
-				}
-			}
-		});
+        element.removeEventListener(type, eventFunc);
+        return element;
+    }
 
-		observer.observe(document.body, {subtree: true, childList: true});
-	}
+    /**
+     * Adds a listener for when the node is added/removed from the document body.
+     * The listener is automatically removed upon firing.
+     * @param {HTMLElement} node - node to wait for
+     * @param {callable} callback - function to be performed on event
+     * @param {boolean} onMount - determines if it should fire on Mount or on Unmount
+     */
+    static onMountChange(node, callback, onMount = true) {
+        const wrappedCallback = () => {
+            this.observer.unsubscribe(wrappedCallback);
+            callback();
+        };
+        this.observer.subscribe(wrappedCallback, mutation => {
+            const nodes = Array.from(onMount ? mutation.addedNodes : mutation.removedNodes);
+            const directMatch = nodes.indexOf(node) > -1;
+            const parentMatch = nodes.some(parent => parent.contains(node));
+            return directMatch || parentMatch;
+        });
+        return node;
+    }
 
-	/**
-	 * Adds a listener for when the node is removed from the document body.
-	 * @param {HTMLElement} node - node to wait for
-	 * @param {callable} callback - function to be performed on event
-	 */
-	static onRemoved(node, callback) {
-		const observer = new MutationObserver((mutations) => {
-			for (let m = 0; m < mutations.length; m++) {
-				const mutation = mutations[m];
-				const nodes = Array.from(mutation.removedNodes);
-				const directMatch = nodes.indexOf(node) > -1;
-				const parentMatch = nodes.some(parent => parent.contains(node));
-				if (directMatch || parentMatch) {
-					observer.disconnect();
-					callback();
-				}
-			}
-		});
+    /** Shorthand for {@link module:DOMTools.onMountChange} with third parameter `true` */
+    static onMount(node, callback) { return this.onMountChange(node, callback); }
 
-		observer.observe(document.body, {subtree: true, childList: true});
-	}
+    /** Shorthand for {@link module:DOMTools.onMountChange} with third parameter `false` */
+    static onUnmount(node, callback) { return this.onMountChange(node, callback, false); }
 
-	/**
-	 * Helper function which combines multiple elements into one parent element
-	 * @param {Array<HTMLElement>} elements - array of elements to put into a single parent
-	 */
-	static wrap(elements) {
-		const domWrapper = this.parseHTML(`<div class="dom-wrapper"></div>`);
-		for (let e = 0; e < elements.length; e++) domWrapper.appendChild(elements[e]);
-		return domWrapper;
-	}
+    /** Alias for {@link module:DOMTools.onMount} */
+    static onAdded(node, callback) { return this.onMount(node, callback); }
 
-	/**
-	 * Resolves the node to an HTMLElement. This is mainly used by library modules.
-	 * @param {(jQuery|Element)} node - node to resolve
-	 */
-	static resolveElement(node) {
-		if (!(node instanceof jQuery) && !(node instanceof Element)) return undefined;
-		return node instanceof jQuery ? node[0] : node;
-	}
+    /** Alias for {@link module:DOMTools.onUnmount} */
+    static onRemoved(node, callback) { return this.onUnmount(node, callback, false); }
+
+    /**
+     * Helper function which combines multiple elements into one parent element
+     * @param {Array<HTMLElement>} elements - array of elements to put into a single parent
+     */
+    static wrap(elements) {
+        const domWrapper = this.parseHTML(`<div class="dom-wrapper"></div>`);
+        for (let e = 0; e < elements.length; e++) domWrapper.appendChild(elements[e]);
+        return domWrapper;
+    }
+
+    /**
+     * Resolves the node to an HTMLElement. This is mainly used by library modules.
+     * @param {(jQuery|Element)} node - node to resolve
+     */
+    static resolveElement(node) {
+        if (!(node instanceof jQuery) && !(node instanceof Element)) return undefined;
+        return node instanceof jQuery ? node[0] : node;
+    }
 }
 
 _utilities__WEBPACK_IMPORTED_MODULE_0__["default"].addToPrototype(HTMLElement, "addClass", function(...classes) {return DOMTools.addClass(this, ...classes);});
@@ -2055,8 +2011,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * Function that gets the remote version from the file contents. 
- * @param {string} fileContent - the content of the remote file 
+ * Function that gets the remote version from the file contents.
+ * @param {string} fileContent - the content of the remote file
  * @returns {string} - remote version
  * @callback module:PluginUpdater~versioner
  */
@@ -2089,13 +2045,13 @@ class PluginUpdater {
 		if (updateURL) updateLink = updateURL;
 		if (typeof(versioner) != "function") versioner = this.defaultVersioner;
 		if (typeof(comparator) != "function") comparator = this.defaultComparator;
-		
+
 		if (typeof window.PluginUpdates === "undefined") {
 			window.PluginUpdates = {
 				plugins: {},
 				checkAll: function() {
-					for (let key in this.plugins) {
-						let plugin = this.plugins[key];
+					for (const key in this.plugins) {
+						const plugin = this.plugins[key];
 						if (!plugin.versioner) plugin.versioner = PluginUpdater.defaultVersioner;
 						if (!plugin.comparator) plugin.comparator = PluginUpdater.defaultComparator;
 						PluginUpdater.processUpdateCheck(plugin.name, plugin.raw);
@@ -2134,11 +2090,11 @@ class PluginUpdater {
 	 * The default versioner used as {@link module:PluginUpdater~versioner} for {@link module:PluginUpdater.checkForUpdate}.
 	 * This works on basic semantic versioning e.g. "1.0.0". You do not need to provide this as a versioner if your plugin adheres
 	 * to this style as this will be used as default.
-	 * @param {string} currentVersion 
-	 * @param {string} content 
+	 * @param {string} currentVersion
+	 * @param {string} content
 	 */
 	static defaultVersioner(content) {
-		var remoteVersion = content.match(/['"][0-9]+\.[0-9]+\.[0-9]+['"]/i);
+		const remoteVersion = content.match(/['"][0-9]+\.[0-9]+\.[0-9]+['"]/i);
 		if (!remoteVersion) return "0.0.0";
 		return remoteVersion.toString().replace(/['"]/g, "");
 	}
@@ -2147,13 +2103,13 @@ class PluginUpdater {
 	 * The default comparator used as {@link module:PluginUpdater~comparator} for {@link module:PluginUpdater.checkForUpdate}.
 	 * This works on basic semantic versioning e.g. "1.0.0". You do not need to provide this as a comparator if your plugin adheres
 	 * to this style as this will be used as default.
-	 * @param {string} currentVersion 
-	 * @param {string} content 
+	 * @param {string} currentVersion
+	 * @param {string} content
 	 */
 	static defaultComparator(currentVersion, remoteVersion) {
 		currentVersion = currentVersion.split(".").map((e) => {return parseInt(e);});
 		remoteVersion = remoteVersion.split(".").map((e) => {return parseInt(e);});
-		
+
 		if (remoteVersion[0] > currentVersion[0]) return true;
 		else if (remoteVersion[0] == currentVersion[0] && remoteVersion[1] > currentVersion[1]) return true;
 		else if (remoteVersion[0] == currentVersion[0] && remoteVersion[1] == currentVersion[1] && remoteVersion[2] > currentVersion[2]) return true;
@@ -2161,6 +2117,10 @@ class PluginUpdater {
 	}
 
 	static patchPluginList() {
+		try {
+			V2C_ContentColumn.prototype;
+		}
+		catch (e) {return;}
 		_patcher__WEBPACK_IMPORTED_MODULE_1__["default"].after("ZeresLibrary", V2C_ContentColumn.prototype, "componentDidMount", (self) => {
 			if (self._reactInternalFiber.key != "pcolumn") return;
 			const column = _discordmodules__WEBPACK_IMPORTED_MODULE_5__["default"].ReactDOM.findDOMNode(self);
@@ -2169,7 +2129,7 @@ class PluginUpdater {
 			if (!button || button.nextElementSibling.classList.contains("bd-updatebtn")) return;
 			button.after(PluginUpdater.createUpdateButton());
 		});
-		const button = document.getElementsByClassName("bd-pfbtn")[0];		
+		const button = document.getElementsByClassName("bd-pfbtn")[0];
 		if (!button || !button.textContent.toLowerCase().includes("plugin") || button.nextElementSibling.classList.contains("bd-updatebtn")) return;
 		button.after(PluginUpdater.createUpdateButton());
 	}
@@ -2184,7 +2144,7 @@ class PluginUpdater {
 		updateButton.onclick = function () {
 			window.PluginUpdates.checkAll();
 		};
-		let tooltip = new ui__WEBPACK_IMPORTED_MODULE_6__["Tooltip"](updateButton, "Checks for updates of plugins that support this feature. Right-click for a list.");
+		const tooltip = new ui__WEBPACK_IMPORTED_MODULE_6__["EmulatedTooltip"](updateButton, "Checks for updates of plugins that support this feature. Right-click for a list.");
 		updateButton.oncontextmenu = function () {
 			if (!window.PluginUpdates || !window.PluginUpdates.plugins) return;
 			tooltip.label = Object.values(window.PluginUpdates.plugins).map(p => p.name).join(", ");
@@ -2206,9 +2166,9 @@ class PluginUpdater {
 	 * @param {string} updateLink - link to the raw text version of the plugin
 	 */
 	static downloadPlugin(pluginName, updateLink) {
-		let request = __webpack_require__(/*! request */ "request");
-		let fileSystem = __webpack_require__(/*! fs */ "fs");
-		let path = __webpack_require__(/*! path */ "path");
+		const request = __webpack_require__(/*! request */ "request");
+		const fileSystem = __webpack_require__(/*! fs */ "fs");
+		const path = __webpack_require__(/*! path */ "path");
 		request(updateLink, async (error, response, body) => {
 			if (error) return _logger__WEBPACK_IMPORTED_MODULE_3__["default"].warn("PluginUpdates", "Unable to get update for " + pluginName);
 			const remoteVersion = window.PluginUpdates.plugins[updateLink].versioner(body);
@@ -2226,7 +2186,7 @@ class PluginUpdater {
 			if (!window.PluginUpdates.downloaded) {
 				window.PluginUpdates.downloaded = [];
 				const button = _domtools__WEBPACK_IMPORTED_MODULE_2__["default"].parseHTML(`<button class="btn btn-reload ${_discordclasses__WEBPACK_IMPORTED_MODULE_4__["default"].Notices.btn} ${_discordclasses__WEBPACK_IMPORTED_MODULE_4__["default"].Notices.button}">Reload</button>`);
-				const tooltip = new ui__WEBPACK_IMPORTED_MODULE_6__["Tooltip"](button, window.PluginUpdates.downloaded.join(", "), {side: "top"});
+				const tooltip = new ui__WEBPACK_IMPORTED_MODULE_6__["EmulatedTooltip"](button, window.PluginUpdates.downloaded.join(", "), {side: "top"});
 				button.addEventListener("click", (e) => {
 					e.preventDefault();
 					window.location.reload(false);
@@ -2472,13 +2432,12 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReactHelpers", function() { return Helpers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ReactComponents; });
-/* harmony import */ var _logger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./logger */ "./src/modules/logger.js");
-/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities */ "./src/modules/utilities.js");
-/* harmony import */ var _patcher__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./patcher */ "./src/modules/patcher.js");
-/* harmony import */ var _reflection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./reflection */ "./src/modules/reflection.js");
-/* harmony import */ var _discordmodules__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./discordmodules */ "./src/modules/discordmodules.js");
-/* harmony import */ var _domtools__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./domtools */ "./src/modules/domtools.js");
-/* harmony import */ var _reacttools__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./reacttools */ "./src/modules/reacttools.js");
+/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities */ "./src/modules/utilities.js");
+/* harmony import */ var _patcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./patcher */ "./src/modules/patcher.js");
+/* harmony import */ var _reflection__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./reflection */ "./src/modules/reflection.js");
+/* harmony import */ var _discordmodules__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./discordmodules */ "./src/modules/discordmodules.js");
+/* harmony import */ var _domtools__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./domtools */ "./src/modules/domtools.js");
+/* harmony import */ var _reacttools__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./reacttools */ "./src/modules/reacttools.js");
 /**
  * BetterDiscord React Component Manipulations
  * Original concept and some code by samogot - https://github.com/samogot / https://github.com/samogot/betterdiscord-plugins/tree/master/v2/1Lib%20Discord%20Internals
@@ -2491,7 +2450,7 @@ __webpack_require__.r(__webpack_exports__);
  * LICENSE file in the root directory of this source tree.
 */
 
-
+// import Logger from "./logger";
 
 
 
@@ -2554,7 +2513,7 @@ class Helpers {
         };
         const checkFilter = (selector, {item, parent, key, count, index}) => {
             let match = true;
-            if (match && selector.type) match = item && selector.type === item.type;
+            if (selector.type) match = item && selector.type === item.type;
             if (match && selector.tag) match = item && typeof item.type === "string" && selector.tag === item.type;
             if (match && selector.className) {
                 match = item && item.props && typeof item.props.className === "string";
@@ -2621,11 +2580,11 @@ class Helpers {
     }
 
     static get React() {
-        return _discordmodules__WEBPACK_IMPORTED_MODULE_4__["default"].React;
+        return _discordmodules__WEBPACK_IMPORTED_MODULE_3__["default"].React;
     }
 
     static get ReactDOM() {
-        return _discordmodules__WEBPACK_IMPORTED_MODULE_4__["default"].ReactDOM;
+        return _discordmodules__WEBPACK_IMPORTED_MODULE_3__["default"].ReactDOM;
     }
 }
 
@@ -2643,11 +2602,16 @@ class ReactComponent {
     forceUpdateAll() {
         if (!this.selector) return;
         for (const e of document.querySelectorAll(this.selector)) {
-            Object(_reflection__WEBPACK_IMPORTED_MODULE_3__["default"])(e).forceUpdate(this);
+            Object(_reflection__WEBPACK_IMPORTED_MODULE_2__["default"])(e).forceUpdate(this);
         }
     }
 }
 
+/**
+ * Methods for obtaining and interacting with react components.
+ * @module ReactComponents
+ * @version 0.0.1
+ */
 class ReactComponents {
     static get components() {return this._components || (this._components = []);}
     static get unknownComponents() {return this._unknownComponents || (this._unknownComponents = []);}
@@ -2677,7 +2641,7 @@ class ReactComponents {
         const listener = this.listeners.find(listener => listener.id === displayName);
         if (listener) {
             for (const l of listener.listeners) l(c);
-            _utilities__WEBPACK_IMPORTED_MODULE_1__["default"].removeFromArray(this.listeners, listener);
+            _utilities__WEBPACK_IMPORTED_MODULE_0__["default"].removeFromArray(this.listeners, listener);
         }
 
         // for (const listen of this.listeners) {
@@ -2691,7 +2655,7 @@ class ReactComponents {
      * Finds a component from the components array or by waiting for it to be mounted.
      * @param {String} name The component's name
      * @param {Object} selector A selector to look for
-     * @return {Promise => ReactComponent}
+     * @return {Promise<ReactComponent>}
      */
     static async getComponentByName(name, selector) {
         return this.getComponent(name, selector, m => m.displayName == name);
@@ -2702,7 +2666,7 @@ class ReactComponents {
      * @param {String} name The component's name
      * @param {Object} selector A selector to look for
      * @param {Function} filter A function to filter components if a single element is rendered by multiple components
-     * @return {Promise => ReactComponent}
+     * @return {Promise<ReactComponent>}
      */
     static async getComponent(name, selector, filter) {
         const have = this.components.find(c => c.id === name);
@@ -2711,8 +2675,8 @@ class ReactComponents {
         if (selector) {
             const callback = () => {
                 if (this.components.find(c => c.id === name)) {
-                    _logger__WEBPACK_IMPORTED_MODULE_0__["default"].info("ReactComponents", `Important component ${name} already found`);
-                    _domtools__WEBPACK_IMPORTED_MODULE_5__["default"].observer.unsubscribe(observerSubscription);
+                    // Logger.info("ReactComponents", `Important component ${name} already found`);
+                    _domtools__WEBPACK_IMPORTED_MODULE_4__["default"].observer.unsubscribe(observerSubscription);
                     return;
                 }
 
@@ -2721,16 +2685,16 @@ class ReactComponents {
 
                 let component, reflect;
                 for (const element of elements) {
-                    reflect = Object(_reflection__WEBPACK_IMPORTED_MODULE_3__["default"])(element);
+                    reflect = Object(_reflection__WEBPACK_IMPORTED_MODULE_2__["default"])(element);
                     component = filter ? reflect.components.find(filter) : reflect.component;
                     if (component) break;
                 }
                 
-                if (!component && filter) return _logger__WEBPACK_IMPORTED_MODULE_0__["default"].log("ReactComponents", ["Found elements matching the query selector but no components passed the filter"]);
+                if (!component && filter) return;// Logger.log("ReactComponents", ["Found elements matching the query selector but no components passed the filter"]);
 
-                _domtools__WEBPACK_IMPORTED_MODULE_5__["default"].observer.unsubscribe(observerSubscription);
+                _domtools__WEBPACK_IMPORTED_MODULE_4__["default"].observer.unsubscribe(observerSubscription);
 
-                if (!component) return _logger__WEBPACK_IMPORTED_MODULE_0__["default"].err("ReactComponents", [`FAILED TO GET IMPORTANT COMPONENT ${name} WITH REFLECTION FROM`, elements]);
+                if (!component) return;// Logger.err("ReactComponents", [`FAILED TO GET IMPORTANT COMPONENT ${name} WITH REFLECTION FROM`, elements]);
 
                 if (!component.displayName) component.displayName = name;
                 // if (component.displayName && component.displayName != name) {
@@ -2742,12 +2706,12 @@ class ReactComponents {
                 //         Utilities.removeFromArray(this.listeners, current);
                 //     }
                 // }
-                _logger__WEBPACK_IMPORTED_MODULE_0__["default"].info("ReactComponents", [`Found important component ${name} with reflection`, reflect]);
+                //Logger.info("ReactComponents", [`Found important component ${name} with reflection`, reflect]);
 
                 this.push(component, selector, filter);
             };
 
-            const observerSubscription = _domtools__WEBPACK_IMPORTED_MODULE_5__["default"].observer.subscribeToQuerySelector(callback, selector, null, true);
+            const observerSubscription = _domtools__WEBPACK_IMPORTED_MODULE_4__["default"].observer.subscribeToQuerySelector(callback, selector, null, true);
             setTimeout(callback, 0);
         }
 
@@ -2784,7 +2748,7 @@ class ReactComponents {
         const have = this.unknownComponents.find(c => c.component === component);
         for (const [fi, filter] of this.nameSetters.entries()) {
             if (filter.filter.filter(component)) {
-                _logger__WEBPACK_IMPORTED_MODULE_0__["default"].log("ReactComponents", "Filter match!");
+                // Logger.log("ReactComponents", "Filter match!");
                 component.displayName = filter.name;
                 this.nameSetters.splice(fi, 1);
                 return this.push(component);
@@ -2795,7 +2759,7 @@ class ReactComponents {
         return component;
     }
 
-    static *recursiveComponents(internalInstance = _reacttools__WEBPACK_IMPORTED_MODULE_6__["default"].rootInstance) {
+    static *recursiveComponents(internalInstance = _reacttools__WEBPACK_IMPORTED_MODULE_5__["default"].rootInstance) {
         if (internalInstance.stateNode) yield internalInstance.stateNode;
         if (internalInstance.sibling) yield *this.recursiveComponents(internalInstance.sibling);
         if (internalInstance.child) yield *this.recursiveComponents(internalInstance.child);
@@ -2808,9 +2772,9 @@ class ReactAutoPatcher {
      * Also patches some known components.
      */
     static async autoPatch() {
-        this.unpatchCreateElement = _patcher__WEBPACK_IMPORTED_MODULE_2__["default"].before("ReactComponents", _discordmodules__WEBPACK_IMPORTED_MODULE_4__["default"].React, "createElement", (react, [component]) => ReactComponents.push(component));
-        this.unpatchCreateElement = _patcher__WEBPACK_IMPORTED_MODULE_2__["default"].instead("ReactComponents", _discordmodules__WEBPACK_IMPORTED_MODULE_4__["default"].React.Component.prototype, "UNSAFE_componentWillMount", (component) => ReactComponents.push(component));
-        this.unpatchCreateElement = _patcher__WEBPACK_IMPORTED_MODULE_2__["default"].instead("ReactComponents", _discordmodules__WEBPACK_IMPORTED_MODULE_4__["default"].React.Component.prototype, "componentWillMount", (component) => ReactComponents.push(component));
+        this.unpatchCreateElement = _patcher__WEBPACK_IMPORTED_MODULE_1__["default"].before("ReactComponents", _discordmodules__WEBPACK_IMPORTED_MODULE_3__["default"].React, "createElement", (react, [component]) => ReactComponents.push(component));
+        this.unpatchCreateElement = _patcher__WEBPACK_IMPORTED_MODULE_1__["default"].instead("ReactComponents", _discordmodules__WEBPACK_IMPORTED_MODULE_3__["default"].React.Component.prototype, "UNSAFE_componentWillMount", (component) => ReactComponents.push(component));
+        this.unpatchCreateElement = _patcher__WEBPACK_IMPORTED_MODULE_1__["default"].instead("ReactComponents", _discordmodules__WEBPACK_IMPORTED_MODULE_3__["default"].React.Component.prototype, "componentWillMount", (component) => ReactComponents.push(component));
         // this.patchComponents();
     }
 
@@ -2871,7 +2835,7 @@ class ReactTools {
 	 */
 	static getReactInstance(node) {
 		if (!(node instanceof window.jQuery) && !(node instanceof Element)) return undefined;
-		var domNode = node instanceof window.jQuery ? node[0] : node;
+		const domNode = node instanceof window.jQuery ? node[0] : node;
 		return domNode[Object.keys(domNode).find((key) => key.startsWith("__reactInternalInstance"))];
 	}
 
@@ -2883,10 +2847,7 @@ class ReactTools {
 	 * @return {(*|undefined)} the value requested or undefined if not found.
 	 */
 	static getReactProperty(node, path) {
-		var value = path.split(/\s?\.\s?/).reduce(function(obj, prop) {
-			return obj && obj[prop];
-		}, this.getReactInstance(node));
-		return value;
+		return _utilities__WEBPACK_IMPORTED_MODULE_2__["default"].getNestedProp(this.getReactInstance(node), path);
 	}
 
 	/**
@@ -2916,7 +2877,7 @@ class ReactTools {
 		let curr = this.getReactInstance(node);
 		for (curr = curr && curr.return; !_utilities__WEBPACK_IMPORTED_MODULE_2__["default"].isNil(curr); curr = curr.return) {
 			if (_utilities__WEBPACK_IMPORTED_MODULE_2__["default"].isNil(curr)) continue;
-			let owner = curr.stateNode;
+			const owner = curr.stateNode;
 			if (!_utilities__WEBPACK_IMPORTED_MODULE_2__["default"].isNil(owner) && !(owner instanceof HTMLElement) && classFilter(curr) && filter(owner)) return owner;
 		}
 		
@@ -3223,23 +3184,21 @@ class Utilities {
      * @param {function} comparator - comparator to sort by
      */
     static stableSort(list, comparator) {
-        var length = list.length;
-        var entries = Array(length);
-        var index;
+        const entries = Array(length);
 
         // wrap values with initial indices
-        for (index = 0; index < length; index++) {
+        for (let index = 0; index < list.length; index++) {
             entries[index] = [index, list[index]];
         }
 
         // sort with fallback based on initial indices
         entries.sort(function (a, b) {
-            var comparison = Number(this(a[1], b[1]));
+            const comparison = Number(this(a[1], b[1]));
             return comparison || a[0] - b[0];
         }.bind(comparator));
 
         // re-map original array to stable sorted values
-        for (index = 0; index < length; index++) {
+        for (let index = 0; index < list.length; index++) {
             list[index] = entries[index][1];
         }
     }
@@ -3254,7 +3213,7 @@ class Utilities {
             get: function(obj, mod) {
                 if (!obj.hasOwnProperty(mod)) return undefined;
                 if (Object.getOwnPropertyDescriptor(obj, mod).get) {
-                    let value = obj[mod];
+                    const value = obj[mod];
                     delete obj[mod];
                     obj[mod] = value;
                 }
@@ -3296,7 +3255,7 @@ class Utilities {
     }
 
     /**
-     * Format strings with placeholders (`${placeholder}`) into full strings.
+     * Format template strings with placeholders (`${placeholder}`) into full strings.
      * Quick example: `PluginUtilities.formatString("Hello, ${user}", {user: "Zerebos"})`
      * would return "Hello, Zerebos".
      * @param {string} string - string to format
@@ -3304,8 +3263,11 @@ class Utilities {
      * @returns {string} the properly formatted string
      */
     static formatTString(string, values) {
-        for (let val in values) {
-            string = string.replace(new RegExp(`\\$\\{${val}\\}`, "g"), values[val]);
+        for (const val in values) {
+            let replacement = values[val];
+            if (Array.isArray(replacement)) replacement = JSON.stringify(replacement);
+            if (typeof(replacement) === "object" && replacement !== null) replacement = replacement.toString();
+            string = string.replace(new RegExp(`\\$\\{${val}\\}`, "g"), replacement);
         }
         return string;
     }
@@ -3319,8 +3281,11 @@ class Utilities {
      * @returns {string} the properly formatted string
      */
     static formatString(string, values) {
-        for (let val in values) {
-            string = string.replace(new RegExp(`{{${val}}}`, "g"), values[val]);
+        for (const val in values) {
+            let replacement = values[val];
+            if (Array.isArray(replacement)) replacement = JSON.stringify(replacement);
+            if (typeof(replacement) === "object" && replacement !== null) replacement = replacement.toString();
+            string = string.replace(new RegExp(`{{${val}}}`, "g"), replacement);
         }
         return string;
     }
@@ -3342,7 +3307,7 @@ class Utilities {
      * @param {Array<string>|null} [options.walkable=null] Array of strings to use as keys that are allowed to be walked on. Null value indicates all keys are walkable
      * @param {Array<string>} [options.ignore=[]] Array of strings to use as keys to exclude from the search, most helpful when `walkable = null`.
      */
-    static findInTree(tree, searchFilter, {walkable = null, ignore = []}) {
+    static findInTree(tree, searchFilter, {walkable = null, ignore = []} = {}) {
         if (typeof searchFilter === "string") {
             if (tree.hasOwnProperty(searchFilter)) return tree[searchFilter];
         }
@@ -3383,29 +3348,33 @@ class Utilities {
     }
 
     /**
-     * https://github.com/JedWatson/classnames
+     * Builds a classname string from any number of arguments. This includes arrays and objects.
+     * When given an array all values from the array are added to the list.
+     * When given an object they keys are added as the classnames if the value is truthy.
+     * Copyright (c) 2018 Jed Watson https://github.com/JedWatson/classnames MIT License
+     * @param {...Any} argument - anything that should be used to add classnames.
      */
     static className() {
-        var classes = [];
-        var hasOwn = {}.hasOwnProperty;
+        const classes = [];
+        const hasOwn = {}.hasOwnProperty;
 
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
+		for (let i = 0; i < arguments.length; i++) {
+			const arg = arguments[i];
 			if (!arg) continue;
 
-			var argType = typeof arg;
+			const argType = typeof arg;
 
 			if (argType === "string" || argType === "number") {
 				classes.push(arg);
             }
             else if (Array.isArray(arg) && arg.length) {
-				var inner = this.classNames.apply(null, arg);
+				const inner = this.classNames.apply(null, arg);
 				if (inner) {
 					classes.push(inner);
 				}
             }
             else if (argType === "object") {
-				for (var key in arg) {
+				for (const key in arg) {
 					if (hasOwn.call(arg, key) && arg[key]) {
 						classes.push(key);
 					}
@@ -3440,7 +3409,7 @@ class Utilities {
      */
     static extend(extendee, ...extenders) {
         for (let i = 0; i < extenders.length; i++) {
-            for (let key in extenders[i]) {
+            for (const key in extenders[i]) {
                 if (extenders[i].hasOwnProperty(key)) {
                     if (typeof extendee[key] === "object" && typeof extenders[i][key] === "object") this.extend(extendee[key], extenders[i][key]);
                     else if (typeof extenders[i][key] === "object") extendee[key] = {}, this.extend(extendee[key], extenders[i][key]);
@@ -3466,7 +3435,7 @@ class Utilities {
 
             const clone = Object.assign({}, value);
 
-            for (let key in clone) {
+            for (const key in clone) {
                 clone[key] = this.deepclone(clone[key]);
             }
 
@@ -3487,7 +3456,7 @@ class Utilities {
         if (typeof object === "object" && object !== null) {
             const properties = Object.getOwnPropertyNames(object);
 
-            for (let property of properties) {
+            for (const property of properties) {
                 this.deepfreeze(object[property], exclude);
             }
 
@@ -3643,6 +3612,21 @@ class Filters {
     }
 
     /**
+     * Generates a {@link module:WebpackModules.Filters~filter} that filters by strings.
+     * @param {...String} search - A RegExp to check on the module
+     * @returns {module:WebpackModules.Filters~filter} - A filter that checks for a set of strings
+     */
+    static byString(...strings) {
+        return module => {
+            const moduleString = module.toString([]);
+            for (const s of strings) {
+                if (!moduleString.includes(s)) return false;
+            }
+            return true;
+        };
+    }
+
+    /**
      * Generates a {@link module:WebpackModules.Filters~filter} that filters by a set of properties.
      * @param {string} name - Name the module should have
      * @param {module:WebpackModules.Filters~filter} filter - Additional filter
@@ -3682,7 +3666,7 @@ class WebpackModules {
     static getModule(filter, first = true) {
         const modules = this.getAllModules();
         const rm = [];
-        for (let index in modules) {
+        for (const index in modules) {
             if (!modules.hasOwnProperty(index)) continue;
             const module = modules[index];
             const {exports} = module;
@@ -3773,6 +3757,24 @@ class WebpackModules {
     }
 
     /**
+     * Finds a single module using a set of strings.
+     * @param {...String} props Strings to use to filter modules
+     * @return {Any}
+     */
+    static getByString(...strings) {
+        return this.getModule(Filters.byString(...strings), true);
+    }
+
+    /**
+     * Finds all modules with a set of strings.
+     * @param {...String} strings Strings to use to filter modules
+     * @return {Any}
+     */
+    static getAllByString(...strings) {
+        return this.getModule(Filters.byString(...strings), false);
+    }
+
+    /**
      * Discord's __webpack_require__ function.
      */
     static get require() {
@@ -3797,6 +3799,72 @@ class WebpackModules {
     }
 
 }
+
+/***/ }),
+
+/***/ "./src/plugin.js":
+/*!***********************!*\
+  !*** ./src/plugin.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ((BasePlugin, Library) => {
+    const {PluginUpdater, Patcher, Logger, Settings, Toasts, PluginUtilities, ReactComponents} = Library;
+    const PluginLibrary = class PluginLibrary extends BasePlugin {
+        get Library() {return Library;}
+        
+        load() {
+            super.load();
+            const exists = document.getElementById("ZLibraryCSS");
+            PluginUtilities.removeStyle("ZLibraryCSS");
+            PluginUtilities.addStyle("ZLibraryCSS", Settings.CSS + Toasts.CSS + PluginUpdater.CSS);
+            if (!exists) return; // This is first load, no need to reload dependent plugins
+            const prev = window.settingsCookie["fork-ps-2"];
+            window.settingsCookie["fork-ps-2"] = false;
+            const list = Object.keys(window.bdplugins).filter(k => window.bdplugins[k].plugin._config && k != "ZeresPluginLibrary");
+            for (let p = 0; p < list.length; p++) window.pluginModule.reloadPlugin(list[p]);
+            window.settingsCookie["fork-ps-2"] = prev;
+            ReactComponents.AutoPatcher.processAll();
+            ReactComponents.AutoPatcher.autoPatch();
+        }
+
+        static buildPlugin(config) {
+            const name = config.info.name;
+            const BoundAPI = {
+                Logger: {
+                    stacktrace: (message, error) => Logger.stacktrace(name, message, error),
+                    log: (...message) => Logger.log(name, ...message),
+                    error: (...message) => Logger.err(name, ...message),
+                    err: (...message) => Logger.err(name, ...message),
+                    warn: (...message) => Logger.warn(name, ...message),
+                    info: (...message) => Logger.info(name, ...message),
+                    debug: (...message) => Logger.debug(name, ...message)
+                },
+                Patcher: {
+                    getPatchesByCaller: () => {return Patcher.getPatchesByCaller(name);},
+                    unpatchAll: () => {return Patcher.unpatchAll(name);},
+                    before: (moduleToPatch, functionName, callback, options = {}) => {return Patcher.before(name, moduleToPatch, functionName, callback, options);},
+                    instead: (moduleToPatch, functionName, callback, options = {}) => {return Patcher.instead(name, moduleToPatch, functionName, callback, options);},
+                    after: (moduleToPatch, functionName, callback, options = {}) => {return Patcher.after(name, moduleToPatch, functionName, callback, options);}
+                }
+            };
+            const BoundLib = Object.assign({}, Library);
+            BoundLib.Logger = BoundAPI.Logger;
+            BoundLib.Patcher = BoundAPI.Patcher;
+            return [Library.Structs.Plugin(config), BoundLib];		
+        }
+    };
+
+    Object.assign(PluginLibrary, Library);
+    Library.buildPlugin = PluginLibrary.buildPlugin;
+    window.ZLibrary = Library;
+    window.ZLibraryPromise = new Promise(r => setImmediate(r));
+	window.ZeresPluginLibrary = PluginLibrary;
+    return PluginLibrary;
+});
 
 /***/ }),
 
@@ -4483,7 +4551,7 @@ class Guild {
      * An array of the guild's custom emojis.
      */
     get emojis() {
-        return structs__WEBPACK_IMPORTED_MODULE_1__["List"].from(modules__WEBPACK_IMPORTED_MODULE_0__["DiscordModules"].EmojiUtils.getGuildEmoji(this.id), e => new Emoji(e, this.id));
+        return structs__WEBPACK_IMPORTED_MODULE_1__["List"].from(modules__WEBPACK_IMPORTED_MODULE_0__["DiscordModules"].EmojiUtils.getGuildEmoji(this.id), e => new Emoji(e));
     }
 
     checkPermissions(perms) {
@@ -5663,9 +5731,7 @@ class ClassName {
 	 * @returns {ClassName} returns self to allow chaining
 	 */
 	add(...classNames) {
-		for (var i = 0; i < classNames.length; i++) {
-			this.value += " " + classNames[i];
-		}
+		for (let i = 0; i < classNames.length; i++) this.value += " " + classNames[i];
 		return this;
 	}
 	
@@ -5715,7 +5781,6 @@ class ClassName {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DOMObserver; });
 /* harmony import */ var modules__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! modules */ "./src/modules/modules.js");
 /**
  * BetterDiscord Client DOM Module
@@ -5729,6 +5794,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/** 
+ * Representation of a MutationObserver but with helpful utilities.
+ * @memberof module:DOMTools
+ **/
 class DOMObserver {
     constructor(root, options) {
         this.observe = this.observe.bind(this);
@@ -5846,6 +5915,7 @@ class DOMObserver {
     }
 }
 
+/* harmony default export */ __webpack_exports__["default"] = (DOMObserver);
 
 /***/ }),
 
@@ -6002,8 +6072,8 @@ class List extends Array {
      */
     get(...filters) {
         return this.find(item => {
-            for (let filter of filters) {
-                for (let key in filter) {
+            for (const filter of filters) {
+                for (const key in filter) {
                     if (filter.hasOwnProperty(key)) {
                         if (item[key] !== filter[key]) return false;
                     }
@@ -6123,16 +6193,17 @@ __webpack_require__.r(__webpack_exports__);
         getDescription() { return this._config.info.description; }
         getVersion() { return this._config.info.version; }
         getAuthor() { return this._config.info.authors.map(a => a.name).join(", "); }
-        load() {}
-        async start() {
-            _modules_logger__WEBPACK_IMPORTED_MODULE_1__["default"].info(this.getName(), `version ${this.getVersion()} has started.`);
-            if (this.defaultSettings) this.settings = this.loadSettings();
+        load() {
             const currentVersionInfo = _modules_pluginutilities__WEBPACK_IMPORTED_MODULE_4__["default"].loadData(this.getName(), "currentVersionInfo", {version: this.getVersion(), hasShownChangelog: false});
             if (currentVersionInfo.version != this.getVersion() || !currentVersionInfo.hasShownChangelog) {
                 this.showChangelog();
                 _modules_pluginutilities__WEBPACK_IMPORTED_MODULE_4__["default"].saveData(this.getName(), "currentVersionInfo", {version: this.getVersion(), hasShownChangelog: true});
             }
             _modules_pluginupdater__WEBPACK_IMPORTED_MODULE_0__["default"].checkForUpdate(this.getName(), this.getVersion(), this._config.info.github_raw);
+        }
+        async start() {
+            _modules_logger__WEBPACK_IMPORTED_MODULE_1__["default"].info(this.getName(), `version ${this.getVersion()} has started.`);
+            if (this.defaultSettings) this.settings = this.loadSettings();
             this._enabled = true;
             if (typeof(this.onStart) == "function") this.onStart();
         }
@@ -6515,7 +6586,7 @@ class Menu {
      * @returns {module:ContextMenu.Menu} returns self for chaining
      */
 	addItems(...contextItems) {
-		for (var i = 0; i < contextItems.length; i++) {
+		for (let i = 0; i < contextItems.length; i++) {
 			if (this.scroll) this.scroller.append(contextItems[i].getElement());
 			else this.element.append(contextItems[i].getElement());
 		}
@@ -6606,7 +6677,7 @@ class ItemGroup {
      * @returns {module:ContextMenu.ItemGroup} returns self for chaining
      */
 	addItems(...contextItems) {
-		for (var i = 0; i < contextItems.length; i++) {
+		for (let i = 0; i < contextItems.length; i++) {
 			this.element.append(contextItems[i].getElement());
 		}
 		return this;
@@ -6746,6 +6817,194 @@ class ToggleItem extends MenuItem {
 			this.input.checked = !this.input.checked;
             if (typeof(onChange) == "function") onChange(this.input.checked);
         });
+	}
+}
+
+/***/ }),
+
+/***/ "./src/ui/emulatedtooltip.js":
+/*!***********************************!*\
+  !*** ./src/ui/emulatedtooltip.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EmulatedTooltip; });
+/* harmony import */ var modules__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! modules */ "./src/modules/modules.js");
+/* harmony import */ var _structs_screen__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../structs/screen */ "./src/structs/screen.js");
+/** 
+ * Tooltip that automatically show and hide themselves on mouseenter and mouseleave events.
+ * Will also remove themselves if the node to watch is removed from DOM through
+ * a MutationObserver.
+ * 
+ * Note this is not using Discord's internals but normal DOM manipulation and emulates 
+ * Discord's own tooltips as closely as possible.
+ * 
+ * @module EmulatedTooltip
+ * @version 0.0.1
+ */
+
+
+
+
+const getClass = function(sideOrColor) {
+    const upperCase = sideOrColor[0].toUpperCase() + sideOrColor.slice(1);
+    const tooltipClass = modules__WEBPACK_IMPORTED_MODULE_0__["DiscordClasses"].Tooltips[`tooltip${upperCase}`];
+    if (tooltipClass) return tooltipClass;
+    return null;
+};
+
+const classExists = function(sideOrColor) {
+    return getClass(sideOrColor) ? true : false;
+};
+
+const toPx = function(value) {
+    return `${value}px`;
+};
+
+/* <div class="layer-v9HyYc da-layer" style="left: 234.5px; bottom: 51px;">
+    <div class="tooltip-2QfLtc da-tooltip tooltipTop-XDDSxx tooltipBlack-PPG47z">
+        <div class="tooltipPointer-3ZfirK da-tooltipPointer"></div>
+        User Settings
+    </div>
+</div> */
+
+class EmulatedTooltip {
+	/**
+	 * 
+	 * @constructor
+	 * @param {(HTMLElement|jQuery)} node - DOM node to monitor and show the tooltip on
+	 * @param {string} tip - string to show in the tooltip
+	 * @param {object} options - additional options for the tooltip
+	 * @param {string} [options.style=black] - correlates to the discord styling/colors (black, brand, green, grey, red, yellow)
+	 * @param {string} [options.side=top] - can be any of top, right, bottom, left
+	 * @param {boolean} [options.preventFlip=false] - prevents moving the tooltip to the opposite side if it is too big or goes offscreen
+     * @param {boolean} [options.disabled=false] - whether the tooltip should be disabled from showing on hover
+	 */
+	constructor(node, text, options = {}) {
+		const {style = "black", side = "top", preventFlip = false, disabled = false} = options;
+		this.node = node instanceof jQuery ? node[0] : node;
+        this.label = text;
+        this.style = style.toLowerCase();
+		this.side = side.toLowerCase();
+        this.preventFlip = preventFlip;
+        this.disabled = disabled;
+
+        if (!classExists(this.side)) return modules__WEBPACK_IMPORTED_MODULE_0__["Logger"].err("EmulatedTooltip", `Side ${this.side} does not exist.`);
+        if (!classExists(this.style)) return modules__WEBPACK_IMPORTED_MODULE_0__["Logger"].err("EmulatedTooltip", `Style ${this.style} does not exist.`);
+
+        this.element = modules__WEBPACK_IMPORTED_MODULE_0__["DOMTools"].createElement(`<div class="${modules__WEBPACK_IMPORTED_MODULE_0__["DiscordClasses"].TooltipLayers.layer}">`);
+        this.tooltipElement = modules__WEBPACK_IMPORTED_MODULE_0__["DOMTools"].createElement(`<div class="${modules__WEBPACK_IMPORTED_MODULE_0__["DiscordClasses"].Tooltips.tooltip} ${getClass(this.style)}"><div class="${modules__WEBPACK_IMPORTED_MODULE_0__["DiscordClasses"].Tooltips.tooltipPointer}"></div>${this.label}</div>`);
+        this.labelElement = this.tooltipElement.childNodes[1];
+        this.element.append(this.tooltipElement);
+        
+
+		this.node.addEventListener("mouseenter", () => {
+            if (this.disabled) return;
+            this.show();
+			
+			const observer = new MutationObserver((mutations) => {
+				mutations.forEach((mutation) => {
+					const nodes = Array.from(mutation.removedNodes);
+					const directMatch = nodes.indexOf(this.node) > -1;
+					const parentMatch = nodes.some(parent => parent.contains(this.node));
+					if (directMatch || parentMatch) {
+						this.hide();
+						observer.disconnect();
+					}
+				});
+			});
+
+			observer.observe(document.body, {subtree: true, childList: true});
+		});
+
+		this.node.addEventListener("mouseleave", () => {
+			this.hide();
+		});
+    }
+    
+    /** Container where the tooltip will be appended. */
+    get container() { return document.querySelector(modules__WEBPACK_IMPORTED_MODULE_0__["DiscordSelectors"].TooltipLayers.layerContainer); }
+    /** Boolean representing if the tooltip will fit on screen above the element */
+    get canShowAbove() { return this.node.offset().top - this.element.outerHeight() >= 0; }
+    /** Boolean representing if the tooltip will fit on screen below the element */
+    get canShowBelow() { return this.node.offset().top + this.node.outerHeight() + this.element.outerHeight() <= _structs_screen__WEBPACK_IMPORTED_MODULE_1__["default"].height; }
+    /** Boolean representing if the tooltip will fit on screen to the left of the element */
+    get canShowLeft() { return this.node.offset().left - this.element.outerWidth() >= 0; }
+    /** Boolean representing if the tooltip will fit on screen to the right of the element */
+	get canShowRight() { return this.node.offset().left + this.node.outerWidth() + this.element.outerWidth() <= _structs_screen__WEBPACK_IMPORTED_MODULE_1__["default"].width; }
+
+    /** Hides the tooltip. Automatically called on mouseleave. */
+	hide() {
+        this.element.remove();
+        this.tooltipElement.className = this._className;
+	}
+
+    /** Shows the tooltip. Automatically called on mouseenter. Will attempt to flip if position was wrong. */
+	show() {
+        this.tooltipElement.className = `${modules__WEBPACK_IMPORTED_MODULE_0__["DiscordClasses"].Tooltips.tooltip} ${getClass(this.style)}`;
+        this.labelElement.textContent = this.label;
+		this.element.appendTo(this.container);
+
+		if (this.side == "top") {
+			if (this.canShowAbove || (!this.canShowAbove && this.preventFlip)) this.showAbove();
+			else this.showBelow();
+		}
+
+		if (this.side == "bottom") {
+			if (this.canShowBelow || (!this.canShowBelow && this.preventFlip)) this.showBelow();
+			else this.showAbove();
+		}
+
+		if (this.side == "left") {
+			if (this.canShowLeft || (!this.canShowLeft && this.preventFlip)) this.showLeft();
+			else this.showRight();
+		}
+
+		if (this.side == "right") {
+			if (this.canShowRight || (!this.canShowRight && this.preventFlip)) this.showRight();
+			else this.showLeft();
+		}
+	}
+
+    /** Force showing the tooltip above the node. */
+	showAbove() {
+		this.tooltipElement.addClass(getClass("top"));
+		this.element.css("top", toPx(this.node.offset().top - this.element.outerHeight() - 10));
+		this.centerHorizontally();
+	}
+
+    /** Force showing the tooltip below the node. */
+	showBelow() {
+		this.tooltipElement.addClass(getClass("bottom"));
+		this.element.css("top", toPx(this.node.offset().top + this.node.outerHeight() + 10));
+		this.centerHorizontally();
+	}
+
+    /** Force showing the tooltip to the left of the node. */
+	showLeft() {
+		this.tooltipElement.addClass(getClass("left"));
+		this.element.css("left", toPx(this.node.offset().left - this.element.outerWidth() - 10));
+		this.centerVertically();
+	}
+
+    /** Force showing the tooltip to the right of the node. */
+	showRight() {
+		this.tooltipElement.addClass(getClass("right"));
+		this.element.css("left", toPx(this.node.offset().left + this.node.outerWidth() + 10));
+		this.centerVertically();
+	}
+
+	centerHorizontally() {
+		const nodecenter = this.node.offset().left + (this.node.outerWidth() / 2);
+		this.element.css("left", toPx(nodecenter - (this.element.outerWidth() / 2)));
+	}
+
+	centerVertically() {
+		const nodecenter = this.node.offset().top + (this.node.outerHeight() / 2);
+		this.element.css("top", toPx(nodecenter - (this.element.outerHeight() / 2)));
 	}
 }
 
@@ -7040,35 +7299,36 @@ class Popouts {
      * Shows the user popout for a user relative to a target element
      * @param {HTMLElement} target - Element to show the popout in relation to
      * @param {object} user - Discord User object for the user to show
-	 * @param {object} [options] - Options to modify the request
+     * @param {object} [options] - Options to modify the request
      * @param {string} [options.guild="currentGuildId"] - Id of the guild  (uses current if not specified)
      * @param {string} [options.channel="currentChannelId"] - Id of the channel (uses current if not specified)
-	 * @param {string} [options.position="right"] - Positioning relative to element
+     * @param {string} [options.position="right"] - Positioning relative to element
      */
     static showUserPopout(target, user, options = {}) {
-		let {guild = modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].SelectedGuildStore.getGuildId(), channel = modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].SelectedChannelStore.getChannelId(), position = "right"} = options;
-		target = modules__WEBPACK_IMPORTED_MODULE_1__["DOMTools"].resolveElement(target);
-		if (target.getBoundingClientRect().right + 250 >= structs__WEBPACK_IMPORTED_MODULE_0__["Screen"].width) position = "left";
-		modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].PopoutOpener.openPopout(target, {
-			position: position,
-			offsetX: 0,
-			offsetY: 0,
-			animationType: "default",
-			preventInvert: false,
-			zIndexBoost: 0,
-			closeOnScroll: false,
-			shadow: false,
-			backdrop: false,
-			toggleClose: true,
-			render: (props) => {
-				return modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].React.createElement(modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].UserPopout, Object.assign({}, props, {
-					user: user,
-					guildId: guild,
-					channelId: channel
-				}));
-			}
-		}, "ZeresLibrary");
-	}
+        const {guild = modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].SelectedGuildStore.getGuildId(), channel = modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].SelectedChannelStore.getChannelId()} = options;
+        let {position = "right"} = options;
+        target = modules__WEBPACK_IMPORTED_MODULE_1__["DOMTools"].resolveElement(target);
+        if (target.getBoundingClientRect().right + 250 >= structs__WEBPACK_IMPORTED_MODULE_0__["Screen"].width) position = "left";
+        modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].PopoutOpener.openPopout(target, {
+            position: position,
+            offsetX: 0,
+            offsetY: 0,
+            animationType: "default",
+            preventInvert: false,
+            zIndexBoost: 0,
+            closeOnScroll: false,
+            shadow: false,
+            backdrop: false,
+            toggleClose: true,
+            render: (props) => {
+                return modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].React.createElement(modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].UserPopout, Object.assign({}, props, {
+                    userId: user.id,
+                    guildId: guild,
+                    channelId: channel
+                }));
+            }
+        }, "ZeresLibrary");
+    }
 }
 
 /***/ }),
@@ -7220,15 +7480,19 @@ class ReactSetting extends modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"
         return modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].React.createElement(modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].SettingsNote, {children: this.props.note, type: "description", className: className.toString()});
     }
 
-    get dividerElement() { return modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].React.createElement(modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].SettingsDivider, {className: modules__WEBPACK_IMPORTED_MODULE_1__["DiscordClasses"].Dividers.dividerDefault.toString()}); }
+    get dividerElement() { return modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].React.createElement("div", {className: modules__WEBPACK_IMPORTED_MODULE_1__["DiscordClasses"].Dividers.divider.add(modules__WEBPACK_IMPORTED_MODULE_1__["DiscordClasses"].Dividers.dividerDefault).toString()}); }
 
     render() {
         const SettingElement = modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].React.createElement(this.props.type, this.props);
-        return modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].React.createElement(modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].SettingsWrapper, {className: modules__WEBPACK_IMPORTED_MODULE_1__["DiscordClasses"].Margins.marginBottom20.toString(), title: this.props.title, children: [
-            this.props.noteOnTop ? this.noteElement : SettingElement,
-            this.props.noteOnTop ? SettingElement : this.noteElement,
-            this.dividerElement
-        ]});
+        return modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].React.createElement(modules__WEBPACK_IMPORTED_MODULE_1__["DiscordModules"].SettingsWrapper, {
+			className: modules__WEBPACK_IMPORTED_MODULE_1__["DiscordClasses"].Margins.marginBottom20.toString(),
+			title: this.props.title,
+			children: [
+				this.props.noteOnTop ? this.noteElement : SettingElement,
+				this.props.noteOnTop ? SettingElement : this.noteElement,
+				this.dividerElement
+			]
+		});
     }
 }
 
@@ -7313,7 +7577,7 @@ class SettingGroup extends _structs_listenable__WEBPACK_IMPORTED_MODULE_0__["def
      * @returns {module:Settings.SettingGroup} - returns self for chaining
      */
 	append(...nodes) {
-		for (var i = 0; i < nodes.length; i++) {
+		for (let i = 0; i < nodes.length; i++) {
 			if (nodes[i] instanceof jQuery || nodes[i] instanceof Element) this.controls.append(nodes[i]);
 			else if (nodes[i] instanceof _settingfield__WEBPACK_IMPORTED_MODULE_2__["default"] || nodes[i] instanceof SettingGroup) this.controls.append(nodes[i].getElement());
 			if (nodes[i] instanceof _settingfield__WEBPACK_IMPORTED_MODULE_2__["default"]) {
@@ -7407,7 +7671,7 @@ class SettingPanel extends _structs_listenable__WEBPACK_IMPORTED_MODULE_0__["def
      * @returns {module:Settings.SettingPanel} - returns self for chaining
      */
 	append(...nodes) {
-		for (var i = 0; i < nodes.length; i++) {
+		for (let i = 0; i < nodes.length; i++) {
 			if (nodes[i] instanceof jQuery || nodes[i] instanceof Element) this.element.append(nodes[i]);
 			else if (nodes[i] instanceof _settingfield__WEBPACK_IMPORTED_MODULE_2__["default"] || nodes[i] instanceof _settinggroup__WEBPACK_IMPORTED_MODULE_3__["default"]) this.element.append(nodes[i].getElement());
 			if (nodes[i] instanceof _settingfield__WEBPACK_IMPORTED_MODULE_2__["default"]) {
@@ -7945,14 +8209,15 @@ class Toast {
 
     static ensureContainer() {
         if (document.querySelector(".toasts")) return;
-        let container = document.querySelector(modules__WEBPACK_IMPORTED_MODULE_0__["DiscordSelectors"].ChannelList.channels.adjacent("div"));
-        let memberlist = container.querySelector(modules__WEBPACK_IMPORTED_MODULE_0__["DiscordSelectors"].MemberList.membersWrap);
-        let form = container ? container.querySelector("form") : null;
-        let left = container ? container.getBoundingClientRect().left : 310;
-        let right = memberlist ? memberlist.getBoundingClientRect().left : 0;
-        let width = right ? right - container.getBoundingClientRect().left : container.offsetWidth;
-        let bottom = form ? form.offsetHeight : 80;
-        let toastWrapper = document.createElement("div");
+        const channelClass = modules__WEBPACK_IMPORTED_MODULE_0__["DiscordSelectors"].ChannelList.sidebar;
+        const container = channelClass ? document.querySelector(channelClass.adjacent("div")) : null;
+        const memberlist = container ? container.querySelector(modules__WEBPACK_IMPORTED_MODULE_0__["DiscordSelectors"].MemberList.membersWrap) : null;
+        const form = container ? container.querySelector("form") : null;
+        const left = container ? container.getBoundingClientRect().left : 310;
+        const right = memberlist ? memberlist.getBoundingClientRect().left : 0;
+        const width = right ? right - container.getBoundingClientRect().left : container.offsetWidth;
+        const bottom = form ? form.offsetHeight : 80;
+        const toastWrapper = document.createElement("div");
         toastWrapper.classList.add("toasts");
         toastWrapper.style.setProperty("left", left + "px");
         toastWrapper.style.setProperty("width", width + "px");
@@ -8092,7 +8357,7 @@ class Tooltip {
 /*!**********************!*\
   !*** ./src/ui/ui.js ***!
   \**********************/
-/*! exports provided: Tooltip, Toasts, Popouts, Modals, Settings, ContextMenu, Icons */
+/*! exports provided: Tooltip, EmulatedTooltip, Toasts, Popouts, Modals, Settings, ContextMenu, Icons */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8106,14 +8371,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tooltip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tooltip */ "./src/ui/tooltip.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Tooltip", function() { return _tooltip__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _toasts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./toasts */ "./src/ui/toasts.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Toasts", function() { return _toasts__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+/* harmony import */ var _emulatedtooltip__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./emulatedtooltip */ "./src/ui/emulatedtooltip.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "EmulatedTooltip", function() { return _emulatedtooltip__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
-/* harmony import */ var _popouts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./popouts */ "./src/ui/popouts.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Popouts", function() { return _popouts__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+/* harmony import */ var _toasts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./toasts */ "./src/ui/toasts.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Toasts", function() { return _toasts__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
-/* harmony import */ var _modals__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modals */ "./src/ui/modals.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Modals", function() { return _modals__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+/* harmony import */ var _popouts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./popouts */ "./src/ui/popouts.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Popouts", function() { return _popouts__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+
+/* harmony import */ var _modals__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modals */ "./src/ui/modals.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Modals", function() { return _modals__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+
 
 
 
@@ -8183,3 +8452,4 @@ module.exports = window.require("request");
 /***/ })
 
 /******/ })["default"];
+/*@end@*/

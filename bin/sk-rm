@@ -1,19 +1,17 @@
 #!/bin/sh
 
-packages="$(sk \
+packages="$(listpkgs | sk \
     --ansi \
     --bind 'ctrl-p:toggle-preview' \
-    --cmd 'listpkgs "{}"' \
-    --cmd-prompt 'remove > ' \
+    --prompt 'remove > ' \
     --cmd-query "$1" \
     --delimiter ' ' \
-    --interactive \
     --multi \
     --no-hscroll \
     --nth 2 \
     --preview 'pacman -Qi {2}' \
-    --preview-window right:50%:wrap:hidden \
-    --tac \
-    | cut -d ' ' -f 2 \
-    | tr '\n' ' ')"
+    --preview-window right:50%:wrap \
+    --tac |
+    cut -d ' ' -f 2 |
+    tr '\n' ' ')"
 test -n "$packages" && sudo pacman -R $packages

@@ -42,212 +42,241 @@
 			"Voicechat Reconnect": "/assets/471cfd0005b112ff857705e894bf41a6.mp3"
 		}
 	},
+	"changelog": {
+		"currentversion": "3.3.5"
+	},
 	"choices": {
-		"message1": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/dd920c06a01e5bb8b09678581e29d56f.mp3",
-			"mute": true
-		},
-		"dm": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/84c9fa3d07da865278bd77c97d952db4.mp3",
-			"mute": true
-		},
-		"mentioned": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/a5f42064e8120e381528b14fd3188b72.mp3",
-			"mute": true
-		},
-		"deafen": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/e4d539271704b87764dc465b1a061abd.mp3",
-			"mute": false
-		},
-		"mute": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/429d09ee3b86e81a75b5e06d3fb482be.mp3",
-			"mute": false
-		},
-		"disconnect": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/7e125dc075ec6e5ae796e4c3ab83abb3.mp3",
-			"mute": false
-		},
-		"undeafen": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/5a000a0d4dff083d12a1d4fc2c7cbf66.mp3",
-			"mute": false
-		},
-		"unmute": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/43805b9dd757ac4f6b9b58c1a8ee5f0d.mp3",
-			"mute": false
-		},
-		"user_join": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/5dd43c946894005258d85770f0d10cff.mp3",
-			"mute": false
-		},
-		"user_leave": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/4fcfeb2cba26459c4750e60f626cebdc.mp3",
-			"mute": false
-		},
-		"user_moved": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/e81d11590762728c1b811eadfa5be766.mp3",
-			"mute": false
-		},
-		"ptt_start": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/8b63833c8d252fedba6b9c4f2517c705.mp3",
-			"mute": false
-		},
-		"ptt_stop": {
-			"category": "---",
-			"song": "---",
-			"volume": 100,
-			"src": "/assets/74ab980d6890a0fa6aa0336182f9f620.mp3",
-			"mute": false
-		},
 		"call_calling": {
 			"category": "---",
+			"focus": null,
+			"mute": false,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/c6e92752668dde4eee5923d70441579f.mp3",
-			"mute": false
+			"volume": 100
 		},
 		"call_ringing": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/84a1b4e11d634dbfa1e5dd97a96de3ad.mp3",
-			"mute": true
+			"volume": 100
 		},
 		"call_ringing_beat": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/b9411af07f154a6fef543e7e442e4da9.mp3",
-			"mute": true
+			"volume": 100
 		},
 		"ddr-down": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/71f048f8aa7d4b24bf4268a87cbbb192.mp3",
-			"mute": true
+			"volume": 100
 		},
 		"ddr-left": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/1de04408e62b5d52ae3ebbb91e9e1978.mp3",
-			"mute": true
+			"volume": 100
 		},
 		"ddr-right": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/2c0433f93db8449e4a82b76dc520cb29.mp3",
-			"mute": true
+			"volume": 100
 		},
 		"ddr-up": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/68472713f7a62c7c37e0a6a5d5a1faeb.mp3",
-			"mute": true
+			"volume": 100
+		},
+		"deafen": {
+			"category": "---",
+			"focus": null,
+			"mute": false,
+			"song": "---",
+			"src": "/assets/e4d539271704b87764dc465b1a061abd.mp3",
+			"volume": 100
+		},
+		"disconnect": {
+			"category": "---",
+			"focus": null,
+			"mute": false,
+			"song": "---",
+			"src": "/assets/7e125dc075ec6e5ae796e4c3ab83abb3.mp3",
+			"volume": 100
+		},
+		"dm": {
+			"category": "---",
+			"focus": true,
+			"mute": true,
+			"song": "---",
+			"src": "/assets/84c9fa3d07da865278bd77c97d952db4.mp3",
+			"volume": 100
 		},
 		"human_man": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/a37dcd6272ae41cf49295d58c9806fe3.mp3",
-			"mute": true
+			"volume": 100
 		},
 		"mention1": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/fa4d62c3cbc80733bf1f01b9c6f181de.mp3",
-			"mute": true
+			"volume": 100
 		},
 		"mention2": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/a5f42064e8120e381528b14fd3188b72.mp3",
-			"mute": true
+			"volume": 100
 		},
 		"mention3": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/84c9fa3d07da865278bd77c97d952db4.mp3",
-			"mute": true
+			"volume": 100
+		},
+		"mentioned": {
+			"category": "---",
+			"focus": true,
+			"mute": true,
+			"song": "---",
+			"src": "/assets/a5f42064e8120e381528b14fd3188b72.mp3",
+			"volume": 100
+		},
+		"message1": {
+			"category": "---",
+			"focus": null,
+			"mute": true,
+			"song": "---",
+			"src": "/assets/dd920c06a01e5bb8b09678581e29d56f.mp3",
+			"volume": 100
 		},
 		"message2": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/15fe810f6cfab609c7fcda61652b9b34.mp3",
-			"mute": true
+			"volume": 100
 		},
 		"message3": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/53ce6a92d3c233e8b4ac529d34d374e4.mp3",
-			"mute": true
+			"volume": 100
+		},
+		"mute": {
+			"category": "---",
+			"focus": null,
+			"mute": false,
+			"song": "---",
+			"src": "/assets/429d09ee3b86e81a75b5e06d3fb482be.mp3",
+			"volume": 100
 		},
 		"overlayunlock": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/ad322ffe0a88436296158a80d5d11baa.mp3",
-			"mute": true
+			"volume": 100
+		},
+		"ptt_start": {
+			"category": "---",
+			"focus": null,
+			"mute": false,
+			"song": "---",
+			"src": "/assets/8b63833c8d252fedba6b9c4f2517c705.mp3",
+			"volume": 100
+		},
+		"ptt_stop": {
+			"category": "---",
+			"focus": null,
+			"mute": false,
+			"song": "---",
+			"src": "/assets/74ab980d6890a0fa6aa0336182f9f620.mp3",
+			"volume": 100
 		},
 		"reconnect": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/471cfd0005b112ff857705e894bf41a6.mp3",
-			"mute": true
+			"volume": 100
 		},
 		"robot_man": {
 			"category": "---",
+			"focus": null,
+			"mute": true,
 			"song": "---",
-			"volume": 100,
 			"src": "/assets/66598bea6e59eb8acdf32cf2d9d75ba9.mp3",
-			"mute": true
+			"volume": 100
+		},
+		"undeafen": {
+			"category": "---",
+			"focus": null,
+			"mute": false,
+			"song": "---",
+			"src": "/assets/5a000a0d4dff083d12a1d4fc2c7cbf66.mp3",
+			"volume": 100
+		},
+		"unmute": {
+			"category": "---",
+			"focus": null,
+			"mute": false,
+			"song": "---",
+			"src": "/assets/43805b9dd757ac4f6b9b58c1a8ee5f0d.mp3",
+			"volume": 100
+		},
+		"user_join": {
+			"category": "---",
+			"focus": null,
+			"mute": false,
+			"song": "---",
+			"src": "/assets/5dd43c946894005258d85770f0d10cff.mp3",
+			"volume": 100
+		},
+		"user_leave": {
+			"category": "---",
+			"focus": null,
+			"mute": false,
+			"song": "---",
+			"src": "/assets/4fcfeb2cba26459c4750e60f626cebdc.mp3",
+			"volume": 100
+		},
+		"user_moved": {
+			"category": "---",
+			"focus": null,
+			"mute": false,
+			"song": "---",
+			"src": "/assets/e81d11590762728c1b811eadfa5be766.mp3",
+			"volume": 100
 		}
-	},
-	"changelog": {
-		"currentversion": "3.2.6"
 	}
 }

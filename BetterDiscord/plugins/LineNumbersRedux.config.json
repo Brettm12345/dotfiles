@@ -2,5 +2,9 @@
     "settings": {
         "ignoreNoLanguage": false,
         "noStyle": false
+    },
+    "currentVersionInfo": {
+        "version": "1.1.0",
+        "hasShownChangelog": true
     }
 }

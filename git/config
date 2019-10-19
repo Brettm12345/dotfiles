@@ -4,6 +4,7 @@
   name = Brett Mandler
   email = brettmandler@gmail.com
   signkey = B511A07485FD1360
+	signingkey = B511A07485FD1360
 
 [github]
   user = Brettm12345
@@ -16,6 +17,13 @@
   pager = diff-so-fancy | less --tabs=4 -RFX
   excludesFile = ~/.config/git/ignore
   whitespace = trailing-space
+  patch = !git --no-pager diff --no-color
+
+[gpg]
+	program = gpg2
+
+[commit]
+	gpgsign = true
 
 [hub]
   protocol = ssh
@@ -51,10 +59,10 @@
   amend = commit --amend -C HEAD
 
   ; Delete all branches that were merged into master
-  brd = "!sh -c \"git checkout master && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d\""
+  brd = "!sh -c \"git checkout master && git branch -a --merged | grep -v '\\*' | xargs -n 1 git branch -d\""
 
   ; Delete all branches that were merged into the current branch
-  brdhere = "!sh -c \"git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d\""
+  brdhere = "!sh -c \"git branch -a --merged | grep -v '\\*' | xargs -n 1 git branch -d\""
 
   ; Interactive rebase
   ria = "!git rebase -i `git merge-base HEAD master`"
@@ -63,7 +71,7 @@
   b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
 
   ; list aliases
-  la = "!git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1 => \\2/' | grep -v 'alias'| awk 'BEGIN { FS = \"=>\" }{ printf(\"%-20s=>%s\\n\", $1,$2)}'|sort"
+  lsa = "!git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1 => \\2/' | grep -v 'alias'| awk 'BEGIN { FS = \"=>\" }{ printf(\"%-20s=>%s\\n\", $1,$2)}'|sort"
 
   ; Test merge for conflicts before merging
   mergetest = "!f(){ git merge --no-commit --no-ff \"$1\"; git merge --abort; echo \"Merge aborted\"; };f "
@@ -91,7 +99,6 @@
 
   a = add
   ap = add --patch
-  b = branch
   bi = bisect
   bl = blame
   c = commit
@@ -129,7 +136,7 @@
   sts = stash show -p
   t = tag
   tr = trail
-  unmerged = branch --no-merged master
+  unmerged = branch -a --no-merged master
   wt = worktree
 
 ; }}}
@@ -145,10 +152,12 @@
   remote = green
 
 [color "diff"]
-  meta = yellow bold
+  meta = yellow
   frag = magenta bold
+	commit = yellow bold
   old = red bold
   new = green bold
+	whitespace = red reverse
 
 [color "status"]
   added = green
@@ -157,3 +166,5 @@
 ; }}}
 
 # vim:ft=gitconfig:foldmethod=marker:ts=2:sw=2:tw=80:noet:foldlevel=0
+[credential]
+	helper = cache --timeout=360000

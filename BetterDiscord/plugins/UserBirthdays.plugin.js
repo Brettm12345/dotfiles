@@ -4,7 +4,7 @@ class UserBirthdays {
 	
 	getName() { return "User Birthdays"; }
 	getDescription() { return "Allows you to set birthdays for users and get notified when it's a user's birthday."; }
-	getVersion() { return "1.0.7"; }
+	getVersion() { return "1.0.10"; }
 	getAuthor() { return "Metalloriff"; }
 
 	load() {}
@@ -58,16 +58,14 @@ class UserBirthdays {
 
 			if(pop.className.indexOf("popout") != -1) {
 
-				const uid = NeatoLib.ReactData.getProp(pop.getElementsByClassName("discriminator")[0], "user.id"), birthday = this.birthdays[uid];
+				const uid = NeatoLib.ReactData.getProp(pop, "children.props.userId"), birthday = this.birthdays[uid];
 
 				if(!uid) return;
 
-				NeatoLib.DOM.insertHTMLBefore(pop.getElementsByClassName(NeatoLib.getClass("body", "footer"))[0], `
-					<div class="body-3iLsc4 da-body">
-						<div class="bodyTitle-Y0qMQz marginBottom8-AtZOdT size12-3R0845 weightBold-2yjlgw">Birthday</div>
-						<div class="note-3kmerW note-3HfJZ5">
-							<textarea id="ub-birthdayfield" placeholder="No birthday specified, click to add one. Example: 4/20 or April 20" maxlength="50" class="scrollbarGhostHairline-1mSOM1 scrollbar-3dvm_9 da-scrollbarGhostHairline" style="height: 36px;">${birthday ? birthday.day : ""}</textarea>
-						</div>
+				document.getElementsByClassName(NeatoLib.getClass(["note", "protip"], "body"))[0].insertAdjacentHTML("beforeend", `
+					<div class="${NeatoLib.Modules.get(["note", "protip"]).bodyTitle}">Birthday</div>
+					<div class="${NeatoLib.Modules.get(["note", "protip"]).note} note-3kmerW">
+						<textarea id="ub-birthdayfield" placeholder="No birthday specified, click to add one. Example: 4/20 or April 20" maxlength="50" class="${NeatoLib.Modules.get("scrollbarGhostHairline").scrollbarGhostHairline}" style="height: 36px;">${birthday ? birthday.day : ""}</textarea>
 					</div>
 				`);
 
@@ -81,16 +79,20 @@ class UserBirthdays {
 
 			} else {
 
+				if(!m[1]) return;
+
 				pop = m[1].addedNodes[0];
 
 				if(pop.className.indexOf("modal") != -1 && (pop.getElementsByClassName(NeatoLib.getClass("profileBadge", "body")).length || pop.getElementsByClassName(NeatoLib.getClass("userInfoSection")).length)) {
 
-					const uid = NeatoLib.ReactData.getProp(pop.getElementsByClassName("discriminator")[0], "user.id"), birthday = this.birthdays[uid];
+					pop = pop.children[2];
+
+					const uid = NeatoLib.ReactData.getProp(pop, "children.props.user.id"), birthday = this.birthdays[uid];
 
 					if(!uid) return;
 					
 					NeatoLib.DOM.insertHTMLAtIndex(1, `
-						<div class="userInfoSection-2acyCx"><div class="userInfoSectionHeader-CBvMDh size12-3R0845 weightBold-2yjlgw">Birthday</div><div class="note-3kmerW note-QfFU8y"><textarea id="ub-birthdayfield" placeholder="No birthday specified, click to add one. Example: 4/20 or April 20" maxlength="50" class="scrollbarGhostHairline-1mSOM1 scrollbar-3dvm_9" style="height: 24px;">${birthday ? birthday.day : ""}</textarea></div></div>
+						<div class="${NeatoLib.Modules.get(["note", "nameTag", "root", "empty"]).userInfoSection}"><div class="${NeatoLib.Modules.get(["note", "nameTag", "root", "empty"]).userInfoSectionHeader}">Birthday</div><div class="${NeatoLib.Modules.get(["note", "protip"]).note} note-3kmerW"><textarea id="ub-birthdayfield" placeholder="No birthday specified, click to add one. Example: 4/20 or April 20" maxlength="50" class="${NeatoLib.Modules.get("scrollbarGhostHairline").scrollbarGhostHairline}" style="height: 24px;">${birthday ? birthday.day : ""}</textarea></div></div>
 					`, pop.getElementsByClassName(NeatoLib.getClass("scrollerWrapPolyfill", "scroller"))[0]);
 
 					const field = document.getElementById("ub-birthdayfield");
@@ -110,7 +112,7 @@ class UserBirthdays {
 		const pops = document.getElementsByClassName(this.theme);
 
 		this.popObserver.observe(pops[pops.length - 2], { childList : true });
-		this.popObserver.observe(pops[pops.length - 1], { childList : true });
+		this.popObserver.observe(pops[pops.length - 3], { childList : true });
 
 		this.style = NeatoLib.injectCSS(`
 			
@@ -181,24 +183,29 @@ class UserBirthdays {
 			birthday = new Date(this.birthdays[uid].day);
 
 			if(now.getMonth() == birthday.getMonth() && now.getDate() == birthday.getDate() && (isNaN(this.birthdays[uid].hadIn) || now.getFullYear() != this.birthdays[uid].hadIn)) {
-			
-				document.getElementsByClassName("app")[0].insertAdjacentHTML("beforeend", `
-					<div id="ub-alertwindow">
-						<div class="backdrop-1wrmKB da-backdrop" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="this.parentElement.remove();"></div>
-						<div class="modal-1UGdnR da-modal" style="opacity: 1;">
-							<div class="ub-item">
-								<header class="ub-item-inner">
-									<div class="ub-icon"><img src="${user.getAvatarURL()}" height="90" width="90"></div>
-									<div style="flex: 1;">
-										<span class="ub-label">${uid == "264163473179672576" ? "Metalloriff#2891" : user.tag}</span>
-										<div class="ub-label ub-description">It's ${uid == "264163473179672576" ? "the plugin creator" : user.username}'s birthday today!</div>
+				let modalInterval = setInterval(function() {
+					if (document.getElementsByClassName("app-2rEoOp")[0] !== null) {
+						document.getElementsByClassName("app-2rEoOp")[0].insertAdjacentHTML("beforeend", `
+							<div id="ub-alertwindow">
+								<div class="${NeatoLib.Modules.get("backdrop").backdrop}" style="opacity: 0.85; background-color: rgb(0, 0, 0); transform: translateZ(0px);" onclick="this.parentElement.remove();"></div>
+								<div class="modal-1UGdnR da-modal" style="opacity: 1;">
+									<div class="ub-item">
+										<header class="ub-item-inner">
+											<div class="ub-icon"><img src="${user.getAvatarURL()}" height="90" width="90"></div>
+											<div style="flex: 1;">
+												<span class="ub-label">${uid == "264163473179672576" ? "Metalloriff#2891" : user.tag}</span>
+												<div class="ub-label ub-description">It's ${uid == "264163473179672576" ? "the plugin creator" : user.username}'s birthday today!</div>
+											</div>
+											<span class="ub-x-button" onclick="document.getElementById('ub-alertwindow').remove();">X</span>
+										</header>
 									</div>
-									<span class="ub-x-button" onclick="document.getElementById('ub-alertwindow').remove();">X</span>
-								</header>
+								</div>
 							</div>
-						</div>
-					</div>
-				`);
+						`);
+						
+						clearInterval(modalInterval);
+					}
+				}, 500);
 
 				this.birthdays[uid].hadIn = now.getFullYear();
 

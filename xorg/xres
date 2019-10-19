@@ -1,6 +1,6 @@
 #include "xres.d/xft"
-#include "xres.d/colors/material"
-#include "xres.d/fonts/iosevka"
+#include "xres.d/colors/moonlight"
+#include "xres.d/fonts/operator-mono-lig"
 #include "xres.d/2bwm"
 #include "xres.d/emacs"
 #include "xres.d/misc"

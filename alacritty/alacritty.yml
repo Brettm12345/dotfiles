@@ -7,11 +7,10 @@ window:
   dimensions:
     columns: 200
     lines: 40
-  dynamic_padding: true
   padding:
-    x: 25
-    y: 25
-  decorations: full
+    x: 15
+    y: 15
+  dynamic_padding: true
 
 scrolling:
   history: 10000
@@ -19,78 +18,61 @@ scrolling:
   faux_multiplier: 3
   auto_scroll: false
 
-tabspaces: 4
+tabspaces: 2
 
-draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
 font:
   normal:
-    family: Iosevka Term Custom
+    family: Operator Mono Lig
     hintstyle: hintslight
     antialias: true
-    lsdfilter: lcddefault
+    lcdfilter: lcddefault
     rgba: rgb
     style: Medium
 
   bold:
-    family: Iosevka Term Custom
+    family: Operator Mono Lig
     hintstyle: hintnone
     antialias: true
-    lsdfilter: lcddefault
+    lcdfilter: lcddefault
     rgba: rgb
-    style: Semibold
+    style: Medium
 
   italic:
-    family: Iosevka Term Custom
+    family: Operator Mono Lig
     hintstyle: hightslight
     antialias: true
-    lsdfilter: lcddefault
+    lcdfilter: lcddefault
     rgba: rgb
-    style: Medium Italic
+    style: Medium
 
-  size: 16.0
+  size: 13.0
 
-  offset:
-    x: -1
-    y: 0
-
-  glyph_offset:
-    x: 0
-    y: 0
-
-  use_thin_strokes: false
-
-render_timer: false
-
-# Colors
 colors:
   primary:
-    background: "0x292D3E"
-    foreground: "0xA6ACCD"
-
-  cursor:
-    text: "0xA6ACCD"
-    cursor: "0x676e95"
+    background: '0x212337'
+    foreground: '0xafbeee'
 
   normal:
-    black: "0x343b51"
-    red: "0xff5370"
-    green: "0xc3e88d"
-    yellow: "0xffcb6b"
-    blue: "0x82aaff"
-    magenta: "0xc792ea"
-    cyan: "0x78ccf0"
-    white: "0xbfc7d5"
+    black:   '0x2a2e48'
+    red:     '0xff5370'
+    green:   '0xc7f59b'
+    yellow:  '0xffdb8e'
+    blue:    '0x70b0ff'
+    magenta: '0xbaacff'
+    cyan:    '0x7fdaff'
+    white:   '0xe4f3fa'
 
   bright:
-    black: "0x676e95"
-    red: "0xef5350"
-    green: "0xa9c77d"
-    yellow: "0xffca28"
-    blue: "0x82aaff"
-    magenta: "0xbb80b3"
-    cyan: "0x47bae8"
-    white: "0xeeffff"
+    black:   '0x4e5579'
+    red:     '0xff758d'
+    green:   '0xd2f7af'
+    yellow:  '0xffe2a5'
+    blue:    '0x8dc0ff'
+    magenta: '0xc8bdff'
+    cyan:    '0x99e1ff'
+    white:   '0xe9f5fb'
 
 visual_bell:
   animation: EaseOutExpo

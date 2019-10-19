@@ -1,11 +1,14 @@
 {
 	"settings": {
+		"addHints": true,
 		"clearOnEscape": true,
 		"Edit_Message": true,
 		"Delete_Message": true,
 		"Pin/Unpin_Message": true,
 		"React_to_Message": true,
-		"__Note_Message": false,
+		"Copy_Raw": true,
+		"Copy_Link": true,
+		"__Note_Message": true,
 		"__Translate_Message": false,
 		"__Quote_Message": false,
 		"__Citate_Message": false,
@@ -31,6 +34,16 @@
 			"click": 0,
 			"key1": 9,
 			"key2": 0
+		},
+		"Copy_Raw": {
+			"click": 0,
+			"key1": 17,
+			"key2": 68
+		},
+		"Copy_Link": {
+			"click": 0,
+			"key1": 17,
+			"key2": 81
 		},
 		"__Note_Message": {
 			"click": 0,
@@ -59,6 +72,6 @@
 		}
 	},
 	"changelog": {
-		"currentversion": "1.4.6"
+		"currentversion": "1.5.8"
 	}
 }
